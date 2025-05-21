@@ -1,0 +1,72 @@
+{% extends "/layouts/v2.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post">
+        <span class="govuk-caption-l">Create an education support plan</span>
+
+        {% set detailsHtml %}
+          {{ govukTextarea({
+            id: "san-"+v+"-create-teachingadjust-details",
+            name: "san-"+v+"-create-teachingadjust-details",
+            label: {
+              text: "Add details"
+            },
+            value: data["san-"+v+"-create-teachingadjust-details"]
+          }) }}
+        {% endset -%}
+
+        {{ govukRadios({
+          name: "san-"+v+"-create-teachingadjust",
+          fieldset: {
+            legend: {
+              text: "Does Chris Atkinson need any  adjustments to teaching?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            text: "Things like modifying the curriculum or adapting teaching."
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes",
+              checked: checked("san-"+v+"-create-teachingadjust","Yes"),
+              conditional: {
+                html: detailsHtml
+              }
+            },
+            {
+              value: "No",
+              text: "No",
+              checked: checked("san-"+v+"-create-teachingadjust","No")
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

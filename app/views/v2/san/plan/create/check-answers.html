@@ -1,0 +1,35 @@
+{% extends "/layouts/v2.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post">
+        <span class="govuk-caption-l">Create an education support plan</span>
+        <h1 class="govuk-heading-l">Review Chris Atkinson’s education support plan</h1>
+
+
+        <!--
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+-->
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

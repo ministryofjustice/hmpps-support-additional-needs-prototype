@@ -73,8 +73,11 @@ L0,21.2C1.3,23,2.6,25.5,3.7,30C7.4,29.5,11.6,29.2,16,29.2"></path>
 
 {% block beforeContent %}{% endblock %}
 
-<div class="govuk-body">
+<div class="govuk-body" id="main-content">
     {% block content %}{% endblock %}
+    <!--
+      {{ data | dump }}
+    -->
 </div>
 
 {% endblock %}
@@ -89,7 +92,7 @@ L0,21.2C1.3,23,2.6,25.5,3.7,30C7.4,29.5,11.6,29.2,16,29.2"></path>
         text: "GOV.UK Prototype Kit " + releaseVersion
       },
       {
-        href: "/prototype-admin/clear-data",
+        href: "/manage-prototype/clear-data",
         text: "Clear data"
       }
     ]

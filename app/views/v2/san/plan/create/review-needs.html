@@ -1,0 +1,167 @@
+{% extends "/layouts/v2.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post">
+
+        <span class="govuk-caption-l">Create an education support plan</span>
+        <h1 class="govuk-heading-l">Review Chris Atkinson's additional support needs</h1>
+
+        <!-- TABLE - Additional needs -->
+        <section class="app-summary-card govuk-!-margin-bottom-6">
+          <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">
+              Additional needs
+            </h2>
+            <div>
+              <a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Add need</a>
+            </div>
+          </header>
+
+          <div class="app-summary-card__body">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Cognition and learning</dt>
+                <dd class="govuk-summary-list__value">Reading, Writing</dd>
+                <dd class="govuk-summary-list__actions"></dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Communication and interaction</dt>
+                <dd class="govuk-summary-list__value">Social interaction</dd>
+                <dd class="govuk-summary-list__actions"></dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Social and emotional</dt>
+                <dd class="govuk-summary-list__value">Struggles with anxiety</dd>
+                <dd class="govuk-summary-list__actions"></dd>
+              </div>
+            </dl>
+
+          </div>
+        </section>
+        <!-- END TABLE - Additional needs -->
+
+        <!-- TABLE - Conditions -->
+        <section class="app-summary-card govuk-!-margin-bottom-6">
+          <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">
+              Conditions
+            </h2>
+            <div>
+              <a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Add condition</a>
+            </div>
+          </header>
+          <div class="app-summary-card__body">
+            <p class="govuk-body">No conditions declared</p>
+          </div>
+        </section>
+        <!-- END TABLE - Conditions -->
+
+        <!-- TABLE - Strengths -->
+        <section class="app-summary-card govuk-!-margin-bottom-6">
+          <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">
+              Strengths
+            </h2>
+            <div>
+              <a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Add strength</a>
+            </div>
+          </header>
+          <div class="app-summary-card__body">
+            <p class="govuk-body">No strengths declared</p>
+          </div>
+        </section>
+        <!-- END TABLE - Strengths -->
+
+        <!-- TABLE - Curious screener -->
+        <section class="app-summary-card govuk-!-margin-bottom-6">
+          <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">
+              Screener and assessment results from Curious
+            </h2>
+            <!--div>
+              <a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Add need</a>
+            </div-->
+          </header>
+
+          <div class="app-summary-card__body">
+
+            <p class="govuk-body govuk-hint">This is information from the education team entered in Curious and is not a medical diagnosis.</p>
+
+            <h2 class="govuk-heading-m">Hull (HMP)</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-5">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Rapid screener from induction</dt>
+                <dd class="govuk-summary-list__value">Not recorded in Curious</dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">In-depth assessment by education </dt>
+                <dd class="govuk-summary-list__value">Not recorded in Curious</dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Primary area of need identified</dt>
+                <dd class="govuk-summary-list__value">Speech, Language and communication  needs</dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Other areas of need identified</dt>
+                <dd class="govuk-summary-list__value">
+                  Dyslexia<br>
+                  Autism spectrum disorder
+                </dd>
+              </div>
+            </dl>
+
+            <h2 class="govuk-heading-m">Leeds (HMP)</h2>
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Rapid screener from induction</dt>
+                <dd class="govuk-summary-list__value">3 December 2023</dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">In-depth assessment by education </dt>
+                <dd class="govuk-summary-list__value">3 December 2023</dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Primary area of need identified</dt>
+                <dd class="govuk-summary-list__value">Hearing impairment</dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Other areas of need identified</dt>
+                <dd class="govuk-summary-list__value">
+                  Disability affecting mobility<br>
+                  Social and emotional difficulties<br>
+                  Mental health difficulty
+                </dd>
+              </div>
+            </dl>
+
+          </div>
+        </section>
+        <!-- END TABLE - Curious screener -->
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

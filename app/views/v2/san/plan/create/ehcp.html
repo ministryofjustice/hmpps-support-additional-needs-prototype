@@ -1,0 +1,55 @@
+{% extends "/layouts/v2.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post">
+        <span class="govuk-caption-l">Create an education support plan</span>
+
+        {{ govukRadios({
+          name: "san-"+v+"-create-ehcp",
+          fieldset: {
+            legend: {
+              text: "Does Chris Atkinson have a current education, health and care plan (EHCP)?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes",
+              checked: checked("san-"+v+"-create-ehcp","Yes")
+            },
+            {
+              value: "No",
+              text: "No",
+              checked: checked("san-"+v+"-create-ehcp","No")
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
