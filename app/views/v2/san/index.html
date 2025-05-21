@@ -1,0 +1,480 @@
+{% extends "/layouts/v2.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="https://digital-dev.prison.service.justice.gov.uk">Digital Prison Services</a>
+        </li>
+      </ol>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  
+  <!-- TITLE PAGE + print-->
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-l">Learning and work progress</span>
+      <h1 class="govuk-heading-l">Manage learning and work progress</h1>
+    </div>
+
+  </div>
+
+    <div class="govuk-grid-column-full-width">
+      <!-- Search bar  -->
+      <div class="govuk-form-group filter-box govuk-!-margin-top-4">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
+          style="padding-left:16px">
+          Filter by
+        </legend>
+
+        <div class="govuk-grid-column-one-third">
+          <div class="moj-search">
+            <form method="post">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-!-margin-bottom-2" for="search">
+                  Prisoner's name
+                </label>
+                <input class="govuk-input moj-search__input " id="search" name="search" type="search"
+                  aria-describedby="search-hint">
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds">
+          <div class="moj-search">
+            <div class="govuk-form-group">
+
+              <legend class="govuk-label govuk-!-margin-bottom-2">
+                Status
+              </legend>
+
+              <select class="govuk-select" id="sort" name="sort">
+                <option value="all">All statuses</option>
+                <option value="updated" selected>All statuses</option>
+                <option value="needs-plan">Needs plan</option>
+                <option value="needs-review">Needs review</option>
+              </select>
+
+              <a style="margin-left:14px" href="home-filtered.html" role="button" draggable="false"
+                class="govuk-button moj-button-menu__item  " data-module="govuk-button">
+                Apply filters
+              </a>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- add table of people  -->
+      <table class="govuk-table govuk-!-margin-top-6" data-module="moj-sortable-table" id="prisonerTable">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header" aria-sort="ascending">Prisoner name</th>
+            <th scope="col" class="govuk-table__header" aria-sort="none">Prison number</th>
+            <th scope="col" class="govuk-table__header" aria-sort="descending">Location</th>
+            <th scope="col" class="govuk-table__header" aria-sort="descending"></th>
+        </thead>
+        <tbody class="govuk-table__body">
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell" data-sort-value="Adams"><a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Adams, Damien</a></td>
+            <td class="govuk-table__cell">G2911GD</td>
+            <td class="govuk-table__cell" data-sort-value="B-2-08">B-2-08</td>
+            <td class="govuk-table__cell" style="width: 300px;"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Atkinson" href="/v2/san/profile/">Atkinson, Chris</a></td>
+            <td class="govuk-table__cell">G2911GD</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-0">C-2-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Marvin" href="javascript:preventDefault();">Lee, Marvin</a></td>
+            <td class="govuk-table__cell"> G8232UP</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-16">B-1-16</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Osborne, Jamie</a></td>
+            <td class="govuk-table__cell"> G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-2-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Quinton" href="javascript:preventDefault();">Quinton, Rowley</a></td>
+            <td class="govuk-table__cell">G1234UU</td>
+            <td class="govuk-table__cell" data-sort-value="2C-2-0">C-2-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Sidney" href="javascript:preventDefault();">Sidney, Harley</a></td>
+            <td class="govuk-table__cell">G5423IL</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-1">B-1-1</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Valentine" href="javascript:preventDefault();">Valentine, Nazar</a></td>
+            <td class="govuk-table__cell">G8112OP</td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-1-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Lawson, Jamie</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Quinton" href="javascript:preventDefault();">Smith, Rich</a></td>
+            <td class="govuk-table__cell">G1234UU</td>
+            <td class="govuk-table__cell" data-sort-value="2C-2-0">C-2-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Sidney" href="javascript:preventDefault();">Williams, Stuart</a></td>
+            <td class="govuk-table__cell">G5423XX</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-1">B-3-1</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Valentine" href="javascript:preventDefault();">Erikson, Karl</a></td>
+            <td class="govuk-table__cell">G8112OP</td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-5-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Hamzah, Reid</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Sheldon, Hugh</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="B-2-01">B-12-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Suarez, John</a></td>
+            <td class="govuk-table__cell"> G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Sidney" href="javascript:preventDefault();">Johns, Ashley</a></td>
+            <td class="govuk-table__cell">G5423IL</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-1">B-3-1</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Valentine" href="javascript:preventDefault();">De Cervantes, Miguel</a></td>
+            <td class="govuk-table__cell">G8112OP</td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-5-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Stones, Patrick</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-12-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Lucero, Rod</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">B-5-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">McLauren, John</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Oliver, Jamie</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Quinton" href="javascript:preventDefault();">Samson, Dave</a></td>
+            <td class="govuk-table__cell">G1234UU</td>
+            <td class="govuk-table__cell" data-sort-value="2C-2-0">C-2-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Sidney" href="javascript:preventDefault();">Lock, Harry</a></td>
+            <td class="govuk-table__cell">G5423IL</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-1">B-3-1</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Valentine" href="javascript:preventDefault();">Alis, Carlos</a></td>
+            <td class="govuk-table__cell">G8112OP</span></td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-5-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Mendes, Raphaello</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">B-5-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Tiliki, Alex</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Mercado, John</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-12-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Sidney" href="javascript:preventDefault();">Williams, Ashley</a></td>
+            <td class="govuk-table__cell">G5423IL</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-1">B-3-1</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Valentine" href="javascript:preventDefault();">Pinheiro, Viktor</a></td>
+            <td class="govuk-table__cell">G8112OP</td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-5-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Blunt, James</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Vamp, Hugo</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Johnson, John</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-12-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Valentine" href="javascript:preventDefault();">Erikson, Karl</a></td>
+            <td class="govuk-table__cell">G8112OP</td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-5-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Brown, James</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Cooper, Alex</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-12-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Nelson, Roman</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Johns" href="javascript:preventDefault();">Johns, Edward</a></td>
+            <td class="govuk-table__cell">G5423IL</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-1">B-3-1</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Alicante" href="javascript:preventDefault();">Alicante, Carlos</a></td>
+            <td class="govuk-table__cell">G8112OP</td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-5-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Stones" href="javascript:preventDefault();">Stones, James</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-12-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Corene" href="javascript:preventDefault();">Corene, Alex</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">B-5-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Torres" href="javascript:preventDefault();">Torres, Branson</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Rogers" href="javascript:preventDefault();">Rogers, Lawrence</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Silvester" href="javascript:preventDefault();">Silvester, Rich</a></td>
+            <td class="govuk-table__cell">G1234UU</td>
+            <td class="govuk-table__cell" data-sort-value="2C-2-0">C-2-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Harris" href="javascript:preventDefault();">Harris, Ashley</a></td>
+            <td class="govuk-table__cell">G5423IL</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-1">B-3-1</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Alis" href="javascript:preventDefault();">Alis, Carlos</a></td>
+            <td class="govuk-table__cell">G8112OP</td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-5-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Munoz" href="javascript:preventDefault();">Munoz, Jamie</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">B-5-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Reese" href="javascript:preventDefault();">Reese, Ernest</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Brandon" href="javascript:preventDefault();">Brandon, Marlon</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-12-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Pavlov" href="javascript:preventDefault();">Pavlov, Andre</a></td>
+            <td class="govuk-table__cell">G5423IL</td>
+            <td class="govuk-table__cell" data-sort-value="B-1-1">B-3-1</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Ribeiro" href="javascript:preventDefault();">Ribeiro, Carlos</a></td>
+            <td class="govuk-table__cell">G8112OP</td>
+            <td class="govuk-table__cell" data-sort-value="C-1-22">C-5-22</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">Solis, James</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="B-2-01">B-4-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Osborne" href="javascript:preventDefault();">McCoy, John</a></td>
+            <td class="govuk-table__cell">G5511UP</td>
+            <td class="govuk-table__cell" data-sort-value="C-2-01">C-12-01</td>
+            <td class="govuk-table__cell"></td>
+          </tr>
+
+      </table>
+
+      <!-- pagination  -->
+      <nav class="moj-pagination" aria-label="Pagination navigation">
+
+        <ul class="moj-pagination__list" style="width:400px">
+          <li class="moj-pagination__item  moj-pagination__item--prev">
+            <a class="moj-pagination__link" href=""><span class="govuk-visually-hidden"> page</span></a>
+          </li>
+
+          <li class="moj-pagination__item moj-pagination__item--active" aria-label="Page 2 of 30" aria-current="page">
+            1</li>
+
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#"" aria-label=" Page 2 of 30">2</a>
+          </li>
+
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#" aria-label="Page 3 of 30">3</a>
+          </li>
+
+          <li class="moj-pagination__item moj-pagination__item--dots">…</li>
+
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#" aria-label="Page 5 of 30">5</a>
+          </li>
+
+          <li class="moj-pagination__item  moj-pagination__item--next">
+            <a class="moj-pagination__link" href="">Next<span class="govuk-visually-hidden"> page</span></a>
+          </li>
+        </ul>
+        <p class="moj-pagination__results" style="float:right">Showing <b>1</b> to <b>50</b> of <b>226</b> results</p>
+      </nav>
+
+    </div>
+</div>
+
+{% endblock %}

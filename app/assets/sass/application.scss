@@ -1,6 +1,901 @@
-//
-// For guidance on how to add CSS and SCSS see:
-// https://prototype-kit.service.gov.uk/docs/adding-css-javascript-and-images
-// 
+// global styles for <a> and <p> tags
+$govuk-global-styles: true;
+$govuk-new-link-styles: true;
+$moj-page-width: 1170px;
+$govuk-page-width: $moj-page-width;
 
-// Add extra styles here
+// We can't mount GOV.UK Frontend's assets at root as it's done automatically by the extensions framework.
+$govuk-assets-path: '/govuk/assets/';
+
+// Import GOV.UK Frontend and any extension styles if extensions have been configured
+// @import "lib/extensions/extensions";
+
+@import "node_modules/@ministryofjustice/frontend/moj/all";
+
+// Patterns that aren't in Frontend
+/* @import "patterns/step-by-step-header";
+@import "patterns/step-by-step-nav";
+@import "patterns/step-by-step-related";
+@import "patterns/task-list";
+@import "patterns/related-items";
+@import "components/cards"; */
+
+////////// DPS styles //////////
+
+// DPS header
+@import "components/dps-header";
+
+// Hero banner (masthead)
+@import "components/masthead";
+
+// Date / time picker styles only
+@import "components/date_time";
+
+// Navigation cards and DPS home stuff
+@import "components/cards";
+
+// Location bar
+@import "components/location-bar";
+
+// prisoner results
+@import "components/prisoner-results";
+
+// BaSM styles
+@import "components/basm";
+
+// DPS profile styles
+@import "components/prisonerProfile/prisoner-alerts";
+@import "components/prisonerProfile/prisoner-full-image";
+@import "components/prisonerProfile/prisoner-personal";
+@import "components/prisonerProfile/prisoner-profile";
+@import "components/prisonerProfile/prisoner-profile-header";
+@import "components/prisonerProfile/prisoner-profile-footer";
+@import "components/prisonerProfile/prisoner-schedule";
+@import "components/prisonerProfile/prisoner-visits";
+@import "components/prisonerProfile/prisoner-button";
+@import "components/summary-list";
+@import "components/summary-card";
+@import "components/app-contact-panel";
+@import "components/beta-feedback";
+@import "components/feedback-banner-beta";
+// @import "components/alert-list";
+@import "components/alert-status";
+
+@import "components/modal";
+
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+@import "components/services-grid";
+
+// Added styles for extended width container
+
+.govuk-width-container {
+  max-width: 1170px;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+@supports (margin: max(calc(0px))) {
+  .govuk-width-container {
+    margin-right: max(15px, calc(15px + env(safe-area-inset-right)));
+    margin-left: max(15px, calc(15px + env(safe-area-inset-left)));
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-width-container {
+    margin-right: 30px;
+    margin-left: 30px;
+  }
+
+  @supports (margin: max(calc(0px))) {
+    .govuk-width-container {
+      margin-right: max(30px, calc(15px + env(safe-area-inset-right)));
+      margin-left: max(30px, calc(15px + env(safe-area-inset-left)));
+    }
+  }
+}
+
+@media (min-width: 1230px) {
+  .govuk-width-container {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  @supports (margin: max(calc(0px))) {
+    .govuk-width-container {
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}
+
+
+.govuk-summary-list__status-tags {
+  text-align: left;
+  //vertical-align: top;
+  width: 120px;
+}
+
+.govuk-breadcrumbs {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.1428571429;
+  color: #0b0c0c;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.filter-box {
+  background-color: govuk-colour("light-grey");
+  padding: 30px 10px 30px 10px;
+}
+
+/* Auto layout */
+
+
+.govuk-main-wrapper {
+  padding-top: 0px;
+  padding-bottom: 40px;
+}
+
+.homepage-search {
+  padding: 30px 0;
+  background-color: #e0eef8;
+}
+
+.goal-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+
+  width: 648px;
+  height: 396.11px;
+
+  background: #FFFFFF;
+  /* Border/Default */
+
+  border: 1px solid #B1B4B6;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+
+.goal-card-header {
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+
+  width: 648px;
+  height: 145.11px;
+
+  /* Other/Light Grey */
+
+  background: #F3F2F1;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+
+
+  /* Header font style */
+
+
+  width: 281px;
+  height: 33px;
+  //align:left;
+
+  font-family: 'GDS Transport Website';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
+
+  color: #0B0C0C;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.govuk-accordion {
+  border: 0px solid #b1b4b6;
+  margin-bottom: 0px;
+}
+
+.edit-steps-border {
+  border-bottom: 1px solid #b1b4b6;
+  padding: 0px 0px 16px 0px;
+}
+
+.edit-steps-no-border {
+  border-bottom: 0px solid #b1b4b6;
+  padding: 0px 0px 16px 0px;
+}
+
+.steps-order-container {
+  float: right;
+  font-size: medium;
+  ;
+
+}
+
+.js-enabled .govuk-accordion__section-content {
+  padding-bottom: 0px;
+}
+
+/* ==========================================================================
+   #ACCORDION STANDARD GOVUK
+   ========================================================================== */
+
+.js-enabled .govuk-accordion__section-button {
+  width: 100%;
+  padding: 0px 0 0 0;
+  border: 0;
+  border-top: 0px solid #b1b4b6;
+  border-bottom: 0px solid transparent;
+  color: #0b0c0c;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 22px;
+  //background-color:green;
+  // -webkit-appearance: none;
+}
+
+.govuk-accordion__controls {
+  height: 0;
+  visibility: hidden;
+}
+
+
+
+.govuk-summary-card__title-wrapper-white {
+  padding: 15px 0 0 16px;
+  border-bottom: 1px solid transparent;
+  border-top: 4px solid #000;
+  background-color: #fff;
+}
+
+.govuk-summary-activity-card__title-wrapper {
+  padding: 15px 0 0 16px;
+  border-bottom: 1px solid transparent;
+  background-color: #fff;
+}
+
+.govuk-summary-card__content {
+  padding: 0px 20px;
+}
+
+
+.card-labels-edit {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 12px;
+
+  width: 616px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+
+.card-labels {
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.card-edit {
+
+  float: right;
+  width: 100px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+.float-right {
+  float: right;
+  width: 100px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+
+/* Actions menu */
+
+.hmpps-actions-block {
+  border: 1px solid #505a5f
+}
+
+.hmpps-actions-block h2 {
+  padding: 10px;
+  border-bottom: 2px solid #0b0c0c;
+  margin: 0
+}
+
+.hmpps-actions-block__list {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  margin: 0
+}
+
+.hmpps-actions-block__list li {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  margin: 0 15px
+}
+
+.hmpps-actions-block__list li img {
+  align-self: flex-start;
+  margin-right: 15px
+}
+
+@media(max-width: 1000px) {
+  .hmpps-actions-block__list li img {
+    display: none
+  }
+}
+/*
+.hmpps-actions-block__list li a {
+  font-weight: 700
+}
+*/
+@media(max-width: 1000px) {
+  .hmpps-actions-block__list li a {
+    font-size: 16px
+  }
+}
+
+.hmpps-actions-block__list li:not(:last-of-type) {
+  border-bottom: 1px solid #b1b4b6
+}
+
+/* Change the link color to #111 (black) on hover */
+
+
+.govuk-tag--white {
+  color: #383F43;
+  background: #fff;
+}
+
+.govuk-tag--red-big {
+  color: #942514;
+  background: #f6d7d2;
+  font-size: 24px;
+}
+
+.govuk-tag--xl {
+  font-size: 28px;
+}
+
+.govuk-tag--l {
+  font-size: 24px;
+}
+
+.govuk-tag--m {
+  font-size: 19px;
+}
+
+
+.activity-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+
+  width: 648px;
+  height: 419.11px;
+
+  background: #FFFFFF;
+  /* Border/Default */
+
+  border: 1px solid #B1B4B6;
+  box-shadow: inset 8px 0px 0px #D9D9D9;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.font-19 {
+  font-size: 19px;
+}
+
+.font-16 {
+  font-size: 16px;
+}
+
+.govuk-summary-card-activity {
+  margin-bottom: 20px;
+  border: 1px solid #b1b4b6;
+  border-left: 4px solid #D9D9D9;
+}
+
+.inset-text-dash {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 1px;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #0b0c0c;
+  padding: 15px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  //clear: both;
+  border-left: 10px solid #b1b4b6;
+  width: 500px;
+}
+
+.govuk-title-dash {
+
+  margin-bottom: 0px;
+  margin-bottom: 0px;
+  border: 0px solid #b1b4b6;
+}
+
+
+.goals-title {
+  display: inline;
+}
+
+.goals-button {
+  float: right;
+}
+
+#div1 {
+  float: left;
+}
+
+
+.timeline-note {
+  font-size: 16px;
+  padding-left: 8px
+}
+
+/* .govuk-checkboxes__item {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  display: block;
+  flex-wrap: wrap;
+  position: relative;
+  margin-bottom: 16px;
+}
+
+
+.govuk-checkboxes__label {
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 0px 15px 0px;
+  cursor: pointer;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+ */
+
+
+.summary-history {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #0b0c0c;
+  padding: 8px 0 0 16px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  clear: both;
+  border-left: 6px solid #b1b4b6;
+}
+
+/* ==========================================================================
+   #SECONDARY NAV
+   ========================================================================== */
+
+.moj-sub-navigation {
+  margin-bottom: govuk-spacing(7);
+}
+
+.moj-sub-navigation__list {
+  font-size: 0; // Removes white space when using inline-block on child element.
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include govuk-media-query($from: tablet) {
+    box-shadow: inset 0 -1px 0 $govuk-border-colour;
+    width: 100%;
+  }
+}
+
+.moj-sub-navigation__item {
+  @include govuk-font(19);
+  box-shadow: inset 0 -1px 0 $govuk-border-colour;
+  display: block;
+  margin-top: -1px;
+  margin-right: 10px;
+
+  &:last-child {
+    box-shadow: none;
+  }
+
+  @include govuk-media-query($from: tablet) {
+    box-shadow: none;
+    display: inline-block;
+    margin-right: govuk-spacing(4);
+    margin-top: 0;
+  }
+
+}
+
+.moj-sub-navigation__link {
+  @include govuk-link-common;
+  @include govuk-link-style-default;
+  display: block;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: govuk-spacing(3);
+  text-decoration: none;
+  position: relative;
+  font-size: 19px;
+
+  @include govuk-media-query($from: tablet) {
+    padding-left: 0;
+  }
+
+  &:link,
+  &:visited {
+    color: $govuk-link-colour;
+  }
+
+  &:hover {
+    color: govuk-tint($govuk-link-colour, 25);
+  }
+
+  &:focus {
+    color: govuk-colour("black"); // Focus colour on yellow should really be black.
+    position: relative; // Ensure focus sits above everything else.
+    box-shadow: none;
+  }
+
+  &:focus:before {
+    background-color: govuk-colour("black");
+    content: "";
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+  }
+
+}
+
+.moj-sub-navigation__link[aria-current="page"] {
+  color: $govuk-link-active-colour;
+  position: relative;
+  text-decoration: none;
+
+  &:before {
+    background-color: $govuk-link-colour;
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 5px;
+
+    @include govuk-media-query($from: tablet) {
+      height: 5px;
+      width: 100%;
+    }
+
+  }
+
+  &:focus:before {
+    background-color: govuk-colour("black");
+  }
+
+}
+
+/* ==========================================================================
+   #TIMELINE
+   ========================================================================== */
+
+.moj-timeline {
+  margin-bottom: govuk-spacing(4);
+  overflow: hidden;
+  position: relative;
+
+  &:before {
+    background-color: $govuk-brand-colour;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: govuk-spacing(2);
+    width: 5px;
+  }
+
+}
+
+.moj-timeline--full {
+  margin-bottom: 0;
+
+  &:before {
+    height: calc(100% - 75px);
+  }
+}
+
+.moj-timeline__item {
+  padding-bottom: govuk-spacing(6);
+  padding-left: govuk-spacing(4);
+  position: relative;
+
+  &:before {
+    background-color: $govuk-brand-colour;
+    content: "";
+    height: 5px;
+    left: 0;
+    position: absolute;
+    top: govuk-spacing(2);
+    width: 15px;
+  }
+}
+
+.moj-timeline__title {
+  @include govuk-font($size: 19, $weight: bold);
+  display: inline;
+}
+
+.moj-timeline__byline {
+  @include govuk-font($size: 19);
+  color: $govuk-secondary-text-colour;
+  display: inline;
+  margin: 0;
+}
+
+.moj-timeline__date {
+  @include govuk-font($size: 16);
+  margin-top: govuk-spacing(1);
+  margin-bottom: 0;
+}
+
+.moj-timeline__description {
+  @include govuk-font($size: 19);
+  margin-top: govuk-spacing(4);
+}
+
+/* ==========================================================================
+   #TIMELINE DOCUMENT STYLES – FOR BACKWARDS COMPATIBILITY
+   ========================================================================== */
+
+.moj-timeline__documents {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.moj-timeline__document-item {
+  margin-bottom: govuk-spacing(1);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+}
+
+.moj-timeline__document-icon {
+  float: left;
+  margin-top: 4px;
+  margin-right: 4px;
+  fill: currentColor;
+
+  @media screen and (forced-colors: active) {
+    fill: linkText;
+  }
+}
+
+.moj-timeline__document-link {
+  background-image: url(#{$moj-images-path}icon-document.svg);
+  background-repeat: no-repeat;
+  background-size: 20px 16px;
+  background-position: 0 50%;
+  padding-left: govuk-spacing(5);
+
+  &:focus {
+    color: govuk-colour("black"); // Focus colour on yellow should really be black.
+  }
+}
+
+/* ==========================================================================
+   #ADD ANOTHER
+   ========================================================================== */
+
+.moj-add-another__item {
+  margin: 0;
+  //margin-top: 30px;
+  padding: 0;
+  position: relative;
+}
+
+.moj-add-another__item:first-of-type {
+  margin-top: 0;
+}
+
+.moj-add-another__title {
+  float: left;
+  padding: 4px 100px 4px 0;
+  width: 100%;
+}
+
+.moj-add-another__title+.govuk-form-group {
+  clear: left;
+}
+
+.moj-add-another__remove-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+.moj-add-another__add-button {
+  display: block;
+}
+
+.moj-add-another__heading:focus {
+  background-color: #ffdd00;
+  color: #0b0c0c;
+  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
+  outline: none;
+}
+
+
+/* ==========================================================================
+   #MINI PROFILE
+   ========================================================================== */
+
+
+.dps-mini-profile-header {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  background: #f1f2f3;
+  height: 83px;
+}
+
+.dps-mini-profile-header .app-prisoner-photo--small {
+  margin-right: 30px
+}
+
+.dps-mini-profile-header dl {
+  margin-right: 60px;
+}
+
+.dps-mini-profile-header dl:last-child {
+  margin-right: 0
+}
+
+.dps-mini-profile-header .dps-mini-profile-header--align-right {
+  align-self: center;
+  margin-left: auto
+}
+
+.dps-mini-profile-header .dps-mini-profile-header--align-right .govuk-button,
+.dps-mini-profile-header .dps-mini-profile-header--align-right .hmpps-action-button {
+  margin-bottom: 0
+}
+
+@media(max-width: 40.0525em) {
+  .dps-mini-profile-header {
+    display: block
+  }
+
+  .dps-mini-profile-header .app-prisoner-photo--small {
+    margin-bottom: 20px
+  }
+
+  .dps-mini-profile-header dl {
+    margin-right: 0
+  }
+
+  .dps-mini-profile-header dl:last-child {
+    margin-bottom: 0
+  }
+
+  .dps-mini-profile-header dl:last-child dd {
+    margin-bottom: 0
+  }
+}
+
+.app-prisoner-photo,
+.app-prisoner-photo--large,
+.app-prisoner-photo--small {
+  width: 90px
+}
+
+.app-prisoner-photo--small {
+  width: 80px
+}
+
+.app-prisoner-photo--large {
+  width: 120px
+}
+
+dl dt {
+  font-weight: bold
+}
+
+dl dd {
+  margin-left: 0
+}
+
+.govuk-\!-padding-3,
+.dps-mini-profile-header {
+  padding: 15px !important;
+}
+
+dl dd,
+dl,
+p,
+.govuk-body,
+.govuk-body-m {
+  margin-top: 0;
+  /* margin-bottom:15px; */
+}
+
+.today-section-break--blue {
+  height: 3px;
+  background-color: #1d70b8;
+  border: none;
+  margin-top: 35px;
+  margin-bottom: 30px;
+}
+
+.noflex {
+  display:block !important;
+}

@@ -1,20 +1,84 @@
-{% extends "layouts/main.html" %}
-
-{% set pageName="Home" %}
+{% extends "layouts/home.html" %}
 
 {% block content %}
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
-
-    <h1 class="govuk-heading-xl">
-      {{ serviceName }}
-    </h1>
-
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
-  </div>
-</div>
+    
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-width">
+    
+        <div class="govuk-!-padding-bottom-6"></div>
+        <div class="govuk-grid-column-two-thirds">
+          
+          <h2 class="govuk-heading-m">Version 2
+            {{ govukTag({
+              classes: "govuk-tag--red govuk-!-static-margin-left-3",
+              text: "WIP"
+            }) }}
+          </h2>
+          <h3 class="govuk-heading-s">Conversion of Figma designs into usable prototype</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li></li>
+          </ul>
+          {{ govukButton({
+            href: "v2/",
+            text: "View prototype"
+          }) }}
+    
+          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+    
+          <h2 class="govuk-heading-m">Version 1
+            {{ govukTag({
+              classes: "govuk-tag--green govuk-!-static-margin-left-3",
+              text: "Ready for UR"
+            }) }}</h2>
+          <h3 class="govuk-heading-s">Entry to 'Support for additional needs service' including journey to create an education learning support plan</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Addition of 'Support for additional needs' (SAN) tile on DPS home page to access new sevrice</li>
+            <li>Various methods to navigate to an individual's SAN profile</li>
+            <li>Highlighting the need for an education support plan to be created on lists and profile screens</li>
+            <li>Users can review existing needs, conditions, strengths, and support recommendations on individual's profile</li>
+            <li>Users can create an education support plan, featuring staff involved, education specific support, setting of SMART targets and a review date.</li>
+          </ul>
+          <p class="govuk-body">
+            <a
+            href="https://www.figma.com/proto/RoxQOu1FjRQGFnbmMThdRh/Additional-Support-Needs?page-id=1%3A40455&node-id=7-305&p=f&viewport=218%2C122%2C0.03&t=WsZlFAIHTMe4OfG8-8&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=7%3A305&hide-ui=1" target=" _blank" class="govuk-link">View Figma prototype</a>
+          </p>
+          <p class="govuk-body">
+            <a href="https://www.figma.com/design/RoxQOu1FjRQGFnbmMThdRh/Additional-Support-Needs?node-id=1-40455" target=" _blank" class="govuk-link">View Figma design file</a>
+          </p>
+    
+        </div>
+    
+    
+        <div class="govuk-grid-column-one-third">
+    
+          <!-- The Related items component is not part of GOV.UK Frontend but will be styled if used in the Prototype Kit -->
+          <aside class="app-related-items" role="complementary">
+            <h2 class="govuk-heading-m" id="subsection-title">
+              Related content
+            </h2>
+            <nav role="navigation" aria-labelledby="subsection-title">
+              <!--p class="govuk-list govuk-!-font-size-16">
+                <a class="govuk-link govuk-link--no-visited-state" target="_blank"
+                  href="https://github.com/ministryofjustice/hmpps-education-and-work-plan-prototype">
+                  Prototype Github repository
+                </a>
+              </p-->
+              <p class="govuk-list govuk-!-font-size-16">
+                <a class="govuk-link govuk-link--no-visited-state" target=" _blank"
+                  href="https://miro.com/app/board/uXjVLYIYqAI=/">
+                  Learner support plan overview - Miro board
+                </a>
+              </p>
+              <p class="govuk-list govuk-!-font-size-16">
+                <a class="govuk-link govuk-link--no-visited-state" target="_blank"
+                  href="https://dsdmoj.atlassian.net/jira/software/c/projects/RR/boards/1693">
+                  Learning & Work Progress Jira Board
+                </a>
+              </p>
+              </ul>
+            </nav>
+          </aside>
+    
+        </div>
 
 {% endblock %}

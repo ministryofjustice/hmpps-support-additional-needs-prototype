@@ -1,0 +1,38 @@
+.hmpps-services {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 40px;
+  row-gap: 20px;
+}
+
+.hmpps-services .hmpps-service-item {
+  min-height: 120px;
+  position: relative;
+}
+
+.hmpps-services .hmpps-service-item__header {
+  width: calc(100% - 15px);
+}
+
+.hmpps-services .hmpps-service-item a:before {
+  content: "";
+  display: block;
+  height: 8px;
+  position: absolute;
+  right: 3px;
+  top: 29px;
+  transform: translateY(0px) rotate(45deg) scale(1);
+  width: 8px;
+  border-right: 2px solid #0b0c0c;
+  border-top: 2px solid #0b0c0c;
+}
+
+.hmpps-services .hmpps-service-item a:after {
+  bottom: 0;
+  content: "";
+  display: block;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
