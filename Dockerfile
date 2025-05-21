@@ -21,6 +21,4 @@ RUN chown -R appuser:appgroup /app
 
 USER 2000
 
-RUN chmod +x start.sh
-
 CMD [ "npm", "start" ]
