@@ -57,7 +57,7 @@ L0,21.2C1.3,23,2.6,25.5,3.7,30C7.4,29.5,11.6,29.2,16,29.2"></path>
                   
 
                   <li class="fallback-dps-header__navigation__item">
-                      <a data-qa="signOut" class="fallback-dps-header__link fallback-dps-header__link--no-underline fallback-dps-header__sign-out" href="/sign-out">Sign out</a>
+                      <a data-qa="signOut" class="fallback-dps-header__link fallback-dps-header__link--no-underline fallback-dps-header__sign-out" href="javascript:preventDefault();">Sign out</a>
                   </li>
               </ul>
           </nav>
@@ -68,7 +68,6 @@ L0,21.2C1.3,23,2.6,25.5,3.7,30C7.4,29.5,11.6,29.2,16,29.2"></path>
 {% endblock %}
 {% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
 
-
 {% block main %}
 
 {% block beforeContent %}{% endblock %}
@@ -76,6 +75,8 @@ L0,21.2C1.3,23,2.6,25.5,3.7,30C7.4,29.5,11.6,29.2,16,29.2"></path>
 <div class="govuk-body" id="main-content">
     {% block content %}{% endblock %}
     <!--
+      [ {{ data["prevurl"] }} ]
+      <br><br>
       {{ data | dump }}
     -->
 </div>
