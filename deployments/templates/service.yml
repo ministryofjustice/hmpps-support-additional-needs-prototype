@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hmpps-support-additional-needs-prototype
+spec:
+  selector:
+    app: hmpps-support-additional-needs-prototype
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http

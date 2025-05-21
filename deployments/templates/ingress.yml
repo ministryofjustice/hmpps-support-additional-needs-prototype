@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hmpps-support-additional-needs-prototype-ingress
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: hmpps-support-additional-needs-prototype-ingress-${NAMESPACE}-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+spec:
+  ingressClassName: default
+  tls:
+    - hosts:
+        - ${NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
+  rules:
+    - host: ${NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: hmpps-support-additional-needs-prototype
+                port:
+                  number: 80

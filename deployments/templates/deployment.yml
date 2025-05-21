@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hmpps-support-additional-needs-prototype
+  labels:
+    app: hmpps-support-additional-needs-prototype
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hmpps-support-additional-needs-prototype
+  template:
+    metadata:
+      labels:
+        app: hmpps-support-additional-needs-prototype
+    spec:
+      containers:
+        - name: hmpps-support-additional-needs-prototype
+          image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
