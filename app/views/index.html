@@ -10,18 +10,30 @@
           
           <h2 class="govuk-heading-m">Version 2
             {{ govukTag({
-              classes: "govuk-tag--red govuk-!-static-margin-left-3",
-              text: "WIP"
+              classes: "govuk-tag--yellow govuk-!-static-margin-left-3",
+              text: "In review"
             }) }}
           </h2>
-          <h3 class="govuk-heading-s">Conversion of Figma designs into usable prototype</h3>
+          <p class="govuk-hint">Conversion of Figma designs into usable prototype</>
+          <h3 class="govuk-heading-s">Iterations from version 1</h3>
           <ul class="govuk-list govuk-list--bullet">
-            <li></li>
+            <li>Removal of superfluous data in prisoner list</li>
+            <li>Merged "Are you the person who met" question with inputs for full name and job role of person who conducted the meeting</li>
+            <li>Content updates throughout, mianly on hints for questions</li>
+            <li>adition of Curious screener data for review</li>
+          </ul>
+          <h3 class="govuk-heading-s">Limitations</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Search bars are not functional</li>
+            <li>Only functioning record is for "Chris Atkinson"</li>
+            <li>Prisoner profile screen only allows user to navigate to "Create education support plan" journey</li>
+            <li>Will need to use "Clear data" link in footer to reset stored data after "Create education support plan" has been completed</li>
           </ul>
           {{ govukButton({
             href: "v2/",
-            text: "View prototype"
+            text: "View V2 prototype"
           }) }}
+          <p class="govuk-body-s"><a href="https://www.figma.com/design/RoxQOu1FjRQGFnbmMThdRh/Additional-Support-Needs?node-id=500-11828" class="govuk-link">V2 and related designs in Figma</a></p>
     
           <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
     

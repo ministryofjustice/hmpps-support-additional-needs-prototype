@@ -21,8 +21,8 @@
   <!-- TITLE PAGE + print-->
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-      <span class="govuk-caption-l">Learning and work progress</span>
-      <h1 class="govuk-heading-l">Manage learning and work progress</h1>
+      <!--span class="govuk-caption-l">Support for additional learning needs</span-->
+      <h1 class="govuk-heading-l">Manage support for additional needs</h1>
     </div>
 
   </div>
@@ -32,27 +32,30 @@
       <div class="govuk-form-group filter-box govuk-!-margin-top-4">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
           style="padding-left:16px">
-          Filter by
+          Search for a prisoner
         </legend>
 
-        <div class="govuk-grid-column-one-third">
+        <div class="govuk-grid-column-two-thirds">
           <div class="moj-search">
             <form method="post">
               <div class="govuk-form-group">
                 <label class="govuk-label govuk-!-margin-bottom-2" for="search">
-                  Prisoner's name
+                  Prisoner's name or prison number
                 </label>
-                <input class="govuk-input moj-search__input " id="search" name="search" type="search"
-                  aria-describedby="search-hint">
+                <input class="govuk-input moj-search__input govuk-input govuk-!-width-one-half" id="search" name="search" type="search">
+                <a style="margin-left:14px" href="javascript:preventDefault();" role="button" draggable="false"
+                    class="govuk-button moj-button-menu__item" data-module="govuk-button">
+                    Search
+                  </a>
               </div>
             </form>
           </div>
         </div>
 
+<!--
         <div class="govuk-grid-column-two-thirds">
           <div class="moj-search">
             <div class="govuk-form-group">
-
               <legend class="govuk-label govuk-!-margin-bottom-2">
                 Status
               </legend>
@@ -64,15 +67,11 @@
                 <option value="needs-review">Needs review</option>
               </select>
 
-              <a style="margin-left:14px" href="javascript:preventDefault();" role="button" draggable="false"
-                class="govuk-button moj-button-menu__item" data-module="govuk-button">
-                Apply filters
-              </a>
-
             </div>
 
           </div>
         </div>
+-->
       </div>
 
       <!-- add table of people  -->
@@ -88,7 +87,7 @@
 
           <tr class="govuk-table__row">
             <td class="govuk-table__cell" data-sort-value="Adams"><a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Adams, Damien</a></td>
-            <td class="govuk-table__cell">G2911GD</td>
+            <td class="govuk-table__cell">G2872GD</td>
             <td class="govuk-table__cell" data-sort-value="B-2-08">B-2-08</td>
             <td class="govuk-table__cell" style="width: 300px;"></td>
           </tr>
