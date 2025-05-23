@@ -8,6 +8,27 @@
         <div class="govuk-!-padding-bottom-6"></div>
         <div class="govuk-grid-column-two-thirds">
           
+          <h2 class="govuk-heading-m">Version 3
+            {{ govukTag({
+              classes: "govuk-tag--red govuk-!-static-margin-left-3",
+              text: "WIP"
+            }) }}
+          </h2>
+          <h3 class="govuk-heading-s">Iterations from version 2</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Utilises fake data set to allow for testing different scenarios</li>
+          </ul>
+          <h3 class="govuk-heading-s">Limitations</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Search bars are not functional</li>
+          </ul>
+          {{ govukButton({
+            href: "v3/",
+            text: "View V3 prototype"
+          }) }}
+    
+          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+          
           <h2 class="govuk-heading-m">Version 2
             {{ govukTag({
               classes: "govuk-tag--yellow govuk-!-static-margin-left-3",

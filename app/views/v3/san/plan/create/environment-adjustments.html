@@ -1,0 +1,72 @@
+{% extends "/layouts/v3.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post">
+        <span class="govuk-caption-l">Create an education support plan</span>
+
+        {% set detailsHtml %}
+          {{ govukTextarea({
+            id: "san-"+v+"-create-environmentadjust-details",
+            name: "san-"+v+"-create-environmentadjust-details",
+            label: {
+              text: "Add details"
+            },
+            value: data["san-"+v+"-create-environmentadjust-details"]
+          }) }}
+        {% endset -%}
+
+        {{ govukRadios({
+          name: "san-"+v+"-create-environmentadjust",
+          fieldset: {
+            legend: {
+              text: "Does Chris Atkinson need adjustments to their learning environment or materials?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            text: "For example, a desk at the front of class or near the door, materials produced on coloured background, overlays, specific font sizes, diagrammatic materials and assistive technology."
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes",
+              checked: checked("san-"+v+"-create-environmentadjust","Yes"),
+              conditional: {
+                html: detailsHtml
+              }
+            },
+            {
+              value: "No",
+              text: "No",
+              checked: checked("san-"+v+"-create-environmentadjust","No")
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
