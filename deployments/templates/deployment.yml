@@ -21,3 +21,13 @@ spec:
             - containerPort: 3000
               name: http
               protocol: TCP
+          env:
+            - name: PRODUCT_ID
+              value: DPS124
+            - name: NODE_ENV
+              value: production
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: basic-auth
