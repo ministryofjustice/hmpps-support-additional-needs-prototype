@@ -26,9 +26,6 @@
             label: {
               text: "Add details"
             },
-            hint: {
-              text: "For example, British Sign Language or autism training."
-            },
             value: data["san-"+v+"-create-knowledgeskills-details"]
           }) }}
         {% endset -%}
@@ -41,6 +38,9 @@
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
+          },
+          hint: {
+            text: "For example, British Sign Language or autism training."
           },
           items: [
             {

@@ -26,9 +26,6 @@
             label: {
               text: "Add details"
             },
-            hint: {
-              text: "For example, a desk at the front of class or near the door, materials produced on coloured background, overlays, specific font sizes, diagrammatic materials and assistive technology."
-            },
             value: data["san-"+v+"-create-environmentadjust-details"]
           }) }}
         {% endset -%}
@@ -41,6 +38,9 @@
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
+          },
+          hint: {
+            text: "For example, a desk at the front of class or near the door, materials produced on coloured background, overlays, specific font sizes, diagrammatic materials and assistive technology."
           },
           items: [
             {
