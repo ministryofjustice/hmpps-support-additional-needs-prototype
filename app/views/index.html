@@ -8,13 +8,30 @@
         <div class="govuk-!-padding-bottom-6"></div>
         <div class="govuk-grid-column-two-thirds">
           
-          <h2 class="govuk-heading-m">Version 2
+          <h2 class="govuk-heading-m">Version 3
             {{ govukTag({
-              classes: "govuk-tag--yellow govuk-!-static-margin-left-3",
-              text: "In review"
+              classes: "govuk-tag--red govuk-!-static-margin-left-3",
+              text: "WIP"
             }) }}
           </h2>
-          <p class="govuk-hint">Conversion of Figma designs into usable prototype</>
+          <h3 class="govuk-heading-s">Iterations from version 2</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>...</li>
+          </ul>
+          {{ govukButton({
+            href: "v3/",
+            text: "View V3 prototype"
+          }) }}
+          
+          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+          
+          <h2 class="govuk-heading-m">Version 2
+            {{ govukTag({
+              classes: "govuk-tag--green govuk-!-static-margin-left-3",
+              text: "Ready for UR"
+            }) }}
+          </h2>
+          <p class="govuk-hint">Conversion of Figma designs into usable prototype</p>
           <h3 class="govuk-heading-s">Iterations from version 1</h3>
           <ul class="govuk-list govuk-list--bullet">
             <li>Removal of superfluous data in prisoner list</li>
@@ -39,8 +56,8 @@
     
           <h2 class="govuk-heading-m">Version 1
             {{ govukTag({
-              classes: "govuk-tag--green govuk-!-static-margin-left-3",
-              text: "Ready for UR"
+              classes: "govuk-!-static-margin-left-3",
+              text: "Archived"
             }) }}</h2>
           <h3 class="govuk-heading-s">Entry to 'Support for additional needs service' including journey to create an education learning support plan</h3>
           <ul class="govuk-list govuk-list--bullet">

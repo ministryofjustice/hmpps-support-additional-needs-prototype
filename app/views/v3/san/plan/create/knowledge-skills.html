@@ -1,0 +1,72 @@
+{% extends "/layouts/v3.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post">
+        <span class="govuk-caption-l">Create an education support plan</span>
+
+        {% set detailsHtml %}
+          {{ govukTextarea({
+            id: "san-"+v+"-create-knowledgeskills-details",
+            name: "san-"+v+"-create-knowledgeskills-details",
+            label: {
+              text: "Add details"
+            },
+            value: data["san-"+v+"-create-knowledgeskills-details"]
+          }) }}
+        {% endset -%}
+
+        {{ govukRadios({
+          name: "san-"+v+"-create-knowledgeskills",
+          fieldset: {
+            legend: {
+              text: "Do teaching staff need specific knowledge or skills to support Chris Atkinson’s learning?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            text: "For example, British Sign Language or autism training."
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes",
+              checked: checked("san-"+v+"-create-knowledgeskills","Yes"),
+              conditional: {
+                html: detailsHtml
+              }
+            },
+            {
+              value: "No",
+              text: "No",
+              checked: checked("san-"+v+"-create-knowledgeskills","No")
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
