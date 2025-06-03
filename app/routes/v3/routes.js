@@ -1,4 +1,4 @@
-var v = "/v2/";
+var v = "/v3/";
 
 module.exports = function(router) {
 
@@ -11,6 +11,19 @@ module.exports = function(router) {
     // console.log('previous page is: ' + res.locals.prevURL + " and current page is " + req.url + " " + res.locals.currentURL );
     next();
   });
+
+
+  router.get(v+"san/profile/:ref", function (req, res) {
+
+    // find matching ref in session data
+    objIndex = req.session.data["prisoners"].findIndex(obj => obj.prisonerNumber === req.params.ref);
+
+    // store selected ref in a ession variable
+    let ref = req.params.ref;
+
+    res.render(v + "san/profile/overview", {ref});
+  });
+
 
   router.post(v + "san/plan/create/person-who-met", function (req, res) {
     res.redirect(v + "san/plan/create/other-people-consulted");

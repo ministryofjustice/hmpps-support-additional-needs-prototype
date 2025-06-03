@@ -21,6 +21,9 @@
 
 {% block content %}
 
+{% for item in data['prisoners'] %}
+  {% if item.prisonerNumber == ref %}
+
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
   
@@ -46,7 +49,7 @@
             <dl>
               <dt class="govuk-heading-s govuk-!-margin-bottom-0">
                 <a href="javascript:preventDefault();" class="govuk-link govuk-!-font-weight-bold">
-                  Atkinson, Chris
+                  {{ item.lastName }}, {{ item.firstName }}
                 </a>
               </dt>
               <dd class="govuk-body">
@@ -314,5 +317,8 @@
   </div>
 
 </div>
+
+{% endif %}
+{% endfor %}
 
 {% endblock %}
