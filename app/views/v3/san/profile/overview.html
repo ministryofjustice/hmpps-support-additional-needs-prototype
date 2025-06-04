@@ -21,15 +21,15 @@
 
 {% block content %}
 
-{% for item in data['prisoners'] %}
-  {% if item.prisonerNumber == ref %}
+{% for prisoner in data['prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
   
     <!-- TITLE PAGE + print-->
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l">Chris Atkinson's support for additional needs</h1>
+      <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs</h1>
     </div>
 
     <div class="govuk-grid-column-full">
@@ -49,29 +49,29 @@
             <dl>
               <dt class="govuk-heading-s govuk-!-margin-bottom-0">
                 <a href="javascript:preventDefault();" class="govuk-link govuk-!-font-weight-bold">
-                  {{ item.lastName }}, {{ item.firstName }}
+                  {{ prisoner.lastName }}, {{ prisoner.firstName }}
                 </a>
               </dt>
               <dd class="govuk-body">
-                  G2911GD
+                  {{ prisoner.prisonerNumber}}
               </dd>
             </dl>
             <dl>
               <dt class="govuk-heading-s govuk-!-margin-bottom-0">Entered this prison on</dt>
               <dd class="govuk-body">
-                28 May 2024
+                {{ prisoner.enteredPrison }}
               </dd>
             </dl>
             <dl>
               <dt class="govuk-heading-s govuk-!-margin-bottom-0">Release date</dt>
               <dd class="govuk-body">
-                1 Jul 2025<br>
+                {{ prisoner.releaseDate }}
               </dd>
             </dl>
             <dl>
               <dt class="govuk-heading-s govuk-!-margin-bottom-0">DOB</dt>
               <dd class="govuk-body">
-                10 Jun 1969
+                {{ prisoner.dateOfBirth }}
               </dd>
             </dl>
         </div>
@@ -138,7 +138,9 @@
 
   </div>
 
-
+  <!--textarea rows="8" style="width: 700px; white-space:pre-wrap;">
+  {{ prisoner | dump(2) }}
+  </textarea-->
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -155,25 +157,25 @@
         </header>
 
         <div class="app-summary-card__body">
-
-          <dl class="govuk-summary-list">
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">Cognition and learning</dt>
-              <dd class="govuk-summary-list__value">Reading, Writing</dd>
-              <dd class="govuk-summary-list__actions"></dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">Communication and interaction</dt>
-              <dd class="govuk-summary-list__value">Social interaction</dd>
-              <dd class="govuk-summary-list__actions"></dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">Social and emotional</dt>
-              <dd class="govuk-summary-list__value">Struggles with anxiety</dd>
-              <dd class="govuk-summary-list__actions"></dd>
-            </div>
-          </dl>
-
+          {% if prisoner.screener %}
+            <dl class="govuk-summary-list">
+              {% for need in prisoner.screener %}
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">{{ need.areaOfNeed }}</dt>
+                  <dd class="govuk-summary-list__value">
+                    {% for category in need.categoryOfNeed %}
+                      {% for challenge in category.challenges %}
+                        {{ challenge.challengeName }}<br>
+                      {% endfor %}
+                    {% endfor %}
+                  </dd>
+                  <dd class="govuk-summary-list__actions"></dd>
+                </div>
+              {% endfor %}
+            </dl>
+          {% else %}
+            <p class="govuk-body">No additional needs recorded</p>
+          {% endif %}
         </div>
       </section>
       <!-- END TABLE - Additional needs -->
