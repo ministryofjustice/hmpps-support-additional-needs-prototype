@@ -25,6 +25,18 @@ module.exports = function(router) {
   });
 
 
+  router.get(v+"san/plan/:ref/create/person-who-met", function (req, res) {
+
+    // find matching ref in session data
+    objIndex = req.session.data["prisoners"].findIndex(obj => obj.prisonerNumber === req.params.ref);
+
+    // store selected ref in a ession variable
+    let ref = req.params.ref;
+
+    res.render(v + "san/plan/create/person-who-met", {ref});
+  });
+
+
   router.post(v + "san/plan/create/person-who-met", function (req, res) {
     res.redirect(v + "san/plan/create/other-people-consulted");
   });

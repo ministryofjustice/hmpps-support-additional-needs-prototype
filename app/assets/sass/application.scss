@@ -899,3 +899,36 @@ p,
 .noflex {
   display:block !important;
 }
+
+/* SAN profile styles */
+
+.san-needs-list .govuk-summary-list__key {
+  width: 65%;
+}
+
+.san-needs-list .govuk-summary-list__value {
+  text-align: right;
+  width: 35%;
+
+  span {
+    color: $govuk-secondary-text-colour;
+  }
+}
+
+.govuk-summary-list__row.san-needs-list-header {
+  border-bottom: none;
+}
+
+.san-needs-list-header .govuk-summary-list__key, 
+.san-needs-list-header .govuk-summary-list__value, 
+.san-needs-list-header .govuk-summary-list__actions {
+  padding-bottom: 0;
+}
+
+@media (min-width: 40.0625em) {
+.san-needs-list-header .govuk-summary-list__key, 
+.san-needs-list-header .govuk-summary-list__value, 
+.san-needs-list-header .govuk-summary-list__actions {
+  border-bottom: none;
+}
+}

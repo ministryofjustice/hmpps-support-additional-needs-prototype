@@ -91,25 +91,25 @@
 
             <li class="moj-sub-navigation__item">
               {% if currentpage == "overview" %}
-                <a class="moj-sub-navigation__link" aria-current="page" href="/{{ v }}/san/profile/">Overview</a>
+                <a class="moj-sub-navigation__link" aria-current="page" href="/{{ v }}/san/profile/{{ ref }}/">Overview</a>
               {% else %}
-                <a class="moj-sub-navigation__link" href="/{{ v }}/san/profile/">Overview</a>
+                <a class="moj-sub-navigation__link" href="/{{ v }}/san/profile/{{ ref }}/">Overview</a>
               {% endif %}
             </li>
-            <!--
+            
             <li class="moj-sub-navigation__item">
               {% if currentpage == "additionalneeds" %}
-              <a class="moj-sub-navigation__link" aria-current="page" href="#">Additional needs</a>
+              <a class="moj-sub-navigation__link" aria-current="page" href="#">Support strategies</a>
               {% else %}
-              <a class="moj-sub-navigation__link" href="#">Additional needs</a>
+              <a class="moj-sub-navigation__link" href="#">Support strategies</a>
               {% endif %}
             </li>
 
             <li class="moj-sub-navigation__item">
               {% if currentpage == "conditions" %}
-                <a class="moj-sub-navigation__link" aria-current="page" href="#">Conditions</a>
+                <a class="moj-sub-navigation__link" aria-current="page" href="#">Challenges</a>
               {% else %}
-                <a class="moj-sub-navigation__link" href="#">Conditions</a>
+                <a class="moj-sub-navigation__link" href="#">Challenges</a>
               {% endif %}
             </li>
 
@@ -120,8 +120,15 @@
                 <a class="moj-sub-navigation__link" href="#">Strengths</a>
               {% endif %}
             </li>
-          -->
-          {% if data['prevurl'] == "check-answers" %}
+
+            <li class="moj-sub-navigation__item">
+              {% if currentpage == "strengths" %}
+                <a class="moj-sub-navigation__link" aria-current="page" href="#">Conditions</a>
+              {% else %}
+                <a class="moj-sub-navigation__link" href="#">Conditions</a>
+              {% endif %}
+            </li>
+          
             <li class="moj-sub-navigation__item">
               {% if currentpage == "support-plan" %}
                 <a class="moj-sub-navigation__link" aria-current="page" href="#">Education support plan</a>
@@ -129,7 +136,6 @@
                 <a class="moj-sub-navigation__link" href="#">Education support plan</a>
               {% endif %}
             </li>
-          {% endif %}
             
           </ul>
         </nav>
@@ -145,72 +151,174 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <!-- TABLE - Additional needs -->
-      <section class="app-summary-card govuk-!-margin-bottom-6">
-        <header class="app-summary-card__header">
-          <h2 class="app-summary-card__title">
-            Additional needs
-          </h2>
-          <div>
-            <a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Add need</a>
-          </div>
-        </header>
+        {# set tracker for categories prisoner has content it #}
+        {% set cats = [] %}
 
-        <div class="app-summary-card__body">
-          {% if prisoner.screener %}
-            <dl class="govuk-summary-list">
-              {% for need in prisoner.screener %}
-                <div class="govuk-summary-list__row">
-                  <dt class="govuk-summary-list__key">{{ need.areaOfNeed }}</dt>
-                  <dd class="govuk-summary-list__value">
-                    {% for category in need.categoryOfNeed %}
-                      {% for challenge in category.challenges %}
-                        {{ challenge.challengeName }}<br>
-                      {% endfor %}
-                    {% endfor %}
-                  </dd>
-                  <dd class="govuk-summary-list__actions"></dd>
-                </div>
-              {% endfor %}
-            </dl>
-          {% else %}
-            <p class="govuk-body">No additional needs recorded</p>
-          {% endif %}
-        </div>
-      </section>
-      <!-- END TABLE - Additional needs -->
+        {# Check if prisoner has any recorded needs #}
+        {%
+          if prisoner.needsSupport
+          or prisoner.needsChallenges 
+          or prisoner.needsStrengths
+        %}
 
-      <!-- TABLE - Conditions -->
-      <section class="app-summary-card govuk-!-margin-bottom-6">
-        <header class="app-summary-card__header">
-          <h2 class="app-summary-card__title">
-            Conditions
-          </h2>
-          <div>
-            <a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Add condition</a>
-          </div>
-        </header>
-        <div class="app-summary-card__body">
-          <p class="govuk-body">No conditions recorded</p>
-        </div>
-      </section>
-      <!-- END TABLE - Conditions -->
+          {# Loop through all categories of need #}
+          {% for categories in data['categories'] %}
 
-      <!-- TABLE - Strengths -->
-      <section class="app-summary-card govuk-!-margin-bottom-6">
-        <header class="app-summary-card__header">
-          <h2 class="app-summary-card__title">
-            Strengths
-          </h2>
-          <div>
-            <a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Add strength</a>
-          </div>
-        </header>
-        <div class="app-summary-card__body">
-          <p class="govuk-body">No strengths recorded</p>
-        </div>
-      </section>
-      <!-- END TABLE - Strengths -->
+            {# 
+              We're now going to loop through each prisoner's data to check
+              if they have any support strategies, challenges or strengths recorded 
+            #}
+
+            {# Loop through all support needs of prisoner #}
+            {% for needs in prisoner.needsSupport %}
+              {# Check if needsSupport has an item in this category #}
+              {% if needs.needsSupportCategory == categories.categoryName %}
+                {# Add this category to an array of categories associated with this prisoner #}
+                {% if not categories.categoryName in cats %}
+                  {% set cats = (cats.push(categories.categoryName), cats) %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {# Loop through all challenges of prisoner #}
+            {% for needs in prisoner.needsChallenges %}
+              {# Check if needsSupport has an item in this category #}
+              {% if needs.needsChallengeCategory == categories.categoryName %}
+                {# Add this category to an array of categories associated with this prisoner #}
+                {% if not categories.categoryName in cats %}
+                  {% set cats = (cats.push(categories.categoryName), cats) %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {# Loop through all strengths of prisoner #}
+            {% for needs in prisoner.needsstrengths %}
+              {# Check if needsSupport has an item in this category #}
+              {% if needs.needsstrengthCategory == categories.categoryName %}
+                {# Add this category to an array of categories associated with this prisoner #}
+                {% if not categories.categoryName in cats %}
+                  {% set cats = (cats.push(categories.categoryName), cats) %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+
+          {% endfor %}
+
+          {% for cat in cats %}
+
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <header class="app-summary-card__header">
+                <h2 class="app-summary-card__title">
+                  {{ cat }}
+                </h2>
+              </header>
+              <div class="app-summary-card__body">
+                <dl class="govuk-summary-list san-needs-list">
+                
+                  {% set countSup = 0 %}
+                  {# Loop through all support needs of prisoner #}
+                  {% for needs in prisoner.needsSupport %}
+                      <div class="govuk-summary-list__row san-needs-list-header">
+                        <dt class="govuk-summary-list__key">
+                          Support strategies
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <a href="javascript:preventDefault();" class="govuk-body-s">Add support strategy</a>
+                        </dd>
+                      </div>
+                    {# Check if needsSupport has an item in this category #}
+                    {% if needs.needsSupportCategory == cat %}
+                      {% set countSup = countSup + 1 %}
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                          {{ needs.needsSupportDescription | safe }}
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <span class="govuk-body-s">Added on {{ needs.needsSupportDate }} by {{ needs.needsSupportAuthor }}</span>
+                        </dd>
+                      </div>
+                  
+                    {% endif %}
+                    {% if countSup == 0 %}
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                          None recorded
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                        </dd>
+                      </div>
+                      {% set countSup = 1 %}
+                      
+                    {% endif %}
+                  {% endfor %}
+                
+                  {% set countCha = 0 %}
+                  {# Loop through all support needs of prisoner #}
+                  {% for needs in prisoner.needsChallenges %}
+                    {# Check if needsChallenges has an item in this category #}
+                    {% if needs.needsChallengeCategory == cat %}
+                      {% if countCha == 0 %}
+                      <div class="govuk-summary-list__row san-needs-list-header">
+                        <dt class="govuk-summary-list__key {% if countSup > 0 %}govuk-!-padding-top-6{% endif %}">
+                          Challenges
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <a href="javascript:preventDefault();" class="govuk-body-s">Add challenge</a>
+                        </dd>
+                      </div>
+                      {% endif %}
+                      {% set countCha = countCha + 1 %}
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                          {{ needs.needsChallengeDescription | safe }}
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <span class="govuk-body-s">Added on {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</span>
+                        </dd>
+                      </div>
+                  
+                    {% endif %}
+                  {% endfor %}
+                
+                  {% set countStr = 0 %}
+                  {# Loop through all support needs of prisoner #}
+                  {% for needs in prisoner.needsStrengths %}
+                    {# Check if needsStrengths has an item in this category #}
+                    {% if needs.needsStrengthCategory == cat %}
+                      {% if countStr == 0 %}
+                      <div class="govuk-summary-list__row san-needs-list-header">
+                        <dt class="govuk-summary-list__key {% if countSup > 0 %}govuk-!-padding-top-6{% endif %}">
+                          Strengths
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <a href="javascript:preventDefault();" class="govuk-body-s">Add strength</a>
+                        </dd>
+                      </div>
+                      {% endif %}
+                      {% set countStr = countStr + 1 %}
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                          {{ needs.needsStrengthDescription | safe }}
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <span class="govuk-body-s">Added on {{ needs.needsStrengthDate }} by {{ needs.needsStrengthAuthor }}</span>
+                        </dd>
+                      </div>
+                  
+                    {% endif %}
+                  {% endfor %}
+                </dl>        
+
+              </div>
+            </section>
+          {% endfor %}
+
+        {% endif %}
+
 
       <!-- TABLE - Curious screener -->
       <section class="app-summary-card govuk-!-margin-bottom-6">
@@ -218,9 +326,6 @@
           <h2 class="app-summary-card__title">
             Screener and assessment results from Curious
           </h2>
-          <!--div>
-            <a class="govuk-link govuk-link--no-visited-state" href="javascript:preventDefault();">Add need</a>
-          </div-->
         </header>
 
         <div class="app-summary-card__body">
@@ -305,7 +410,7 @@
           {% else %}
           <li>
             <img src="/public/images/icon-create.png" alt="">
-            <a href="/{{ v }}/san/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+            <a href="/{{ v }}/san/plan/{{ prisoner.prisonerNumber }}/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
           </li>
           <li>
             <img src="/public/images/icon-stamp.png" alt="">

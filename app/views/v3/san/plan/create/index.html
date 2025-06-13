@@ -27,8 +27,8 @@
 
       {% set detailsHtml %}
         {{ govukInput({
-          id: "san-"+v+"-create-personwhomet-name",
-          name: "san-"+v+"-create-personwhomet-name",
+          id: "san-"+v+"-"+ref+"-create-personwhomet-name",
+          name: "san-"+v+"-"+ref+"-create-personwhomet-name",
           type: "text",
           spellcheck: false,
           classes: "govuk-!-width-one-third",
@@ -37,8 +37,8 @@
           }
         }) }}
         {{ govukInput({
-          id: "san-"+v+"-create-personwhomet-jobrole",
-          name: "san-"+v+"-create-personwhomet-jobrole",
+          id: "san-"+v+"-"+ref+"-create-personwhomet-jobrole",
+          name: "san-"+v+"-"+ref+"-create-personwhomet-jobrole",
           type: "text",
           spellcheck: false,
           classes: "govuk-!-width-one-third",
@@ -49,7 +49,7 @@
       {% endset -%}
 
       {{ govukRadios({
-        name: "san-"+v+"-create-personwhomet",
+        name: "san-"+v+"-"+ref+"-create-personwhomet",
         fieldset: {
           legend: {
             text: "Are you the person who met with Chris Atkinson?",

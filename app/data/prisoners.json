@@ -12,6 +12,62 @@
         "recall": false,
         "indeterminateSentence": false,
         "planStatus": "Due",
+        "needsSupport": [
+            {
+                "needsSupportCategory": "Attention, organising and time management",
+                "needsSupportDescription": "Print out their timetable in large font each week.<br>They are allowed a wrist watch and alarm clock.<br>Prompt them for their next activity if possible.<br>Break tasks downs and give enough time to do them.<br>Give them time to understand instructions - break these down into no more than 3 steps at time.<br>Limit distractions.",
+                "needsSupportDate": "4 Jan 2025",
+                "needsSupportAuthor": "J. Smith"
+            }
+        ],
+        "needsChallenges": [
+            {
+                "needsChallengeCategory": "Attention, organising and time management",
+                "needsChallengeDescription": "Finds it hard to manage their time.<br>Worries they will be late and becomes anxious.<br>When they are late can get angry if it's made an issue.",
+                "needsChallengeDate": "12 Apr 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Attention, organising and time management",
+                "needsChallengeDescription": "Needs help focussing to plan and finish  an activity.<br>Can get distracted and try to task switch and not finish.",
+                "needsChallengeDate": "27 Mar 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Attention, organising and time management",
+                "needsChallengeDescription": "Finds it hard to follow lengthy instructions.<br>Gets frustrated if they do not understand what they need to do.<br>Doesn't feel confident to speak up.",
+                "needsChallengeDate": "27 Mar 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Literacy skills",
+                "needsChallengeDescription": "Finds it hard to write quickly, has poor grip.<br>Can get frustrated if needs to note things down quickly.",
+                "needsChallengeDate": "27 Mar 2025",
+                "needsChallengeAuthor": "J. Smith"
+            }
+        ],
+        "needsStrengths": [
+            {
+                "needsStrengthCategory": "Attention, organising and time management",
+                "needsStrengthDescription": "Has a good sense of humour<br>Is close to their children and enjoyed reading with them",
+                "needsStrengthDate": "4 Jan 2025",
+                "needsStrengthAuthor": "J. Smith"
+            }
+        ],
+        "needsALNscreener": [
+            {
+                "needsALNscreenerCategory": "Attention, organising and time management",
+                "needsALNscreenerDescription": "Challenges: Writing - Alphabet ordering",
+                "needsALNscreenerDate": "28 Sep 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Attention, organising and time management",
+                "needsALNscreenerDescription": "Strengths: Reading - Language decoding",
+                "needsALNscreenerDate": "28 Sep 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            }
+        ],
         "screener": [
             {
                 "areaOfNeed": "Cognition and Learning",
