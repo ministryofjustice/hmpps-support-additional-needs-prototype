@@ -8,6 +8,16 @@ function matchref(req){
   return ref;
 }
 
+function getFormattedDate() {
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, '0');
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+}
+
 module.exports = function(router) {
 
   router.use('/', (req, res, next) => {
@@ -111,7 +121,7 @@ module.exports = function(router) {
     let newSupportEntry = {
       needsSupportCategory: req.session.data["san-"+v+"-"+ref+"-support-category"],
       needsSupportDescription: needsSupportDescHTML,
-      needsSupportDate: "13 Jun 2025",
+      needsSupportDate: getFormattedDate(),
       needsSupportAuthor: "W. Knight"
     };
 
@@ -119,6 +129,94 @@ module.exports = function(router) {
     thisprisoner.needsSupport.push(newSupportEntry);
     delete req.session.data["san-"+v+"-"+ref+"-support-category"];
     delete req.session.data["san-"+v+"-"+ref+"-support-desc"];
+
+    res.redirect("/"+v+"/san/"+ref+"/profile");
+  });
+
+
+/*****************
+ * Add challenge *
+ *****************/
+
+  router.get("/"+v+"/san/:ref/challenges/add/category", function (req, res){
+    let ref = matchref(req);
+    res.render("/"+v+"/san/challenges/add/category", {ref});
+  });
+
+  router.post("/"+v+"/san/:ref/challenges/add/category", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/challenges/add/description");
+  });
+
+  router.get("/"+v+"/san/:ref/challenges/add/description", function (req, res){
+    let ref = matchref(req);
+    res.render("/"+v+"/san/challenges/add/description", {ref});
+  });
+
+  router.post("/"+v+"/san/:ref/challenges/add/description", function (req, res) {
+    let ref = matchref(req);
+
+    // convert line breaks to html
+    let needsChallengeDescHTML = req.session.data["san-"+v+"-"+ref+"-challenge-desc"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    // take support strategy data and add it to the prisoner session data
+    let newChallengeEntry = {
+      needsChallengeCategory: req.session.data["san-"+v+"-"+ref+"-challenge-category"],
+      needsChallengeDescription: needsChallengeDescHTML,
+      needsChallengeDate: getFormattedDate(),
+      needsChallengeAuthor: "W. Knight"
+    };
+
+    let thisprisoner = req.session.data['prisoners'].find(p => p.prisonerNumber === ref);
+    /*if (!Array.isArray(thisprisoner.needsChallenges)) {
+      thisprisoner.needsChallenges = [];
+    }*/
+    thisprisoner.needsChallenges.push(newChallengeEntry);
+    delete req.session.data["san-"+v+"-"+ref+"-challenge-category"];
+    delete req.session.data["san-"+v+"-"+ref+"-challenge-desc"];
+
+    res.redirect("/"+v+"/san/"+ref+"/profile");
+  });
+
+
+/*****************
+ * Add strength *
+ *****************/
+
+  router.get("/"+v+"/san/:ref/strengths/add/category", function (req, res){
+    let ref = matchref(req);
+    res.render("/"+v+"/san/strengths/add/category", {ref});
+  });
+
+  router.post("/"+v+"/san/:ref/strengths/add/category", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/strengths/add/description");
+  });
+
+  router.get("/"+v+"/san/:ref/strengths/add/description", function (req, res){
+    let ref = matchref(req);
+    res.render("/"+v+"/san/strengths/add/description", {ref});
+  });
+
+  router.post("/"+v+"/san/:ref/strengths/add/description", function (req, res) {
+    let ref = matchref(req);
+
+    // convert line breaks to html
+    let needsStrengthDescHTML = req.session.data["san-"+v+"-"+ref+"-strength-desc"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    // take support strategy data and add it to the prisoner session data
+    let newStrengthEntry = {
+      needsStrengthCategory: req.session.data["san-"+v+"-"+ref+"-strength-category"],
+      needsStrengthDescription: needsStrengthDescHTML,
+      needsStrengthDate: getFormattedDate(),
+      needsStrengthAuthor: "W. Knight"
+    };
+
+    let thisprisoner = req.session.data['prisoners'].find(p => p.prisonerNumber === ref);
+    /*if (!Array.isArray(thisprisoner.needsStrengths)) {
+      thisprisoner.needsStrengths = [];
+    }*/
+    thisprisoner.needsStrengths.push(newStrengthEntry);
+    delete req.session.data["san-"+v+"-"+ref+"-strength-category"];
+    delete req.session.data["san-"+v+"-"+ref+"-strength-desc"];
 
     res.redirect("/"+v+"/san/"+ref+"/profile");
   });
