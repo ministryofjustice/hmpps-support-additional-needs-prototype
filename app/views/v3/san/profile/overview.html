@@ -217,15 +217,15 @@
                 
                   {% set countSup = 0 %}
                   {# Loop through all support needs of prisoner #}
+                  <div class="govuk-summary-list__row san-needs-list-header">
+                    <dt class="govuk-summary-list__key">
+                      Support strategies
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category" class="govuk-body-s">Add support strategy</a>
+                    </dd>
+                  </div>
                   {% for needs in prisoner.needsSupport %}
-                      <div class="govuk-summary-list__row san-needs-list-header">
-                        <dt class="govuk-summary-list__key">
-                          Support strategies
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                          <a href="javascript:preventDefault();" class="govuk-body-s">Add support strategy</a>
-                        </dd>
-                      </div>
                     {# Check if needsSupport has an item in this category #}
                     {% if needs.needsSupportCategory == cat %}
                       {% set countSup = countSup + 1 %}
@@ -238,21 +238,19 @@
                           <span class="govuk-body-s">Added on {{ needs.needsSupportDate }} by {{ needs.needsSupportAuthor }}</span>
                         </dd>
                       </div>
-                  
-                    {% endif %}
-                    {% if countSup == 0 %}
 
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                          None recorded
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                        </dd>
-                      </div>
-                      {% set countSup = 1 %}
-                      
                     {% endif %}
                   {% endfor %}
+
+                  {% if countSup == 0 %}
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                      None recorded
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                    </dd>
+                  </div>
+                  {% endif %}
                 
                   {% set countCha = 0 %}
                   {# Loop through all support needs of prisoner #}
@@ -315,6 +313,7 @@
 
               </div>
             </section>
+            {% set countSup = 0 %}
           {% endfor %}
 
         {% endif %}
@@ -410,7 +409,8 @@
           {% else %}
           <li>
             <img src="/public/images/icon-create.png" alt="">
-            <a href="/{{ v }}/san/plan/{{ prisoner.prisonerNumber }}/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+            <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a-->
+            <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
           </li>
           <li>
             <img src="/public/images/icon-stamp.png" alt="">

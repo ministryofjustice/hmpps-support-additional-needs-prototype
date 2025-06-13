@@ -88,7 +88,7 @@
           {% for prisoner in data['prisoners'] %}
 
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a href="/{{ v }}/san/profile/{{ prisoner.prisonerNumber }}">{{ prisoner.lastName }}, {{ prisoner.firstName }}</a></td>
+            <td class="govuk-table__cell"><a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/">{{ prisoner.lastName }}, {{ prisoner.firstName }}</a></td>
             <td class="govuk-table__cell">{{ prisoner.prisonerNumber }}</td>
             <td class="govuk-table__cell">{{ prisoner.cellLocation }}</td>
             <td class="govuk-table__cell"></td>
@@ -102,7 +102,7 @@
             <td class="govuk-table__cell"></td>
             <td class="govuk-table__cell"></td>
           </tr>
-
+<!--
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" data-sort-value="Atkinson" href="/{{ v }}/san/profile/">Atkinson, Chris</a></td>
             <td class="govuk-table__cell">G2911GD</td>
@@ -459,7 +459,7 @@
             <td class="govuk-table__cell" data-sort-value="C-2-01">C-12-01</td>
             <td class="govuk-table__cell"></td>
           </tr>
-
+-->
       </table>
 
       <!-- pagination  -->

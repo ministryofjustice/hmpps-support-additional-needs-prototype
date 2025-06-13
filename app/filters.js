@@ -8,3 +8,6 @@ const addFilter = govukPrototypeKit.views.addFilter
 
 // Add your filters here
 
+addFilter('nl2br', function(str) {
+    return str.replace(/\r|\n|\r\n/g, '<br />')
+})
