@@ -1,0 +1,30 @@
+
+{% extends "/layouts/v3.html" %}
+
+{% block content %}
+  
+ {{ govukRadios({
+  name: "test",
+  fieldset: {
+    legend: {
+      text: "Legend text",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--xl"
+    }
+  },
+  items: [
+    {
+      value: "Yes",
+      text: "Yes",
+      conditional: {
+        html: "<p>hello</p>"
+      }
+    },
+    {
+      value: "No",
+      text: "No"
+    }
+  ]
+ }) }}
+
+{% endblock %}

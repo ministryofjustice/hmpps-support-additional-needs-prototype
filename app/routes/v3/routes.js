@@ -122,6 +122,7 @@ module.exports = function(router) {
       needsSupportCategory: req.session.data["san-"+v+"-"+ref+"-support-category"],
       needsSupportDescription: needsSupportDescHTML,
       needsSupportDate: getFormattedDate(),
+      needsSupportDate: "13 Jun 2025",
       needsSupportAuthor: "W. Knight"
     };
 
@@ -221,7 +222,7 @@ module.exports = function(router) {
     res.redirect("/"+v+"/san/"+ref+"/profile");
   });
 
-
+  
   module.exports = router;
 
 }
