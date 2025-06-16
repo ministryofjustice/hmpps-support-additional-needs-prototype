@@ -190,6 +190,7 @@
             {% for needs in prisoner.needsStrengths %}
               {# Check if needsSupport has an item in this category #}
               {% if needs.needsStrengthCategory == categories.categoryName %}
+
                 {# Add this category to an array of categories associated with this prisoner #}
                 {% if not categories.categoryName in cats %}
                   {% set cats = (cats.push(categories.categoryName), cats) %}
@@ -238,6 +239,7 @@
                   {% endfor %}
 
                   {% if countSup == 0 %}
+
                     <div class="govuk-summary-list__row">
                       <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
                         None recorded
@@ -245,6 +247,7 @@
                       <dd class="govuk-summary-list__value">
                       </dd>
                     </div>
+
                   {% endif %}
                 
                   {% set countCha = 0 %}
@@ -258,7 +261,9 @@
                           Challenges
                         </dt>
                         <dd class="govuk-summary-list__value">
+
                           <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-body-s">Add challenge</a>
+
                         </dd>
                       </div>
                       {% endif %}
@@ -269,7 +274,9 @@
                           {{ needs.needsChallengeDescription | safe }}
                         </dt>
                         <dd class="govuk-summary-list__value">
+
                           <span class="govuk-body-s">Added {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</span>
+
                         </dd>
                       </div>
                   
@@ -287,7 +294,9 @@
                           Strengths
                         </dt>
                         <dd class="govuk-summary-list__value">
+
                           <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category" class="govuk-body-s">Add strength</a>
+
                         </dd>
                       </div>
                       {% endif %}
@@ -298,7 +307,9 @@
                           {{ needs.needsStrengthDescription | safe }}
                         </dt>
                         <dd class="govuk-summary-list__value">
+
                           <span class="govuk-body-s">Added {{ needs.needsStrengthDate }} by {{ needs.needsStrengthAuthor }}</span>
+
                         </dd>
                       </div>
                   
@@ -315,6 +326,7 @@
 
 
       <!-- TABLE - Curious screener >
+
       <section class="app-summary-card govuk-!-margin-bottom-6">
         <header class="app-summary-card__header">
           <h2 class="app-summary-card__title">
@@ -383,6 +395,7 @@
 
       <div class="hmpps-actions-block govuk-!-margin-bottom-5">
         <ul class="hmpps-actions-block__list">
+
           <li class="noflex">
             <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Education support plan</h3>
             {% if data['prevurl'] == "check-answers" %}
@@ -395,6 +408,7 @@
               </strong>
             {% endif %}
           </li>
+          
           {% if data['prevurl'] == "check-answers" %}
           <li>
             Review due by {{ data["san-"+v+"-create-reviewdate"] }}
