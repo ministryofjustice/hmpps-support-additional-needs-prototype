@@ -1,4 +1,4 @@
-var v = "/v3/";
+var v = "/v2/";
 
 module.exports = function(router) {
 
