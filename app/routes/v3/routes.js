@@ -130,8 +130,8 @@ module.exports = function(router) {
       thisprisoner.needsSupport = [];
     }
     thisprisoner.needsSupport.push(newSupportEntry);
-    delete req.session.data["san-"+v+"-"+ref+"-support-category"];
-    delete req.session.data["san-"+v+"-"+ref+"-support-desc"];
+    //delete req.session.data["san-"+v+"-"+ref+"-support-category"];
+    //delete req.session.data["san-"+v+"-"+ref+"-support-desc"];
 
     res.redirect("/"+v+"/san/"+ref+"/profile");
   });
@@ -161,7 +161,7 @@ module.exports = function(router) {
 
     // convert line breaks to html
     let needsChallengeDescHTML = req.session.data["san-"+v+"-"+ref+"-challenge-desc"].replace(/(?:\r\n|\r|\n)/g, '<br>');
-    // take support strategy data and add it to the prisoner session data
+    // take challenge data and add it to the prisoner session data
     let newChallengeEntry = {
       needsChallengeCategory: req.session.data["san-"+v+"-"+ref+"-challenge-category"],
       needsChallengeDescription: needsChallengeDescHTML,
@@ -174,8 +174,8 @@ module.exports = function(router) {
       thisprisoner.needsChallenges = [];
     }
     thisprisoner.needsChallenges.push(newChallengeEntry);
-    delete req.session.data["san-"+v+"-"+ref+"-challenge-category"];
-    delete req.session.data["san-"+v+"-"+ref+"-challenge-desc"];
+    //delete req.session.data["san-"+v+"-"+ref+"-challenge-category"];
+    //delete req.session.data["san-"+v+"-"+ref+"-challenge-desc"];
 
     res.redirect("/"+v+"/san/"+ref+"/profile");
   });
@@ -218,8 +218,8 @@ module.exports = function(router) {
       thisprisoner.needsStrengths = [];
     }
     thisprisoner.needsStrengths.push(newStrengthEntry);
-    delete req.session.data["san-"+v+"-"+ref+"-strength-category"];
-    delete req.session.data["san-"+v+"-"+ref+"-strength-desc"];
+    //delete req.session.data["san-"+v+"-"+ref+"-strength-category"];
+    //delete req.session.data["san-"+v+"-"+ref+"-strength-desc"];
 
     res.redirect("/"+v+"/san/"+ref+"/profile");
   });
