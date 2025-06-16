@@ -190,6 +190,7 @@
             {% for needs in prisoner.needsStrengths %}
               {# Check if needsSupport has an item in this category #}
               {% if needs.needsStrengthCategory == categories.categoryName %}
+
                 {# Add this category to an array of categories associated with this prisoner #}
                 {% if not categories.categoryName in cats %}
                   {% set cats = (cats.push(categories.categoryName), cats) %}
@@ -259,9 +260,7 @@
                           Challenges
                         </dt>
                         <dd class="govuk-summary-list__value">
-
                           <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-link--no-visited-state govuk-body-s">Add challenge</a-->
-
                         </dd>
                       </div>
                       {% endif %}
@@ -290,9 +289,7 @@
                           Strengths
                         </dt>
                         <dd class="govuk-summary-list__value">
-
                           <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category" class="govuk-link--no-visited-state govuk-body-s">Add strength</a-->
-
                         </dd>
                       </div>
                       {% endif %}
@@ -333,6 +330,7 @@
 
 
       <!-- TABLE - Curious screener >
+
       <section class="app-summary-card govuk-!-margin-bottom-6">
         <header class="app-summary-card__header">
           <h2 class="app-summary-card__title">
