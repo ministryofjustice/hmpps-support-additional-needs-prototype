@@ -126,6 +126,9 @@ module.exports = function(router) {
     };
 
     let thisprisoner = req.session.data['prisoners'].find(p => p.prisonerNumber === ref);
+    if (!Array.isArray(thisprisoner.needsSupport)) {
+      thisprisoner.needsSupport = [];
+    }
     thisprisoner.needsSupport.push(newSupportEntry);
     delete req.session.data["san-"+v+"-"+ref+"-support-category"];
     delete req.session.data["san-"+v+"-"+ref+"-support-desc"];
@@ -167,9 +170,9 @@ module.exports = function(router) {
     };
 
     let thisprisoner = req.session.data['prisoners'].find(p => p.prisonerNumber === ref);
-    /*if (!Array.isArray(thisprisoner.needsChallenges)) {
+    if (!Array.isArray(thisprisoner.needsChallenges)) {
       thisprisoner.needsChallenges = [];
-    }*/
+    }
     thisprisoner.needsChallenges.push(newChallengeEntry);
     delete req.session.data["san-"+v+"-"+ref+"-challenge-category"];
     delete req.session.data["san-"+v+"-"+ref+"-challenge-desc"];
@@ -211,9 +214,9 @@ module.exports = function(router) {
     };
 
     let thisprisoner = req.session.data['prisoners'].find(p => p.prisonerNumber === ref);
-    /*if (!Array.isArray(thisprisoner.needsStrengths)) {
+    if (!Array.isArray(thisprisoner.needsStrengths)) {
       thisprisoner.needsStrengths = [];
-    }*/
+    }
     thisprisoner.needsStrengths.push(newStrengthEntry);
     delete req.session.data["san-"+v+"-"+ref+"-strength-category"];
     delete req.session.data["san-"+v+"-"+ref+"-strength-desc"];

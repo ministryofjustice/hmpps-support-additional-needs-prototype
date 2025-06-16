@@ -217,7 +217,7 @@
                       Support strategies
                     </dt>
                     <dd class="govuk-summary-list__value">
-                      <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category" class="govuk-body-s">Add support strategy</a>
+                      <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category" class=" govuk-link--no-visited-state govuk-body-s">Add support strategy</a-->
                     </dd>
                   </div>
                   {% for needs in prisoner.needsSupport %}
@@ -243,6 +243,7 @@
                         None recorded
                       </dt>
                       <dd class="govuk-summary-list__value">
+                        <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category" class=" govuk-link--no-visited-state govuk-body-s">Add support strategy</a>
                       </dd>
                     </div>
                   {% endif %}
@@ -254,11 +255,13 @@
                     {% if needs.needsChallengeCategory == cat %}
                       {% if countCha == 0 %}
                       <div class="govuk-summary-list__row san-needs-list-header">
-                        <dt class="govuk-summary-list__key {% if countSup > 0 %}govuk-!-padding-top-6{% endif %}">
+                        <dt class="govuk-summary-list__key govuk-!-padding-top-6">
                           Challenges
                         </dt>
                         <dd class="govuk-summary-list__value">
-                          <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-body-s">Add challenge</a>
+
+                          <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-link--no-visited-state govuk-body-s">Add challenge</a-->
+
                         </dd>
                       </div>
                       {% endif %}
@@ -283,11 +286,13 @@
                     {% if needs.needsStrengthCategory == cat %}
                       {% if countStr == 0 %}
                       <div class="govuk-summary-list__row san-needs-list-header">
-                        <dt class="govuk-summary-list__key {% if countSup > 0 %}govuk-!-padding-top-6{% endif %}">
+                        <dt class="govuk-summary-list__key govuk-!-padding-top-6">
                           Strengths
                         </dt>
                         <dd class="govuk-summary-list__value">
-                          <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category" class="govuk-body-s">Add strength</a>
+
+                          <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category" class="govuk-link--no-visited-state govuk-body-s">Add strength</a-->
+
                         </dd>
                       </div>
                       {% endif %}
@@ -310,6 +315,19 @@
             </section>
             {% set countSup = 0 %}
           {% endfor %}
+
+        {% else %}
+        
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <header class="app-summary-card__header">
+              <h2 class="app-summary-card__title">
+                Overview
+              </h2>
+            </header>
+            <div class="app-summary-card__body">
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies, challenges, strengths or conditions recorded.</p>
+            </div>
+          </section>
 
         {% endif %}
 
