@@ -306,6 +306,35 @@
                   
                     {% endif %}
                   {% endfor %}
+                
+                  {% set countALN = 0 %}
+                  {# Loop through all ALN screener results of prisoner #}
+                  {% for needs in prisoner.needsALNscreener %}
+                    {# Check if needsScreener has an item in this category #}
+                    {% if needs.needsALNscreenerCategory == cat %}
+                      {% if countALN == 0 %}
+                      <div class="govuk-summary-list__row san-needs-list-header">
+                        <dt class="govuk-summary-list__key govuk-!-padding-top-6">
+                          Additional learning needs screener result
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category" class="govuk-link--no-visited-state govuk-body-s">Add strength</a-->
+                        </dd>
+                      </div>
+                      {% endif %}
+                      {% set countALN = countALN + 1 %}
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                          {{ needs.needsALNscreenerDescription | safe }}
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <span class="govuk-body-s">Added {{ needs.needsALNscreenerDate }} by {{ needs.needsALNscreenerAuthor }}</span>
+                        </dd>
+                      </div>
+                  
+                    {% endif %}
+                  {% endfor %}
                 </dl>        
 
               </div>

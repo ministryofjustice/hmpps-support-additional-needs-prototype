@@ -49,7 +49,7 @@
         "needsStrengths": [
             {
                 "needsStrengthCategory": "Attention, organising and time management",
-                "needsStrengthDescription": "Has a good sense of humour<br>Is close to their children and enjoyed reading with them",
+                "needsStrengthDescription": "Hard worker - strives for perfection.",
                 "needsStrengthDate": "4 Jan 2025",
                 "needsStrengthAuthor": "J. Smith"
             }
@@ -57,12 +57,24 @@
         "needsALNscreener": [
             {
                 "needsALNscreenerCategory": "Attention, organising and time management",
-                "needsALNscreenerDescription": "Challenges: Writing - Alphabet ordering",
+                "needsALNscreenerDescription": "Challenges: None recorded",
                 "needsALNscreenerDate": "28 Sep 2025",
                 "needsALNscreenerAuthor": "M. Warner"
             },
             {
                 "needsALNscreenerCategory": "Attention, organising and time management",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "28 Sep 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Literacy skills",
+                "needsALNscreenerDescription": "Challenges: Writing - Alphabet ordering",
+                "needsALNscreenerDate": "28 Sep 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Literacy skills",
                 "needsALNscreenerDescription": "Strengths: Reading - Language decoding",
                 "needsALNscreenerDate": "28 Sep 2025",
                 "needsALNscreenerAuthor": "M. Warner"

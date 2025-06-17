@@ -29,6 +29,20 @@
           },
           value: data["san-"+v+"-"+ref+"-challenge-desc"]
         }) }}
+        
+        {{ govukTextarea({
+          id: "san-"+v+"-"+ref+"-challenge-identified",
+          name: "san-"+v+"-"+ref+"-challenge-identified",
+          label: {
+            text: "How was this challenge identified?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          },
+          hint: {
+            text: "You can include triggers, signs they are struggling and when this happens"
+          },
+          value: data["san-"+v+"-"+ref+"-challenge-identified"]
+        }) }}
 
         {{ govukButton({
           text: "Continue"
