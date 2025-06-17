@@ -104,8 +104,8 @@ module.exports = function(router) {
       thisprisoner.needsSupport = [];
     }
     thisprisoner.needsSupport.push(newSupportEntry);
-    delete req.session.data["san-"+v+"-"+ref+"-support-category"];
-    delete req.session.data["san-"+v+"-"+ref+"-support-desc"];
+    //delete req.session.data["san-"+v+"-"+ref+"-support-category"];
+    //delete req.session.data["san-"+v+"-"+ref+"-support-desc"];
 
     res.redirect("/"+v+"/san/"+ref+"/profile");
   });
