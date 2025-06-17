@@ -1,0 +1,192 @@
+{% extends "/layouts/v3.html" %}
+
+{% set currentpage = "strengths" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/{{ v }}/">Digital Prison Services</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/{{ v }}/san/">Support for additional needs</a>
+        </li>
+      </ol>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+{% for prisoner in data['prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+  
+    <!-- TITLE PAGE + print-->
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs</h1>
+    </div>
+
+    <div class="govuk-grid-column-full">
+
+      {% if data['prevurl'] == "check-answers" %}
+        {{ mojAlert({
+          variant: "success",
+          title: "Education suppport plan created",
+          dismissible: false
+        }) }}
+      {% endif %}
+    
+      {% include "includes/san-miniprofile.html" %}
+
+    </div>
+  
+  </div>
+  <div class="govuk-grid-row">
+    
+    {% include "includes/san-subnav.html" %}
+
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">
+        Strengths
+      </h2>
+
+      {# set tracker for categories prisoner has content it #}
+      {% set cats = [] %}
+
+      {# Check if prisoner has any recorded needs #}
+      {%
+        if prisoner.needsStrengths
+      %}
+
+        {# Loop through all categories of need #}
+        {% for categories in data['categories'] %}
+
+          {# Loop through all strengths of prisoner #}
+          {% for needs in prisoner.needsStrengths %}
+            {# Check if needsSupport has an item in this category #}
+            {% if needs.needsStrengthCategory == categories.categoryName %}
+
+              {# Add this category to an array of categories associated with this prisoner #}
+              {% if not categories.categoryName in cats %}
+                {% set cats = (cats.push(categories.categoryName), cats) %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+        {% endfor %}
+
+        {% for cat in cats %}
+
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <header class="app-summary-card__header">
+              <h2 class="app-summary-card__title">
+                {{ cat }}
+              </h2>
+            </header>
+            <div class="app-summary-card__body">
+              <dl class="govuk-summary-list san-needs-list">
+              
+                {% set countStr = 0 %}
+                {# Loop through all support needs of prisoner #}
+                {% for needs in prisoner.needsStrengths %}
+                  {# Check if needsStrengths has an item in this category #}
+                  {% if needs.needsStrengthCategory == cat %}
+                    {% if countStr == 0 %}
+                    <!--div class="govuk-summary-list__row san-needs-list-header">
+                      <dt class="govuk-summary-list__key">
+                        Strengths
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                      </dd>
+                    </div-->
+                    {% endif %}
+                    {% set countStr = countStr + 1 %}
+
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                        {{ needs.needsStrengthDescription | safe }}
+                      </dt>
+                      <dd class="govuk-summary-list__value">
+                        <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
+                        <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
+                        <span class="govuk-body-s">Added {{ needs.needsStrengthDate }} by {{ needs.needsStrengthAuthor }}</span>
+                      </dd>
+                    </div>
+                
+                  {% endif %}
+                {% endfor %}
+
+              </dl>        
+
+            </div>
+          </section>
+          {% set countSup = 0 %}
+        {% endfor %}
+
+      {% else %}
+      
+        <section class="app-summary-card govuk-!-margin-bottom-6">
+          <div class="app-summary-card__body">
+            <p class="govuk-body govuk-!-margin-top-3">This prisoner has no strengths recorded.</p>
+          </div>
+        </section>
+
+      {% endif %}
+
+    </div>
+    
+    <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
+
+      <div class="hmpps-actions-block govuk-!-margin-bottom-5">
+        <ul class="hmpps-actions-block__list">
+          <li class="noflex">
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Education support plan</h3>
+            {% if data['prevurl'] == "check-answers" %}
+              <strong class="govuk-tag govuk-tag--green">
+                Plan created
+              </strong>
+            {% else %}
+              <strong class="govuk-tag govuk-tag--yellow">
+                Due in 5 days
+              </strong>
+            {% endif %}
+          </li>
+          {% if data['prevurl'] == "check-answers" %}
+          <li>
+            Review due by {{ data["san-"+v+"-create-reviewdate"] }}
+          </li>
+          {% else %}
+          <li>
+            <img src="/public/images/icon-create.png" alt="">
+            <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a-->
+            <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+          </li>
+          <li>
+            <img src="/public/images/icon-stamp.png" alt="">
+            <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Record refusal of education support plan</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    
+      {% include "includes/san-actions-add.html" %}
+
+    </div>
+  </div>
+
+</div>
+
+{% endif %}
+{% endfor %}
+
+{% endblock %}

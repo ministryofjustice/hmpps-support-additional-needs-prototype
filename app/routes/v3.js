@@ -29,9 +29,34 @@ module.exports = function(router) {
     next();
   });
 
+
+/********************
+ * Prisoner profile *
+ ********************/
+
   router.get("/"+v+"/san/:ref/profile/", function (req, res) {
     let ref = matchref(req);
     res.render("/"+v+"/san/profile/overview", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/profile/support-strategies", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/support/overview", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/profile/challenges", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/challenges/overview", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/profile/strengths", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/strengths/overview", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/profile/conditions", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/conditions/overview", {ref});
   });
 
 
