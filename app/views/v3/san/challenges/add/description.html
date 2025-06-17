@@ -23,7 +23,7 @@
           id: "san-"+v+"-"+ref+"-challenge-desc",
           name: "san-"+v+"-"+ref+"-challenge-desc",
           label: {
-            text: "Description of challenge for "+data["san-"+v+"-"+ref+"-challenge-category"],
+            text: "Description of challenge for "+data["san-"+v+"-"+ref+"-challenge-category"] | lower,
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           },
