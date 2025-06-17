@@ -59,6 +59,11 @@ module.exports = function(router) {
     res.render("/"+v+"/san/conditions/overview", {ref});
   });
 
+  router.get("/"+v+"/san/:ref/profile/plan", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/overview", {ref});
+  });
+
 
 /************************
  * Add support strategy *
