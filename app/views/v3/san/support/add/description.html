@@ -15,7 +15,7 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
   
-    <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-two-thirds">
       <form method="post">
         <span class="govuk-caption-l">Add support strategy</span>
         
@@ -23,7 +23,7 @@
           id: "san-"+v+"-"+ref+"-support-desc",
           name: "san-"+v+"-"+ref+"-support-desc",
           label: {
-            text: "Description of support strategy for "+data["san-"+v+"-"+ref+"-support-category"],
+            text: "Description of support strategy for "+data["san-"+v+"-"+ref+"-support-category"] | lower,
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           },
@@ -35,6 +35,11 @@
         }) }}
       
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third">
+
+      {% include "includes/san-aside-challenges.html" %}
+
     </div>
   </div>
 </div>

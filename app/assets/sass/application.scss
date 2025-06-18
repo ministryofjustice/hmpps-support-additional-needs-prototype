@@ -941,3 +941,10 @@ p,
     border-bottom: none;
   }
 }
+
+.govuk-grid-column-one-third .app-summary-card__body .govuk-heading-s {
+  margin-bottom: 10px;
+}
+.govuk-grid-column-one-third .app-summary-card__body p:last-of-type {
+  margin-bottom: 0;
+}

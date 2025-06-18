@@ -41,106 +41,15 @@
           dismissible: false
         }) }}
       {% endif %}
-
-      <!-- DPS MINI PROFILE -->
-      <div class="govuk-!-margin-bottom-6">
-        <div class="dps-mini-profile-header">
-            <!--  <img class="app-prisoner-photo" src="/public/images/desmond-photo.jpg" alt="Prisoner image"> -->
-            <dl>
-              <dt class="govuk-heading-s govuk-!-margin-bottom-0">
-                <a href="javascript:preventDefault();" class="govuk-link govuk-!-font-weight-bold">
-                  {{ prisoner.lastName }}, {{ prisoner.firstName }}
-                </a>
-              </dt>
-              <dd class="govuk-body">
-                  {{ prisoner.prisonerNumber}}
-              </dd>
-            </dl>
-            <dl>
-              <dt class="govuk-heading-s govuk-!-margin-bottom-0">Entered this prison on</dt>
-              <dd class="govuk-body">
-                {{ prisoner.enteredPrison }}
-              </dd>
-            </dl>
-            <dl>
-              <dt class="govuk-heading-s govuk-!-margin-bottom-0">Release date</dt>
-              <dd class="govuk-body">
-                {{ prisoner.releaseDate }}
-              </dd>
-            </dl>
-            <dl>
-              <dt class="govuk-heading-s govuk-!-margin-bottom-0">DOB</dt>
-              <dd class="govuk-body">
-                {{ prisoner.dateOfBirth }}
-              </dd>
-            </dl>
-        </div>
-      </div>
-      
+    
+      {% include "includes/san-miniprofile.html" %}
 
     </div>
   
   </div>
   <div class="govuk-grid-row">
-
-    <!-- TABS SUB NAVIGATION -->
-    <div class="govuk-grid-row govuk-!-margin-left-0 govuk-!-margin-right-0">
-      <div class="govuk-grid-column-full govuk-!-margin-left-0">
-        <nav class="moj-sub-navigation govuk-!-display-none-print" aria-label="Sub navigation">
-          <ul class="moj-sub-navigation__list ">
-
-            <li class="moj-sub-navigation__item">
-              {% if currentpage == "overview" %}
-                <a class="moj-sub-navigation__link" aria-current="page" href="/{{ v }}/san/profile/{{ ref }}/">Overview</a>
-              {% else %}
-                <a class="moj-sub-navigation__link" href="/{{ v }}/san/profile/{{ ref }}/">Overview</a>
-              {% endif %}
-            </li>
-            
-            <li class="moj-sub-navigation__item">
-              {% if currentpage == "additionalneeds" %}
-              <a class="moj-sub-navigation__link" aria-current="page" href="#">Support strategies</a>
-              {% else %}
-              <a class="moj-sub-navigation__link" href="#">Support strategies</a>
-              {% endif %}
-            </li>
-
-            <li class="moj-sub-navigation__item">
-              {% if currentpage == "conditions" %}
-                <a class="moj-sub-navigation__link" aria-current="page" href="#">Challenges</a>
-              {% else %}
-                <a class="moj-sub-navigation__link" href="#">Challenges</a>
-              {% endif %}
-            </li>
-
-            <li class="moj-sub-navigation__item">
-              {% if currentpage == "strengths" %}
-                <a class="moj-sub-navigation__link" aria-current="page" href="#">Strengths</a>
-              {% else %}
-                <a class="moj-sub-navigation__link" href="#">Strengths</a>
-              {% endif %}
-            </li>
-
-            <li class="moj-sub-navigation__item">
-              {% if currentpage == "strengths" %}
-                <a class="moj-sub-navigation__link" aria-current="page" href="#">Conditions</a>
-              {% else %}
-                <a class="moj-sub-navigation__link" href="#">Conditions</a>
-              {% endif %}
-            </li>
-          
-            <li class="moj-sub-navigation__item">
-              {% if currentpage == "support-plan" %}
-                <a class="moj-sub-navigation__link" aria-current="page" href="#">Education support plan</a>
-              {% else %}
-                <a class="moj-sub-navigation__link" href="#">Education support plan</a>
-              {% endif %}
-            </li>
-            
-          </ul>
-        </nav>
-      </div>
-    </div>
+    
+    {% include "includes/san-subnav.html" %}
 
   </div>
 
@@ -150,6 +59,10 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">
+        Overview
+      </h2>
 
         {# set tracker for categories prisoner has content it #}
         {% set cats = [] %}
@@ -306,6 +219,35 @@
                   
                     {% endif %}
                   {% endfor %}
+                
+                  {% set countALN = 0 %}
+                  {# Loop through all ALN screener results of prisoner #}
+                  {% for needs in prisoner.needsALNscreener %}
+                    {# Check if needsScreener has an item in this category #}
+                    {% if needs.needsALNscreenerCategory == cat %}
+                      {% if countALN == 0 %}
+                      <div class="govuk-summary-list__row san-needs-list-header">
+                        <dt class="govuk-summary-list__key govuk-!-padding-top-6">
+                          Additional learning needs screener result
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category" class="govuk-link--no-visited-state govuk-body-s">Add strength</a-->
+                        </dd>
+                      </div>
+                      {% endif %}
+                      {% set countALN = countALN + 1 %}
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                          {{ needs.needsALNscreenerDescription | safe }}
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <span class="govuk-body-s">Added {{ needs.needsALNscreenerDate }} by {{ needs.needsALNscreenerAuthor }}</span>
+                        </dd>
+                      </div>
+                  
+                    {% endif %}
+                  {% endfor %}
                 </dl>        
 
               </div>
@@ -316,11 +258,6 @@
         {% else %}
         
           <section class="app-summary-card govuk-!-margin-bottom-6">
-            <header class="app-summary-card__header">
-              <h2 class="app-summary-card__title">
-                Overview
-              </h2>
-            </header>
             <div class="app-summary-card__body">
               <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies, challenges, strengths or conditions recorded.</p>
             </div>
@@ -428,26 +365,8 @@
           {% endif %}
         </ul>
       </div>
-
-      <div class="hmpps-actions-block govuk-!-margin-bottom-5 govuk-!-padding-bottom-3">
-        <ul class="hmpps-actions-block__list">
-          <li class="noflex">
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Actions</h3>
-          </li>
-          <li class="noflex noborder profile-action-links govuk-!-margin-top-2">
-            <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category" class="govuk-link govuk-link--no-visited-state">Add support strategy</a>
-          </li>
-          <li class="noflex noborder profile-action-links">
-            <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-link govuk-link--no-visited-state">Add challenge</a>
-          </li>
-          <li class="noflex noborder profile-action-links">
-            <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category" class="govuk-link govuk-link--no-visited-state">Add strength</a>
-          </li>
-          <li class="noflex noborder profile-action-links">
-            <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Add condition</a>
-          </li>
-        </ul>
-      </div>
+    
+      {% include "includes/san-actions-add.html" %}
 
     </div>
   </div>

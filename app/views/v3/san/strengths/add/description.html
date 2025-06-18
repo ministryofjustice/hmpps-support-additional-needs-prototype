@@ -23,11 +23,25 @@
           id: "san-"+v+"-"+ref+"-strength-desc",
           name: "san-"+v+"-"+ref+"-strength-desc",
           label: {
-            text: "Description of strength for "+data["san-"+v+"-"+ref+"-strength-category"],
+            text: "Description of strength for "+data["san-"+v+"-"+ref+"-strength-category"] | lower,
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           },
           value: data["san-"+v+"-"+ref+"-strength-desc"]
+        }) }}
+        
+        {{ govukTextarea({
+          id: "san-"+v+"-"+ref+"-strength-identified",
+          name: "san-"+v+"-"+ref+"-strength-identified",
+          label: {
+            text: "How was this strength identified?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          },
+          hint: {
+            text: "For example did you observe something?"
+          },
+          value: data["san-"+v+"-"+ref+"-strength-identified"]
         }) }}
 
         {{ govukButton({

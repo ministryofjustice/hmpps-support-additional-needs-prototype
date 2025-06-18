@@ -26,68 +26,42 @@ module.exports = function(router) {
     if (res.locals.prevURL) {
       req.session.data["prevurl"] = res.locals.prevURL.substring(res.locals.prevURL.lastIndexOf('/') +1);
     }
-    // console.log('previous page is: ' + res.locals.prevURL + " and current page is " + req.url + " " + res.locals.currentURL );
     next();
   });
+
+
+/********************
+ * Prisoner profile *
+ ********************/
 
   router.get("/"+v+"/san/:ref/profile/", function (req, res) {
     let ref = matchref(req);
     res.render("/"+v+"/san/profile/overview", {ref});
   });
 
-
-/**
- * Create education support plan
- */
-
-  router.get("/"+v+"/san/:ref/plan/create/person-who-met", function (req, res) {
+  router.get("/"+v+"/san/:ref/profile/support-strategies", function (req, res) {
     let ref = matchref(req);
-    res.render("/"+v+"/san/plan/create/person-who-met", {ref});
+    res.render("/"+v+"/san/support/overview", {ref});
   });
 
-
-  router.post("/"+v+"/san/plan/create/person-who-met", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/other-people-consulted");
+  router.get("/"+v+"/san/:ref/profile/challenges", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/challenges/overview", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/other-people-consulted", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/review-needs");
+  router.get("/"+v+"/san/:ref/profile/strengths", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/strengths/overview", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/review-needs", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/teaching-adjustments");
+  router.get("/"+v+"/san/:ref/profile/conditions", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/conditions/overview", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/teaching-adjustments", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/environment-adjustments");
-  });
-
-  router.post("/"+v+"/san/plan/create/environment-adjustments", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/knowledge-skills");
-  });
-
-  router.post("/"+v+"/san/plan/create/knowledge-skills", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/exams-assessments");
-  });
-
-  router.post("/"+v+"/san/plan/create/exams-assessments", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/ehcp");
-  });
-
-  router.post("/"+v+"/san/plan/create/ehcp", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/lnsp-support");
-  });
-
-  router.post("/"+v+"/san/plan/create/lnsp-support", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/review-date");
-  });
-
-  router.post("/"+v+"/san/plan/create/review-date", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/check-answers");
-  });
-
-  router.post("/"+v+"/san/plan/create/check-answers", function (req, res) {
-    res.redirect("/"+v+"/san/profile/");
+  router.get("/"+v+"/san/:ref/profile/plan", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/overview", {ref});
   });
 
 
@@ -161,10 +135,12 @@ module.exports = function(router) {
 
     // convert line breaks to html
     let needsChallengeDescHTML = req.session.data["san-"+v+"-"+ref+"-challenge-desc"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let needsChallengeIdentifiedHTML = req.session.data["san-"+v+"-"+ref+"-challenge-identified"].replace(/(?:\r\n|\r|\n)/g, '<br>');
     // take challenge data and add it to the prisoner session data
     let newChallengeEntry = {
       needsChallengeCategory: req.session.data["san-"+v+"-"+ref+"-challenge-category"],
       needsChallengeDescription: needsChallengeDescHTML,
+      needsChallengeIdentified: needsChallengeIdentifiedHTML,
       needsChallengeDate: getFormattedDate(),
       needsChallengeAuthor: "W. Knight"
     };
@@ -174,8 +150,9 @@ module.exports = function(router) {
       thisprisoner.needsChallenges = [];
     }
     thisprisoner.needsChallenges.push(newChallengeEntry);
-    //delete req.session.data["san-"+v+"-"+ref+"-challenge-category"];
-    //delete req.session.data["san-"+v+"-"+ref+"-challenge-desc"];
+    delete req.session.data["san-"+v+"-"+ref+"-challenge-category"];
+    delete req.session.data["san-"+v+"-"+ref+"-challenge-desc"];
+    delete req.session.data["san-"+v+"-"+ref+"-challenge-identified"];
 
     res.redirect("/"+v+"/san/"+ref+"/profile");
   });
@@ -205,10 +182,12 @@ module.exports = function(router) {
 
     // convert line breaks to html
     let needsStrengthDescHTML = req.session.data["san-"+v+"-"+ref+"-strength-desc"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let needsStrengthIdentifiedHTML = req.session.data["san-"+v+"-"+ref+"-strength-identified"].replace(/(?:\r\n|\r|\n)/g, '<br>');
     // take support strategy data and add it to the prisoner session data
     let newStrengthEntry = {
       needsStrengthCategory: req.session.data["san-"+v+"-"+ref+"-strength-category"],
       needsStrengthDescription: needsStrengthDescHTML,
+      needsStrengthIdentified: needsStrengthIdentifiedHTML,
       needsStrengthDate: getFormattedDate(),
       needsStrengthAuthor: "W. Knight"
     };
@@ -218,11 +197,68 @@ module.exports = function(router) {
       thisprisoner.needsStrengths = [];
     }
     thisprisoner.needsStrengths.push(newStrengthEntry);
-    //delete req.session.data["san-"+v+"-"+ref+"-strength-category"];
-    //delete req.session.data["san-"+v+"-"+ref+"-strength-desc"];
+    delete req.session.data["san-"+v+"-"+ref+"-strength-category"];
+    delete req.session.data["san-"+v+"-"+ref+"-strength-desc"];
+    delete req.session.data["san-"+v+"-"+ref+"-strength-identified"];
 
     res.redirect("/"+v+"/san/"+ref+"/profile");
   });
+
+
+/**
+ * Create education support plan
+ */
+
+  router.get("/"+v+"/san/:ref/plan/create/person-who-met", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/person-who-met", {ref});
+  });
+
+
+  router.post("/"+v+"/san/plan/create/person-who-met", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/other-people-consulted");
+  });
+
+  router.post("/"+v+"/san/plan/create/other-people-consulted", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/review-needs");
+  });
+
+  router.post("/"+v+"/san/plan/create/review-needs", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/teaching-adjustments");
+  });
+
+  router.post("/"+v+"/san/plan/create/teaching-adjustments", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/environment-adjustments");
+  });
+
+  router.post("/"+v+"/san/plan/create/environment-adjustments", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/knowledge-skills");
+  });
+
+  router.post("/"+v+"/san/plan/create/knowledge-skills", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/exams-assessments");
+  });
+
+  router.post("/"+v+"/san/plan/create/exams-assessments", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/ehcp");
+  });
+
+  router.post("/"+v+"/san/plan/create/ehcp", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/lnsp-support");
+  });
+
+  router.post("/"+v+"/san/plan/create/lnsp-support", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/review-date");
+  });
+
+  router.post("/"+v+"/san/plan/create/review-date", function (req, res) {
+    res.redirect("/"+v+"/san/plan/create/check-answers");
+  });
+
+  router.post("/"+v+"/san/plan/create/check-answers", function (req, res) {
+    res.redirect("/"+v+"/san/profile/");
+  });
+
 
 
   module.exports = router;
