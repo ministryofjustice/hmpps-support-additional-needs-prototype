@@ -72,6 +72,7 @@
           if prisoner.needsSupport
           or prisoner.needsChallenges 
           or prisoner.needsStrengths
+          or prisoner.needsALNscreener
         %}
 
           {# Loop through all categories of need #}
@@ -103,6 +104,18 @@
             {% for needs in prisoner.needsStrengths %}
               {# Check if needsSupport has an item in this category #}
               {% if needs.needsStrengthCategory == categories.categoryName %}
+
+                {# Add this category to an array of categories associated with this prisoner #}
+                {% if not categories.categoryName in cats %}
+                  {% set cats = (cats.push(categories.categoryName), cats) %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {# Loop through all ALN screener results of prisoner #}
+            {% for needs in prisoner.needsALNscreener %}
+              {# Check if needsSupport has an item in this category #}
+              {% if needs.needsALNscreenerCategory == categories.categoryName %}
 
                 {# Add this category to an array of categories associated with this prisoner #}
                 {% if not categories.categoryName in cats %}
