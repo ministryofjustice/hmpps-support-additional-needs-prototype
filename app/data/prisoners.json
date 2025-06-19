@@ -21,7 +21,7 @@
             },
             {
                 "needsSupportCategory": "Memory",
-                "needsSupportDescription": "Ask to repeat back instructions to check he understands<br>Keep instructions clear and simple.<br>Break information down into small chunks<br>Remind him of appointments regularly<br>Remind him of previous conversations as he may not remember",
+                "needsSupportDescription": "Ask to repeat back instructions to check he understands<br>Keep instructions clear and simple<br>Break information down into small chunks<br>Remind him of appointments regularly<br>Remind him of previous conversations as he may not remember",
                 "needsSupportDate": "4 Jan 2025",
                 "needsSupportAuthor": "J. Smith"
             },
@@ -47,7 +47,7 @@
             },
             {
                 "needsChallengeCategory": "Memory",
-                "needsChallengeDescription": "Very forgetful - will not remember things unless reminded often<br>Loses things often<br>Struggles to remember instructions particularly, especially long ones<br>Forgets appointments unless reminded frequently<br>Forgets conversations and other things that happened in the past",
+                "needsChallengeDescription": "Very forgetful - will not remember things unless reminded often<br>Loses things often<br>Struggles to remember instructions, especially long ones<br>Forgets appointments unless reminded frequently<br>Forgets conversations and other things that happened in the past",
                 "needsChallengeDate": "4 Jan 2025",
                 "needsChallengeAuthor": "J. Smith"
             },
@@ -79,7 +79,7 @@
             },
             {
                 "needsStrengthCategory": "Memory",
-                "needsStrengthDescription": "Knows how to help himself with coping techniques  eg tapping his arms helps him to remember words",
+                "needsStrengthDescription": "Knows how to help himself with coping techniques eg tapping his arms helps him to remember words",
                 "needsStrengthDate": "4 Jan 2025",
                 "needsStrengthAuthor": "J. Smith"
             },
@@ -135,7 +135,7 @@
             },
             {
                 "needsALNscreenerCategory": "Emotions and feelings",
-                "needsALNscreenerDescription": "Strengths: Empathy ",
+                "needsALNscreenerDescription": "Strengths: Empathy",
                 "needsALNscreenerDate": "28 Sep 2024",
                 "needsALNscreenerAuthor": "M. Warner"
             },
@@ -155,8 +155,8 @@
     },
     {
         "prisonerNumber": "A8545DY",
-        "firstName": "Carter",
-        "lastName": "  Andrew",
+        "firstName": "Andrew",
+        "lastName": "Carter",
         "dateOfBirth": "17 Aug 1976",
         "enteredPrison": "28 May 2024",
         "releaseDate": "1 Jul 2026",
@@ -169,7 +169,13 @@
         "needsSupport": [
             {
                 "needsSupportCategory": "Emotions and feelings",
-                "needsSupportDescription": "Use simple words<br>Take things at a slow pace<br>Give them time - they may take several attempts to get something right so be patient<br>Is a visual learner - tell them how to do something first<br>Talk them through instructions rather than writing them down<br>Get them to repeat things back so you know they have understood<br>Break things down - give them smaller, achievable targets<br>Give them things in writing after meetings to take away - use simple language and large fonts<br>Manage their expectations - if something gets cancelled, explain why as they will not understand and become frustrated<br>Include a picture of a clock on appointment slips as well as writing the appointment in 12 hour clock eg, 'your appointment is at 1.30pm on Friday afternoon.'",
+                "needsSupportDescription": "Use simple words<br>Take things at a slow pace<br>Give them time - they may take several attempts to get something right so be patient<br>Get them to repeat things back so you know they have understood<br>Break things down - give them smaller, achievable targets<br>Manage their expectations - if something gets cancelled, explain why as they will not understand and become frustrated ",
+                "needsSupportDate": "10 Feb 2025",
+                "needsSupportAuthor": "J. Smith"
+            },
+            {
+                "needsSupportCategory": "Literacy skills",
+                "needsSupportDescription": "Give them things in writing after meetings to take away - use simple language and large fonts<br>Is a visual learner - tell them how to do something first<br>Talk them through instructions rather than writing them down<br>Include a picture of a clock on appointment slips (where possible) as well as writing the time in",
                 "needsSupportDate": "10 Feb 2025",
                 "needsSupportAuthor": "J. Smith"
             }
@@ -337,6 +343,75 @@
         "indeterminateSentence": false
     },
     {
+        "prisonerNumber": "A8659DY",
+        "firstName": "Anthony",
+        "lastName": " Hamilton",
+        "dateOfBirth": "1 Jan 2001",
+        "enteredPrison": "28 May 2024",
+        "releaseDate": "1 Jul 2026",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false
+    },
+    {
+        "prisonerNumber": "A8773DY",
+        "firstName": "Ryan",
+        "lastName": " Holmes",
+        "dateOfBirth": "22 Aug 1991",
+        "enteredPrison": "22 April 2022",
+        "releaseDate": "N/A",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due"
+    },
+    {
+        "prisonerNumber": "A8494DY",
+        "firstName": "Laurence",
+        "lastName": " Miller",
+        "dateOfBirth": "1 Jan 2005",
+        "enteredPrison": "28 May 2024",
+        "releaseDate": "1 Jul 2026",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due"
+    },
+    {
+        "prisonerNumber": "A9420DY",
+        "firstName": "Jamie",
+        "lastName": " Ross",
+        "dateOfBirth": "12 Apr 1998",
+        "enteredPrison": "20 Oct 2022",
+        "releaseDate": "N/A",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due"
+    },
+    {
+        "prisonerNumber": "A8689DY",
+        "firstName": "John",
+        "lastName": " Turner",
+        "dateOfBirth": "27 Sep 1983",
+        "enteredPrison": "9 May 2022",
+        "releaseDate": "N/A",
+        "prisonId": "BXI",
+        "cellLocation": "A-2-015",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due"
+    },
+    {
         "prisonerNumber": "A8560DY",
         "firstName": "Nigel",
         "lastName": "  Walker",
@@ -348,32 +423,5 @@
         "legalStatus": "SENTENCED",
         "recall": false,
         "indeterminateSentence": false
-    },
-    {
-        "prisonerNumber": "A8659DY",
-        "firstName": "Anthony",
-        "lastName": " Alexander",
-        "dateOfBirth": "1 Jan 2001",
-        "enteredPrison": "28 May 2024",
-        "releaseDate": "1 Jul 2026",
-        "prisonId": "BXI",
-        "cellLocation": "RECP",
-        "legalStatus": "SENTENCED",
-        "recall": false,
-        "indeterminateSentence": false
-    },
-    {
-        "prisonerNumber": "A8494DY",
-        "firstName": "Laurence",
-        "lastName": " Armstrong",
-        "dateOfBirth": "1 Jan 2005",
-        "enteredPrison": "28 May 2024",
-        "releaseDate": "1 Jul 2026",
-        "prisonId": "BXI",
-        "cellLocation": "RECP",
-        "legalStatus": "SENTENCED",
-        "recall": false,
-        "indeterminateSentence": false,
-        "planStatus": "Due"
     }
 ]

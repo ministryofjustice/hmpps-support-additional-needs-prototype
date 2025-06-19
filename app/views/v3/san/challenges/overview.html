@@ -133,42 +133,9 @@
     </div>
     
     <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
-
-      <div class="hmpps-actions-block govuk-!-margin-bottom-5">
-        <ul class="hmpps-actions-block__list">
-          <li class="noflex">
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Education support plan</h3>
-            {% if data['prevurl'] == "check-answers" %}
-              <strong class="govuk-tag govuk-tag--green">
-                Plan created
-              </strong>
-            {% else %}
-              <strong class="govuk-tag govuk-tag--yellow">
-                Due in 5 days
-              </strong>
-            {% endif %}
-          </li>
-          {% if data['prevurl'] == "check-answers" %}
-          <li>
-            Review due by {{ data["san-"+v+"-create-reviewdate"] }}
-          </li>
-          {% else %}
-          <li>
-            <img src="/public/images/icon-create.png" alt="">
-            <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a-->
-            <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
-          </li>
-          <li>
-            <img src="/public/images/icon-stamp.png" alt="">
-            <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Record refusal of education support plan</a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-    
       {% include "includes/san-actions-add.html" %}
-
     </div>
+
   </div>
 
 </div>

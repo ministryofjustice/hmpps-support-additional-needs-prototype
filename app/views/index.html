@@ -10,15 +10,15 @@
           
           <h2 class="govuk-heading-m">Version 3
             {{ govukTag({
-              classes: "govuk-tag--red govuk-!-static-margin-left-3",
-              text: "WIP"
+              classes: "govuk-tag--yellow govuk-!-static-margin-left-3",
+              text: "Ready for UR"
             }) }}
           </h2>
           <h3 class="govuk-heading-s">Iterations from previous version</h3>
           <ul class="govuk-list govuk-list--bullet">
-            <li>Prototype is now data driven (only 6 'patchy' demo prisoner records currently exist)</li>
+            <li>Prototype is now data driven (with 2 specific scenarios for UR)</li>
             <li>Ability to add support startegies, challenges and strengths from prisoner overview screen</li>
-            <li>All 'add journeys' will save data to the session and displayed in prototype</li>
+            <li>All functioning 'add journeys' will save data to the session and displayed in prototype</li>
             <li>Sub-navigation added within SAN to switch between Overview, Support strategies, Challenges, Strengths, Conditions, and Education support plan</li>
           </ul>
           <h3 class="govuk-heading-s">Limitations</h3>
@@ -26,6 +26,7 @@
             <li>Search bars are not functional</li>
             <li>"Create education support plan" journey is disabled</li>
             <li>No functionality to edit or archive support strategies, challenges or strengths</li>
+            <li>No functionality for conditions</li>
           </ul>
           {{ govukButton({
             href: "v3/",
