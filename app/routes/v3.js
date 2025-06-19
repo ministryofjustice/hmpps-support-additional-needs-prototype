@@ -214,7 +214,6 @@ module.exports = function(router) {
     res.render("/"+v+"/san/plan/create/person-who-met", {ref});
   });
 
-
   router.post("/"+v+"/san/plan/create/person-who-met", function (req, res) {
     res.redirect("/"+v+"/san/plan/create/other-people-consulted");
   });
@@ -254,12 +253,11 @@ module.exports = function(router) {
   router.post("/"+v+"/san/plan/create/review-date", function (req, res) {
     res.redirect("/"+v+"/san/plan/create/check-answers");
   });
-
+/*
   router.post("/"+v+"/san/plan/create/check-answers", function (req, res) {
-    res.redirect("/"+v+"/san/profile/");
+    res.redirect("/"+v+"/san/"+req.session.data["goto"]+"/profile");
   });
-
-
+*/
 
   module.exports = router;
 

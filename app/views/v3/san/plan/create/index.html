@@ -19,16 +19,12 @@
   
     <!-- TITLE PAGE + print-->
     <div class="govuk-grid-column-three-quarters">
-      <span class="govuk-caption-l">Create an education support plan</span>
-      
-      {% from "govuk/components/radios/macro.njk" import govukRadios %}
-      {% from "govuk/components/input/macro.njk" import govukInput %}
-      
+      <span class="govuk-caption-l">Create an education support plan</span>      
 
       {% set detailsHtml %}
         {{ govukInput({
-          id: "san-"+v+"-"+ref+"-create-personwhomet-name",
-          name: "san-"+v+"-"+ref+"-create-personwhomet-name",
+          id: "san-"+v+"-create-personwhomet-name",
+          name: "san-"+v+"-create-personwhomet-name",
           type: "text",
           spellcheck: false,
           classes: "govuk-!-width-one-third",
@@ -37,8 +33,8 @@
           }
         }) }}
         {{ govukInput({
-          id: "san-"+v+"-"+ref+"-create-personwhomet-jobrole",
-          name: "san-"+v+"-"+ref+"-create-personwhomet-jobrole",
+          id: "san-"+v+"-create-personwhomet-jobrole",
+          name: "san-"+v+"-create-personwhomet-jobrole",
           type: "text",
           spellcheck: false,
           classes: "govuk-!-width-one-third",
@@ -49,7 +45,7 @@
       {% endset -%}
 
       {{ govukRadios({
-        name: "san-"+v+"-"+ref+"-create-personwhomet",
+        name: "san-"+v+"-create-personwhomet",
         fieldset: {
           legend: {
             text: "Are you the person who met with Chris Atkinson?",
