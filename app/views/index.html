@@ -8,9 +8,30 @@
         <div class="govuk-!-padding-bottom-6"></div>
         <div class="govuk-grid-column-two-thirds">
           
+          <h2 class="govuk-heading-m">Version 4
+            {{ govukTag({
+              classes: "govuk-tag--red govuk-!-static-margin-left-3",
+              text: "WIP"
+            }) }}
+          </h2>
+          <h3 class="govuk-heading-s">Iterations from previous version</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>...</li>
+          </ul>
+          <h3 class="govuk-heading-s">Limitations</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Search bars are not functional</li>
+          </ul>
+          {{ govukButton({
+            href: "v4/",
+            text: "View v4 prototype"
+          }) }}
+          
+          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+          
           <h2 class="govuk-heading-m">Version 3
             {{ govukTag({
-              classes: "govuk-tag--yellow govuk-!-static-margin-left-3",
+              classes: "govuk-tag--green govuk-!-static-margin-left-3",
               text: "Ready for UR"
             }) }}
           </h2>
@@ -24,21 +45,21 @@
           <h3 class="govuk-heading-s">Limitations</h3>
           <ul class="govuk-list govuk-list--bullet">
             <li>Search bars are not functional</li>
-            <li>"Create education support plan" journey is disabled</li>
+            <li>"Create education support plan" only works for 'Chris Atkinson'</li>
             <li>No functionality to edit or archive support strategies, challenges or strengths</li>
             <li>No functionality for conditions</li>
           </ul>
           {{ govukButton({
             href: "v3/",
-            text: "View V3 prototype"
+            text: "View v3 prototype"
           }) }}
           
           <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
           
           <h2 class="govuk-heading-m">Version 2
             {{ govukTag({
-              classes: "govuk-tag--green govuk-!-static-margin-left-3",
-              text: "Ready for UR"
+              classes: "govuk-!-static-margin-left-3",
+              text: "Archived"
             }) }}
           </h2>
           <p class="govuk-hint">Conversion of Figma designs into usable prototype</p>
@@ -58,7 +79,7 @@
           </ul>
           {{ govukButton({
             href: "v2/",
-            text: "View V2 prototype"
+            text: "View v2 prototype"
           }) }}
           <p class="govuk-body-s"><a href="https://www.figma.com/design/RoxQOu1FjRQGFnbmMThdRh/Additional-Support-Needs?node-id=500-11828" class="govuk-link">V2 and related designs in Figma</a></p>
     

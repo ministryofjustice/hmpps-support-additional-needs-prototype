@@ -1,4 +1,4 @@
-{% extends "/layouts/v3.html" %}
+{% extends "/layouts/v4.html" %}
 
 {% block beforeContent %}
   <div class="govuk-width-container ">
@@ -15,15 +15,15 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
   
-    <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-two-thirds">
       <form method="post">
-        <span class="govuk-caption-l">Add challenge</span>
+        <span class="govuk-caption-l">Add support strategy</span>
 
         {{ govukRadios({
-          name: "san-"+v+"-"+ref+"-challenge-category",
+          name: "san-"+v+"-"+ref+"-support-category",
           fieldset: {
             legend: {
-              text: "Select a category for this challenge",
+              text: "Select a category for this support recommendation",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
@@ -32,7 +32,7 @@
             {
               value: "Literacy skills",
               text: "Literacy skills",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Literacy skills"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Literacy skills"),
               hint: {
                 text: "Things like reading, writing and spelling"
               }
@@ -40,7 +40,7 @@
             {
               value: "Numeracy skills",
               text: "Numeracy skills",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Numeracy skills"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Numeracy skills"),
               hint: {
                 text: "Things like maths and managing money"
               }
@@ -48,7 +48,7 @@
             {
               value: "Attention, organising and time management",
               text: "Attention, organising and time management",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Attention, organising and time management"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Attention, organising and time management"),
               hint: {
                 text: "Things like planning, task management, tidiness and focus"
               }
@@ -56,7 +56,7 @@
             {
               value: "Memory",
               text: "Memory",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Memory"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Memory"),
               hint: {
                 text: "Things like remembering and recalling information "
               }
@@ -64,7 +64,7 @@
             {
               value: "Processing speed",
               text: "Processing speed",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Processing speed"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Processing speed"),
               hint: {
                 text: "Things like taking time to understand and follow instructions"
               }
@@ -72,7 +72,7 @@
             {
               value: "Language and communication skills",
               text: "Language and communication skills",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Language and communication skills"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Language and communication skills"),
               hint: {
                 text: "Things like taking turns, listening and language fluency"
               }
@@ -80,7 +80,7 @@
             {
               value: "Emotions and feelings",
               text: "Emotions and feelings",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Emotions and feelings"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Emotions and feelings"),
               hint: {
                 text: "Things like confidence, empathy, managing emotions and impulses"
               }
@@ -88,7 +88,7 @@
             {
               value: "Physical skills and coordination",
               text: "Physical skills and coordination",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Physical skills and coordination"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Physical skills and coordination"),
               hint: {
                 text: "Things like learning new skills, co-ordination, stamina and fine motor skills"
               }
@@ -96,10 +96,18 @@
             {
               value: "Sensory",
               text: "Sensory",
-              checked: checked("san-"+v+"-"+ref+"-challenge-category","Sensory"),
+              checked: checked("san-"+v+"-"+ref+"-support-category","Sensory"),
               hint: {
                 text: "Things like reacting to some environments or situations eg noise or being touched"
               }
+            },
+            {
+              divider: "or"
+            },
+            {
+              value: "General support need",
+              text: "General support need",
+              checked: checked("san-"+v+"-"+ref+"-support-category","General support need")
             }
           ]
         }) }}
@@ -110,6 +118,12 @@
       
       </form>
     </div>
+    <div class="govuk-grid-column-one-third">
+
+      {% include "includes/"+v+"/san-aside-challenges.html" %}
+
+    </div>
+
   </div>
 </div>
 

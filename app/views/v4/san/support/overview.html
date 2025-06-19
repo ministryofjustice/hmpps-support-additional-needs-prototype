@@ -1,6 +1,6 @@
-{% extends "/layouts/v3.html" %}
+{% extends "/layouts/v4.html" %}
 
-{% set currentpage = "strengths" %}
+{% set currentpage = "supportstrategies" %}
 
 {% block beforeContent %}
   <div class="govuk-width-container ">
@@ -41,8 +41,8 @@
           dismissible: false
         }) }}
       {% endif %}
-    
-      {% include "includes/"+v+"/san-miniprofile.html" %}
+
+      {% include "includes/"+v+"/san-miniprofile.html" %}      
 
     </div>
   
@@ -57,7 +57,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h2 class="govuk-heading-m">
-        Strengths
+        Support strategies
       </h2>
 
       {# set tracker for categories prisoner has content it #}
@@ -65,17 +65,16 @@
 
       {# Check if prisoner has any recorded needs #}
       {%
-        if prisoner.needsStrengths
+        if prisoner.needsSupport
       %}
 
         {# Loop through all categories of need #}
         {% for categories in data[v+'categories'] %}
 
-          {# Loop through all strengths of prisoner #}
-          {% for needs in prisoner.needsStrengths %}
+          {# Loop through all support needs of prisoner #}
+          {% for needs in prisoner.needsSupport %}
             {# Check if needsSupport has an item in this category #}
-            {% if needs.needsStrengthCategory == categories.categoryName %}
-
+            {% if needs.needsSupportCategory == categories.categoryName %}
               {# Add this category to an array of categories associated with this prisoner #}
               {% if not categories.categoryName in cats %}
                 {% set cats = (cats.push(categories.categoryName), cats) %}
@@ -96,36 +95,26 @@
             <div class="app-summary-card__body">
               <dl class="govuk-summary-list san-needs-list">
               
-                {% set countStr = 0 %}
-                {# Loop through all support needs of prisoner #}
-                {% for needs in prisoner.needsStrengths %}
-                  {# Check if needsStrengths has an item in this category #}
-                  {% if needs.needsStrengthCategory == cat %}
-                    {% if countStr == 0 %}
-                    <!--div class="govuk-summary-list__row san-needs-list-header">
-                      <dt class="govuk-summary-list__key">
-                        Strengths
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                      </dd>
-                    </div-->
-                    {% endif %}
-                    {% set countStr = countStr + 1 %}
+                {% set countSup = 0 %}
+                {% for needs in prisoner.needsSupport %}
+                  {# Check if needsSupport has an item in this category #}
+                  {% if needs.needsSupportCategory == cat %}
+                    {% set countSup = countSup + 1 %}
 
                     <div class="govuk-summary-list__row">
                       <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                        {{ needs.needsStrengthDescription | safe }}
+                        {{ needs.needsSupportDescription | safe }}
                       </dt>
                       <dd class="govuk-summary-list__value">
                         <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
-                        <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
-                        <span class="govuk-body-s">Added {{ needs.needsStrengthDate }} by {{ needs.needsStrengthAuthor }}</span>
+                        <p  class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
+                        <span class="govuk-body-s">Added {{ needs.needsSupportDate }} by {{ needs.needsSupportAuthor }}</span>
                       </dd>
                     </div>
-                
+
                   {% endif %}
                 {% endfor %}
-
+                
               </dl>        
 
             </div>
@@ -137,7 +126,7 @@
       
         <section class="app-summary-card govuk-!-margin-bottom-6">
           <div class="app-summary-card__body">
-            <p class="govuk-body govuk-!-margin-top-3">This prisoner has no strengths recorded.</p>
+            <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies recorded.</p>
           </div>
         </section>
 
@@ -148,7 +137,7 @@
     <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
       {% include "includes/"+v+"/san-actions-add.html" %}
     </div>
-    
+
   </div>
 
 </div>
