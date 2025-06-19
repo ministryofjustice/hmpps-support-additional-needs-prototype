@@ -205,6 +205,21 @@ module.exports = function(router) {
   });
 
 
+  /*****************
+   * Add condition *
+   *****************/
+  
+    router.get("/"+v+"/san/:ref/conditions/add", function (req, res){
+      let ref = matchref(req);
+      res.render("/"+v+"/san/conditions/add", {ref});
+    });
+  
+    router.get("/"+v+"/san/:ref/conditions/add-split", function (req, res){
+      let ref = matchref(req);
+      res.render("/"+v+"/san/conditions/add-split", {ref});
+    });
+
+
 /**
  * Create education support plan
  */

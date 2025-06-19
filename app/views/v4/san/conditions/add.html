@@ -1,0 +1,337 @@
+{% extends "/layouts/v4.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <form method="post">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Add condition</span>
+        <h2 class="govuk-heading-l">
+          What self-declared or diagnosed condition do you want to record for Chris Atkinson?
+        </h2>
+        <div class='govuk-warning-text'>
+          <span class='govuk-warning-text__icon' aria-hidden='true'>!</span>
+          <strong class='govuk-warning-text__text'>
+            <span class='govuk-visually-hidden'>Warning</span>
+            You must have Chris Atkinson's consent to share this information
+          </strong>
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+    
+      <div class="govuk-grid-column-one-half">
+          
+          {% set learningDisabilitesHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-learningdisabilities",
+            name: "san-"+v+"-"+ref+"-conditions-learningdisabilities",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set mentalHealthHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-mentalhealth",
+            name: "san-"+v+"-"+ref+"-conditions-mentalhealth",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set neurodegenerativeHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-neurodegenerative",
+            name: "san-"+v+"-"+ref+"-conditions-neurodegenerative",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set dexterityHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-dexterity",
+            name: "san-"+v+"-"+ref+"-conditions-dexterity",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set visualImpairmentHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-visualimpairment",
+            name: "san-"+v+"-"+ref+"-conditions-visualimpairment",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set disabilitesHealthHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-disabiliteshealth",
+            name: "san-"+v+"-"+ref+"-conditions-disabiliteshealth",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set languageSpeechCommHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-languagespeech",
+            name: "san-"+v+"-"+ref+"-conditions-languagespeech",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set learningDifficultiesHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-learningdifficulties",
+            name: "san-"+v+"-"+ref+"-conditions-learningdifficulties",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set longTermMedicalHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-longtermmedical",
+            name: "san-"+v+"-"+ref+"-conditions-longtermmedical",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {% set neurologicalHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-conditions-neurological",
+            name: "san-"+v+"-"+ref+"-conditions-neurological",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Add details"
+            }
+          }) }}
+          {% endset -%}
+          
+          {{ govukCheckboxes({
+            name: "san-"+v+"-"+ref+"-conditions",
+            classes: "govuk-checkboxes--small list-conditions",
+            hint: {
+              text: "Select all that apply"
+            },
+            items: [
+              {
+                value: "Acquired brain injury",
+                text: "Acquired brain injury",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Acquired brain injury")
+              },
+              {
+                value: "Attention deficit hyperactivity disorder (ADHD or ADD)",
+                text: "Attention deficit hyperactivity disorder (ADHD or ADD)",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Attention deficit hyperactivity disorder (ADHD or ADD)")
+              },
+              {
+                value: "Autism spectrum disorder",
+                text: "Autism spectrum disorder",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Autism spectrum disorder")
+              },
+              {
+                value: "Developmental language disorder",
+                text: "Developmental language disorder",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Developmental language disorder")
+              },
+              {
+                value: "Down's syndrome",
+                text: "Down's syndrome",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Down's syndrome")
+              },
+              {
+                value: "Dyscalculia",
+                text: "Dyscalculia",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Dyscalculia")
+              },
+              {
+                value: "Dyslexia",
+                text: "Dyslexia",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Dyslexia")
+              },
+              {
+                value: "Dyspraxia or developmental coordination disorder",
+                text: "Dyspraxia or developmental coordination disorder",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Dyspraxia or developmental coordination disorder")
+              },
+              {
+                value: "Foetal alcohol spectrum disorder",
+                text: "Foetal alcohol spectrum disorder",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Foetal alcohol spectrum disorder")
+              },
+              {
+                value: "Hearing impairment",
+                text: "Hearing impairment",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Hearing impairment")
+              },
+              {
+                value: "Learning disabilities",
+                text: "Learning disabilities",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Learning disabilities"),
+                conditional: {
+                  html: learningDisabilitesHtml
+                }
+              },
+              {
+                value: "Mental health condition",
+                text: "Mental health condition",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Mental health condition"),
+                conditional: {
+                  html: mentalHealthHtml
+                }
+              },
+              {
+                value: "Neurodegenerative condition",
+                text: "Neurodegenerative condition",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Neurodegenerative condition"),
+                conditional: {
+                  html: neurodegenerativeHtml
+                }
+              },
+              {
+                value: "Restricted mobility or dexterity condition",
+                text: "Restricted mobility or dexterity condition",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Restricted mobility or dexterity condition"),
+                conditional: {
+                  html: dexterityHtml
+                }
+              },
+              {
+                value: "Tourette's syndrome or tic disorder",
+                text: "Tourette's syndrome or tic disorder",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Tourette's syndrome or tic disorder")
+              },
+              {
+                value: "Visual impairment",
+                text: "Visual impairment",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Visual impairment"),
+                conditional: {
+                  html: visualImpairmentHtml
+                }
+              }
+            ]
+          }) }}
+        
+        </div>
+        <div class="govuk-grid-column-one-half">
+          
+          {{ govukCheckboxes({
+            name: "san-"+v+"-"+ref+"-otherconditions",
+            classes: "govuk-checkboxes--small list-conditions",
+            hint: {
+              text: "Or any other:"
+            },
+            items: [
+              {
+                value: "Disabilities or health conditions",
+                text: "Disabilities or health conditions",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Disabilities or health conditions"),
+                conditional: {
+                  html: disabilitesHealthHtml
+                }
+              },
+              {
+                value: "Language, speech or communication disorders",
+                text: "Language, speech or communication disorders",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Language, speech or communication disorders"),
+                conditional: {
+                  html: languageSpeechCommHtml
+                }
+              },
+              {
+                value: "Learning difficulties",
+                text: "Learning difficulties",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Learning difficulties"),
+                conditional: {
+                  html: learningDifficultiesHtml
+                }
+              },
+              {
+                value: "Long term medical conditions",
+                text: "Long term medical conditions",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Long term medical conditions"),
+                conditional: {
+                  html: longTermMedicalHtml
+                }
+              },
+              {
+                value: "Neurological conditions",
+                text: "Neurological conditions",
+                checked: checked("san-"+v+"-"+ref+"-conditions","Neurological conditions"),
+                conditional: {
+                  html: neurologicalHtml
+                }
+              }
+            ]
+          }) }}
+        
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+          {{ govukButton({
+            text: "Continue"
+          }) }}
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
