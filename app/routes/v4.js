@@ -213,10 +213,79 @@ module.exports = function(router) {
       let ref = matchref(req);
       res.render("/"+v+"/san/conditions/add", {ref});
     });
-  
-    router.get("/"+v+"/san/:ref/conditions/add-split", function (req, res){
+/*
+    router.get("/"+v+"/san/:ref/conditions/add-alt", function (req, res){
       let ref = matchref(req);
-      res.render("/"+v+"/san/conditions/add-split", {ref});
+      res.render("/"+v+"/san/conditions/add-alt", {ref});
+    });
+*/
+    router.post("/"+v+"/san/:ref/conditions/add", function (req, res) {
+      let ref = matchref(req);
+      let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
+      thisprisoner.conditions = [];
+      thisprisoner.otherConditions = [];
+
+      if (req.session.data["san-"+v+"-"+ref+"-conditions"]){
+
+        if (req.session.data["san-" + v + "-" + ref + "-conditions"]) {
+          const selectedConditions = req.session.data["san-" + v + "-" + ref + "-conditions"];
+          const fullConditionList = req.session.data[v + "conditionlist"] || [];
+        
+          selectedConditions.forEach((selectedConditionName) => {
+            // Find the matching condition from the full list
+            const matchingCondition = fullConditionList.find(
+              (cond) => cond.conditionName === selectedConditionName
+            );
+        
+            if (matchingCondition) {
+              const newConditionEntry = {
+                conditionName: selectedConditionName,
+                conditionDate: getFormattedDate(),
+                conditionAuthor: "W. Knight"
+              };
+        
+              // If it needs extra detail, try to get it from the session data
+              if (matchingCondition.conditionDetail && matchingCondition.conditionID) {
+                const detailFieldName = `san-${v}-${ref}-conditions-${matchingCondition.conditionID}`;
+                const detailValue = req.session.data[detailFieldName];
+        
+                if (detailValue && detailValue.trim() !== "") {
+                  newConditionEntry.conditionDetail = detailValue.trim();
+                }
+              }
+        
+              thisprisoner.conditions.push(newConditionEntry);
+            }
+          });
+        }
+      }
+/*
+      if (req.session.data["san-"+v+"-"+ref+"-otherconditions"]){
+        let countOtherCon = 0;
+        let existingOtherConditions = thisprisoner.otherConditions.map(c => c.otherConditionName);
+        while (countOtherCon < req.session.data["san-"+v+"-"+ref+"-otherconditions"].length) {
+          let currentOtherCondition = req.session.data["san-" + v + "-" + ref + "-otherconditions"][countOtherCon];
+          if (!existingConditions.includes(currentOtherCondition)) {
+            let newOtherConditionEntry = {
+              otherConditionName: req.session.data["san-"+v+"-"+ref+"-otherconditions"][countOtherCon],
+              otherConditionDate: getFormattedDate(),
+              otherConditionAuthor: "W. Knight"
+            };
+            thisprisoner.conditions.push(newOtherConditionEntry);
+          }
+          countOtherCon++;
+        }
+      }
+*/
+      delete req.session.data["san-"+v+"-"+ref+"-conditions"];
+      delete req.session.data["san-"+v+"-"+ref+"-conditions-learningdisabilities"];
+      delete req.session.data["san-"+v+"-"+ref+"-conditions-mentalhealth"];
+      delete req.session.data["san-"+v+"-"+ref+"-conditions-neurodegenerative"];
+      delete req.session.data["san-"+v+"-"+ref+"-conditions-restrictedmobility"];
+      delete req.session.data["san-"+v+"-"+ref+"-conditions-visualimpairment"];
+      //delete req.session.data["san-"+v+"-"+ref+"-otherconditions"];
+
+      res.redirect("/"+v+"/san/"+ref+"/profile");
     });
 
 

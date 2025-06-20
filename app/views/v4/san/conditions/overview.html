@@ -58,67 +58,38 @@
         Conditions
       </h2>
 
-        {# set tracker for categories prisoner has content it #}
-        {% set cats = [] %}
+        {# Check if prisoner has any recorded conditions #}
+        {% if prisoner.conditions %}
 
-        {# Check if prisoner has any recorded challenges #}
-        {%
-          if prisoner.needsConditions
-        %}
+        <section class="app-summary-card govuk-!-margin-bottom-6">
+          <!--header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">
+              {{ cat }}
+            </h2>
+          </header-->
+          <div class="app-summary-card__body">
+            <dl class="govuk-summary-list san-needs-list">
+              {# Loop through all conditions of prisoner #}
+              {% for condition in prisoner.conditions %}
 
-          {# Loop through all categories of need #}
-          {% for categories in data[v+'categories'] %}
-
-            {# Loop through all challenges of prisoner #}
-            {% for needs in prisoner.needsConditions %}
-              {# Check if needsSupport has an item in this category #}
-              {% if needs.needsonditionCategory == categories.categoryName %}
-                {# Add this category to an array of categories associated with this prisoner #}
-                {% if not categories.categoryName in cats %}
-                  {% set cats = (cats.push(categories.categoryName), cats) %}
-                {% endif %}
-              {% endif %}
-            {% endfor %}
-
-          {% endfor %}
-
-          {% for cat in cats %}
-
-            <section class="app-summary-card govuk-!-margin-bottom-6">
-              <header class="app-summary-card__header">
-                <h2 class="app-summary-card__title">
-                  {{ cat }}
-                </h2>
-              </header>
-              <div class="app-summary-card__body">
-                <dl class="govuk-summary-list san-needs-list">
-                
-                  {% set countCha = 0 %}
-                  {# Loop through all support needs of prisoner #}
-                  {% for needs in prisoner.needsConditions %}
-                    {# Check if needsConditions has an item in this category #}
-                    {% if needs.needsonditionCategory == cat %}
-                      {% set countCha = countCha + 1 %}
-
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                          {{ needs.needsonditionDescription | safe }}
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                          <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
-                          <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
-                          <span class="govuk-body-s">Added {{ needs.needsonditionDate }} by {{ needs.needsonditionAuthor }}</span>
-                        </dd>
-                      </div>
-                  
+                <div class="govuk-summary-list__row san-needs-list">
+                  <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                    {{ condition.conditionName | safe }}
+                    {% if condition.conditionDetail %}
+                    <br><span class="govuk-body-s">{{ condition.conditionDetail | safe }}</span>
                     {% endif %}
-                  {% endfor %}
-                </dl>        
-
-              </div>
-            </section>
-            {% set countSup = 0 %}
-          {% endfor %}
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    <!--p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
+                    <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p-->
+                    <span class="govuk-body-s">Added {{ condition.conditionDate }} by {{ condition.conditionAuthor }}</span>
+                  </dd>
+                </div>
+              
+              {% endfor %}
+            </dl>
+          </div>
+        </section>
 
         {% else %}
         
