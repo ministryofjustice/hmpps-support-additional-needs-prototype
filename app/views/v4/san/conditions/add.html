@@ -71,12 +71,11 @@
                             id="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}"
                             name="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}"
                             type="text"
-                            
-                        {% for selectedCondition in prisoner.conditions %}
-                          {% if selectedCondition.conditionName == conditionlisted.conditionName %}
-                            value="{{selectedCondition.conditionDetail}}"
-                          {% endif %}
-                        {% endfor %}
+                            {% for selectedCondition in prisoner.conditions %}
+                              {% if selectedCondition.conditionName == conditionlisted.conditionName %}
+                                value="{{selectedCondition.conditionDetail}}"
+                              {% endif %}
+                            {% endfor %}
                           >
                             
                         </div>
