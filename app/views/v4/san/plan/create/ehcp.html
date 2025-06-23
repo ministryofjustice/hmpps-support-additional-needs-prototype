@@ -12,44 +12,50 @@
 
 {% block content %}
 
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
 
-      <form method="post">
-        <span class="govuk-caption-l">Create an education support plan</span>
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
 
-        {{ govukRadios({
-          name: "san-"+v+"-create-ehcp",
-          fieldset: {
-            legend: {
-              text: "Does Chris Atkinson have a current education, health and care plan (EHCP)?",
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          items: [
-            {
-              value: "Yes",
-              text: "Yes",
-              checked: checked("san-"+v+"-create-ehcp","Yes")
-            },
-            {
-              value: "No",
-              text: "No",
-              checked: checked("san-"+v+"-create-ehcp","No")
-            }
-          ]
-        }) }}
+            <form method="post">
+              <span class="govuk-caption-l">Create an education support plan</span>
 
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+              {{ govukRadios({
+                name: "san-"+v+"-"+ref+"-create-ehcp",
+                fieldset: {
+                  legend: {
+                    text: "Does "+prisoner.firstName+" "+prisoner.lastName+" have a current education, health and care plan (EHCP)?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                  }
+                },
+                items: [
+                  {
+                    value: "Yes",
+                    text: "Yes",
+                    checked: checked("san-"+v+"-"+ref+"-create-ehcp","Yes")
+                  },
+                  {
+                    value: "No",
+                    text: "No",
+                    checked: checked("san-"+v+"-"+ref+"-create-ehcp","No")
+                  }
+                ]
+              }) }}
 
-      </form>
+              {{ govukButton({
+                text: "Continue"
+              }) }}
 
-    </div>
-  </div>
-</div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
 
 {% endblock %}

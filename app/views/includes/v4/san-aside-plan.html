@@ -19,12 +19,7 @@
     {% else %}
     <li>
       <img src="/public/images/icon-create.png" alt="">
-      <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a-->
-      {% if ref == "G2911GD" %}
-      <a href="/{{ v }}/san/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
-      {% else %}
-      <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
-      {% endif %}
+      <a href="/{{ v }}/san/{{ ref }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
     </li>
     <li>
       <img src="/public/images/icon-stamp.png" alt="">

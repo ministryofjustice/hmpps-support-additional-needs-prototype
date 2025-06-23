@@ -205,179 +205,317 @@ module.exports = function(router) {
   });
 
 
-  /*****************
-   * Add condition *
-   *****************/
+/*****************
+ * Add condition *
+ *****************/
+
+  router.get("/"+v+"/san/:ref/conditions/add", function (req, res){
+    let ref = matchref(req);
+    res.render("/"+v+"/san/conditions/add", {ref});
+  });
   
-    router.get("/"+v+"/san/:ref/conditions/add", function (req, res){
-      let ref = matchref(req);
-      res.render("/"+v+"/san/conditions/add", {ref});
-    });
-/*
-    router.get("/"+v+"/san/:ref/conditions/add-alt", function (req, res){
-      let ref = matchref(req);
-      res.render("/"+v+"/san/conditions/add-alt", {ref});
-    });
-*/
-    router.post("/"+v+"/san/:ref/conditions/add", function (req, res) {
-      let ref = matchref(req);
-      let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
-      thisprisoner.conditions = [];
-      thisprisoner.otherConditions = [];
+  router.post("/"+v+"/san/:ref/conditions/add", function (req, res) {
+    let ref = matchref(req);
+    let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
+    thisprisoner.conditions = [];
+    thisprisoner.otherConditions = [];
 
-      if (req.session.data["san-"+v+"-"+ref+"-conditions"]){
+    if (req.session.data["san-"+v+"-"+ref+"-conditions"]){
 
-        if (req.session.data["san-" + v + "-" + ref + "-conditions"]) {
-          const selectedConditions = req.session.data["san-" + v + "-" + ref + "-conditions"];
-          const fullConditionList = req.session.data[v + "conditionlist"] || [];
-        
-          selectedConditions.forEach((selectedConditionName) => {
-            // Find the matching condition from the full list
-            const matchingCondition = fullConditionList.find(
-              (cond) => cond.conditionName === selectedConditionName
-            );
-        
-            if (matchingCondition) {
-              const newConditionEntry = {
-                conditionName: selectedConditionName,
-                conditionDate: getFormattedDate(),
-                conditionAuthor: "W. Knight"
-              };
-        
-              // If it needs extra detail, try to get it from the session data
-              if (matchingCondition.conditionDetail && matchingCondition.conditionID) {
-                const detailFieldName = `san-${v}-${ref}-conditions-${matchingCondition.conditionID}`;
-                const detailValue = req.session.data[detailFieldName];
-        
-                if (detailValue && detailValue.trim() !== "") {
-                  newConditionEntry.conditionDetail = detailValue.trim();
-                }
-              }
-        
-              thisprisoner.conditions.push(newConditionEntry);
-            }
-          });
-        }
-      }
-
-      if (req.session.data["san-"+v+"-"+ref+"-otherconditions"]){
-
-        if (req.session.data["san-" + v + "-" + ref + "-otherconditions"]) {
-          const selectedOtherConditions = req.session.data["san-" + v + "-" + ref + "-otherconditions"];
-          const fullOtherConditionList = req.session.data[v + "otherconditionlist"] || [];
-        
-          selectedOtherConditions.forEach((selectedConditionName) => {
-            // Find the matching condition from the full list
-            const matchingOtherCondition = fullOtherConditionList.find(
-              (cond) => cond.conditionName === selectedConditionName
-            );
-        
-            if (matchingOtherCondition) {
-              const newOtherConditionEntry = {
-                conditionName: selectedConditionName,
-                conditionDate: getFormattedDate(),
-                conditionAuthor: "W. Knight"
-              };
-        
-              // If it needs extra detail, try to get it from the session data
-              if (matchingOtherCondition.conditionDetail && matchingOtherCondition.conditionID) {
-                const detailFieldName = `san-${v}-${ref}-otherconditions-${matchingOtherCondition.conditionID}`;
-                const detailValue = req.session.data[detailFieldName];
-        
-                if (detailValue && detailValue.trim() !== "") {
-                  newOtherConditionEntry.conditionDetail = detailValue.trim();
-                }
-              }
-        
-              thisprisoner.otherConditions.push(newOtherConditionEntry);
-            }
-          });
-        }
-      }
-/*
-      if (req.session.data["san-"+v+"-"+ref+"-otherconditions"]){
-        let countOtherCon = 0;
-        let existingOtherConditions = thisprisoner.otherConditions.map(c => c.otherConditionName);
-        while (countOtherCon < req.session.data["san-"+v+"-"+ref+"-otherconditions"].length) {
-          let currentOtherCondition = req.session.data["san-" + v + "-" + ref + "-otherconditions"][countOtherCon];
-          if (!existingConditions.includes(currentOtherCondition)) {
-            let newOtherConditionEntry = {
-              otherConditionName: req.session.data["san-"+v+"-"+ref+"-otherconditions"][countOtherCon],
-              otherConditionDate: getFormattedDate(),
-              otherConditionAuthor: "W. Knight"
+      if (req.session.data["san-" + v + "-" + ref + "-conditions"]) {
+        const selectedConditions = req.session.data["san-" + v + "-" + ref + "-conditions"];
+        const fullConditionList = req.session.data[v + "conditionlist"] || [];
+      
+        selectedConditions.forEach((selectedConditionName) => {
+          // Find the matching condition from the full list
+          const matchingCondition = fullConditionList.find(
+            (cond) => cond.conditionName === selectedConditionName
+          );
+      
+          if (matchingCondition) {
+            const newConditionEntry = {
+              conditionName: selectedConditionName,
+              conditionDate: getFormattedDate(),
+              conditionAuthor: "W. Knight"
             };
-            thisprisoner.conditions.push(newOtherConditionEntry);
+      
+            // If it needs extra detail, try to get it from the session data
+            if (matchingCondition.conditionDetail && matchingCondition.conditionID) {
+              const detailFieldName = `san-${v}-${ref}-conditions-${matchingCondition.conditionID}`;
+              const detailValue = req.session.data[detailFieldName];
+      
+              if (detailValue && detailValue.trim() !== "") {
+                newConditionEntry.conditionDetail = detailValue.trim();
+              }
+            }
+      
+            thisprisoner.conditions.push(newConditionEntry);
           }
-          countOtherCon++;
-        }
+        });
       }
-*/
-      delete req.session.data["san-"+v+"-"+ref+"-conditions"];
-      delete req.session.data["san-"+v+"-"+ref+"-conditions-learningdisabilities"];
-      delete req.session.data["san-"+v+"-"+ref+"-conditions-mentalhealth"];
-      delete req.session.data["san-"+v+"-"+ref+"-conditions-neurodegenerative"];
-      delete req.session.data["san-"+v+"-"+ref+"-conditions-restrictedmobility"];
-      delete req.session.data["san-"+v+"-"+ref+"-conditions-visualimpairment"];
-      //delete req.session.data["san-"+v+"-"+ref+"-otherconditions"];
+    }
 
-      res.redirect("/"+v+"/san/"+ref+"/profile");
-    });
+    if (req.session.data["san-"+v+"-"+ref+"-otherconditions"]){
+
+      if (req.session.data["san-" + v + "-" + ref + "-otherconditions"]) {
+        const selectedOtherConditions = req.session.data["san-" + v + "-" + ref + "-otherconditions"];
+        const fullOtherConditionList = req.session.data[v + "otherconditionlist"] || [];
+      
+        selectedOtherConditions.forEach((selectedConditionName) => {
+          // Find the matching condition from the full list
+          const matchingOtherCondition = fullOtherConditionList.find(
+            (cond) => cond.conditionName === selectedConditionName
+          );
+      
+          if (matchingOtherCondition) {
+            const newOtherConditionEntry = {
+              conditionName: selectedConditionName,
+              conditionDate: getFormattedDate(),
+              conditionAuthor: "W. Knight"
+            };
+      
+            // If it needs extra detail, try to get it from the session data
+            if (matchingOtherCondition.conditionDetail && matchingOtherCondition.conditionID) {
+              const detailFieldName = `san-${v}-${ref}-otherconditions-${matchingOtherCondition.conditionID}`;
+              const detailValue = req.session.data[detailFieldName];
+      
+              if (detailValue && detailValue.trim() !== "") {
+                newOtherConditionEntry.conditionDetail = detailValue.trim();
+              }
+            }
+      
+            thisprisoner.otherConditions.push(newOtherConditionEntry);
+          }
+        });
+      }
+    }
+    
+    delete req.session.data["san-"+v+"-"+ref+"-conditions"];
+    delete req.session.data["san-"+v+"-"+ref+"-conditions-learningdisabilities"];
+    delete req.session.data["san-"+v+"-"+ref+"-conditions-mentalhealth"];
+    delete req.session.data["san-"+v+"-"+ref+"-conditions-neurodegenerative"];
+    delete req.session.data["san-"+v+"-"+ref+"-conditions-restrictedmobility"];
+    delete req.session.data["san-"+v+"-"+ref+"-conditions-visualimpairment"];
+    delete req.session.data["san-"+v+"-"+ref+"-otherconditions"];
+    delete req.session.data["san-"+v+"-"+ref+"-otherconditions-otherdisabilities"];
+    delete req.session.data["san-"+v+"-"+ref+"-otherconditions-otherlanguage"];
+    delete req.session.data["san-"+v+"-"+ref+"-otherconditions-otherlearning"];
+    delete req.session.data["san-"+v+"-"+ref+"-otherconditions-otherlongterm"];
+    delete req.session.data["san-"+v+"-"+ref+"-otherconditions-otherneurological"];
+
+    res.redirect("/"+v+"/san/"+ref+"/profile");
+  });
 
 
-/**
- * Create education support plan
- */
+/*********************************
+ * Create education support plan *
+ *********************************/
+
+  /* Render screens based on ref */
 
   router.get("/"+v+"/san/:ref/plan/create/person-who-met", function (req, res) {
     let ref = matchref(req);
     res.render("/"+v+"/san/plan/create/person-who-met", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/person-who-met", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/other-people-consulted");
+  router.get("/"+v+"/san/:ref/plan/create/other-people-consulted", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/other-people-consulted", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/other-people-consulted", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/review-needs");
+  router.get("/"+v+"/san/:ref/plan/create/review-needs", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/review-needs", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/review-needs", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/teaching-adjustments");
+  router.get("/"+v+"/san/:ref/plan/create/teaching-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/teaching-adjustments", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/teaching-adjustments", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/environment-adjustments");
+  router.get("/"+v+"/san/:ref/plan/create/teaching-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/teaching-adjustments", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/environment-adjustments", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/knowledge-skills");
+  router.get("/"+v+"/san/:ref/plan/create/environment-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/environment-adjustments", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/knowledge-skills", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/exams-assessments");
+  router.get("/"+v+"/san/:ref/plan/create/knowledge-skills", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/knowledge-skills", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/exams-assessments", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/ehcp");
+  router.get("/"+v+"/san/:ref/plan/create/exams-assessments", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/exams-assessments", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/ehcp", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/lnsp-support");
+  router.get("/"+v+"/san/:ref/plan/create/ehcp", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/ehcp", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/lnsp-support", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/review-date");
+  router.get("/"+v+"/san/:ref/plan/create/lnsp-support", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/lnsp-support", {ref});
   });
 
-  router.post("/"+v+"/san/plan/create/review-date", function (req, res) {
-    res.redirect("/"+v+"/san/plan/create/check-answers");
+  router.get("/"+v+"/san/:ref/plan/create/review-date", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/review-date", {ref});
   });
+
+  router.get("/"+v+"/san/:ref/plan/create/check-answers", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/create/check-answers", {ref});
+  });
+
+
+  /* Routing for create edcation plan */
+
+  router.post("/"+v+"/san/:ref/plan/create/person-who-met", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/other-people-consulted");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/other-people-consulted", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/review-needs");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/review-needs", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/teaching-adjustments");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/teaching-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/environment-adjustments");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/environment-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/knowledge-skills");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/knowledge-skills", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/exams-assessments");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/exams-assessments", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/ehcp");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/ehcp", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/lnsp-support");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/lnsp-support", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/review-date");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/review-date", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/create/check-answers");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/create/check-answers", function (req, res) {
+    let ref = matchref(req);
+
+    /* SESSION DATA EXAMPLE 
+      "san-v4-A8560DY-create-personwhomet": "No",
+      "san-v4-A8560DY-create-personwhomet-name": "Full name of person",
+      "san-v4-A8560DY-create-personwhomet-jobrole": "Job role of person",
+      "san-v4-create-otherpeopleconsulted": "Yes",
+      "san-v4-create-otherpeopleconsulted-details": "names and job roles\r\nof the other people\r\nconsulted or involved",
+      "san-v4-create-teachingadjust": "Yes",
+      "san-v4-create-teachingadjust-details": "details of adjustments to teaching",
+      "san-v4-create-environmentadjust": "Yes",
+      "san-v4-create-environmentadjust-details": "details of adjustments to their learning environment or materials",
+      "san-v4-create-knowledgeskills": "Yes",
+      "san-v4-create-knowledgeskills-details": "details of specific knowledge or skills ",
+      "san-v4-create-examsassessments": "Yes",
+      "san-v4-create-examsassessments-details": "a need for access arrangements in exams.\r\nOr where an assessment has not yet taken place where an assessment for access arrangements will be required.",
+      "san-v4-create-ehcp": "No",
+      "san-v4-create-lnspsupport": "Yes",
+      "san-v4-create-lnspsupport-details": "3000 hours\r\nalong with details",
+      "san-v4-create-reviewdate": "30/6/2025"
+    */
+
+    /* Store data in prisoner object */
+    let newPlanEntry = {
+      personWhoMet: req.session.data["san-"+v+"-"+ref+"-create-personwhomet"],
+      otherPeople: req.session.data["san-"+v+"-"+ref+"-create-otherpeople"],
+      teachingAdjust: req.session.data["san-"+v+"-"+ref+"-create-teachingadjust"],
+      environmentAdjust: req.session.data["san-"+v+"-"+ref+"-create-environmentadjust"],
+      knowledgeSkills: req.session.data["san-"+v+"-"+ref+"-create-knowledgeskills"],
+      examsAssessments: req.session.data["san-"+v+"-"+ref+"-create-examsassessments"],
+      ehcp: req.session.data["san-"+v+"-"+ref+"-create-ehcp"],
+      lnspSupport: req.session.data["san-"+v+"-"+ref+"-create-lnspsupport"],
+      reviewDate: req.session.data["san-"+v+"-"+ref+"-create-reviewdate"],
+      dateCreated: getFormattedDate(),
+      author: "W. Knight"
+    };
+
+    let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
+    if (!Array.isArray(thisprisoner.plan)) {
+      thisprisoner.educationPlan = [];
+    }
+    thisprisoner.educationPlan.push(newPlanEntry);
+
+
+
+      /*needsStrengthDescription: needsStrengthDescHTML,
+      needsStrengthIdentified: needsStrengthIdentifiedHTML,
+      needsStrengthDate: getFormattedDate(),
+      needsStrengthAuthor: "W. Knight"*/
+
+      /*
+
+            // If it needs extra detail, try to get it from the session data
+            if (matchingOtherCondition.conditionDetail && matchingOtherCondition.conditionID) {
+              const detailFieldName = `san-${v}-${ref}-otherconditions-${matchingOtherCondition.conditionID}`;
+              const detailValue = req.session.data[detailFieldName];
+      
+              if (detailValue && detailValue.trim() !== "") {
+                newOtherConditionEntry.conditionDetail = detailValue.trim();
+              }
+            }
+              */
+    
 
 /*
-  router.post("/"+v+"/san/plan/create/check-answers", function (req, res) {
-    res.redirect("/"+v+"/san/"+req.session.data["goto"]+"/profile");
+    // convert line breaks to html
+    let needsStrengthDescHTML = req.session.data["san-"+v+"-"+ref+"-strength-desc"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let needsStrengthIdentifiedHTML = req.session.data["san-"+v+"-"+ref+"-strength-identified"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    // take support strategy data and add it to the prisoner session data
+    let newStrengthEntry = {
+      needsStrengthCategory: req.session.data["san-"+v+"-"+ref+"-strength-category"],
+      needsStrengthDescription: needsStrengthDescHTML,
+      needsStrengthIdentified: needsStrengthIdentifiedHTML,
+      needsStrengthDate: getFormattedDate(),
+      needsStrengthAuthor: "W. Knight"
+    };
+
+    let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
+    if (!Array.isArray(thisprisoner.needsStrengths)) {
+      thisprisoner.needsStrengths = [];
+    }
+    thisprisoner.needsStrengths.push(newStrengthEntry);
+    delete req.session.data["san-"+v+"-"+ref+"-strength-category"];
+    delete req.session.data["san-"+v+"-"+ref+"-strength-desc"];
+    delete req.session.data["san-"+v+"-"+ref+"-strength-identified"];
+    */
+
+    res.redirect("/"+v+"/san/"+ref+"/profile");
   });
-*/
 
 
   module.exports = router;

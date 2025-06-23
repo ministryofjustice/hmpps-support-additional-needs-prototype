@@ -12,58 +12,64 @@
 
 {% block content %}
 
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
 
-      <form method="post">
-        <span class="govuk-caption-l">Create an education support plan</span>
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
 
-        {% set detailsHtml %}
-          {{ govukTextarea({
-            id: "san-"+v+"-create-lnspsupport-details",
-            name: "san-"+v+"-create-lnspsupport-details",
-            label: {
-              text: "Add support details including number of hours "
-            },
-            value: data["san-"+v+"-create-lnspsupport-details"]
-          }) }}
-        {% endset -%}
+            <form method="post">
+              <span class="govuk-caption-l">Create an education support plan</span>
 
-        {{ govukRadios({
-          name: "san-"+v+"-create-lnspsupport",
-          fieldset: {
-            legend: {
-              text: "Does Chris Atkinson need support in the classroom from specialist learning needs staff?",
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          items: [
-            {
-              value: "Yes",
-              text: "Yes",
-              checked: checked("san-"+v+"-create-lnspsupport","Yes"),
-              conditional: {
-                html: detailsHtml
-              }
-            },
-            {
-              value: "No",
-              text: "No",
-              checked: checked("san-"+v+"-create-lnspsupport","No")
-            }
-          ]
-        }) }}
+              {% set detailsHtml %}
+                {{ govukTextarea({
+                  id: "san-"+v+"-"+ref+"-create-lnspsupport-details",
+                  name: "san-"+v+"-"+ref+"-create-lnspsupport-details",
+                  label: {
+                    text: "Add support details including number of hours "
+                  },
+                  value: data["san-"+v+"-"+ref+"-create-lnspsupport-details"]
+                }) }}
+              {% endset -%}
 
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+              {{ govukRadios({
+                name: "san-"+v+"-"+ref+"-create-lnspsupport",
+                fieldset: {
+                  legend: {
+                    text: "Does "+prisoner.firstName+" "+prisoner.lastName+" need support in the classroom from specialist learning needs staff?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                  }
+                },
+                items: [
+                  {
+                    value: "Yes",
+                    text: "Yes",
+                    checked: checked("san-"+v+"-"+ref+"-create-lnspsupport","Yes"),
+                    conditional: {
+                      html: detailsHtml
+                    }
+                  },
+                  {
+                    value: "No",
+                    text: "No",
+                    checked: checked("san-"+v+"-"+ref+"-create-lnspsupport","No")
+                  }
+                ]
+              }) }}
 
-      </form>
+              {{ govukButton({
+                text: "Continue"
+              }) }}
 
-    </div>
-  </div>
-</div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
 
 {% endblock %}

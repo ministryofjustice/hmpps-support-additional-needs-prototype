@@ -12,61 +12,67 @@
 
 {% block content %}
 
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
 
-      <form method="post">
-        <span class="govuk-caption-l">Create an education support plan</span>
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
 
-        {% set detailsHtml %}
-          {{ govukTextarea({
-            id: "san-"+v+"-create-knowledgeskills-details",
-            name: "san-"+v+"-create-knowledgeskills-details",
-            label: {
-              text: "Add details"
-            },
-            value: data["san-"+v+"-create-knowledgeskills-details"]
-          }) }}
-        {% endset -%}
+            <form method="post">
+              <span class="govuk-caption-l">Create an education support plan</span>
 
-        {{ govukRadios({
-          name: "san-"+v+"-create-knowledgeskills",
-          fieldset: {
-            legend: {
-              text: "Do teaching staff need specific knowledge or skills to support Chris Atkinson’s learning?",
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          hint: {
-            text: "For example, British Sign Language or autism training."
-          },
-          items: [
-            {
-              value: "Yes",
-              text: "Yes",
-              checked: checked("san-"+v+"-create-knowledgeskills","Yes"),
-              conditional: {
-                html: detailsHtml
-              }
-            },
-            {
-              value: "No",
-              text: "No",
-              checked: checked("san-"+v+"-create-knowledgeskills","No")
-            }
-          ]
-        }) }}
+              {% set detailsHtml %}
+                {{ govukTextarea({
+                  id: "san-"+v+"-"+ref+"-create-knowledgeskills-details",
+                  name: "san-"+v+"-"+ref+"-create-knowledgeskills-details",
+                  label: {
+                    text: "Add details"
+                  },
+                  value: data["san-"+v+"-"+ref+"-create-knowledgeskills-details"]
+                }) }}
+              {% endset -%}
 
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+              {{ govukRadios({
+                name: "san-"+v+"-"+ref+"-create-knowledgeskills",
+                fieldset: {
+                  legend: {
+                    text: "Do teaching staff need specific knowledge or skills to support "+prisoner.firstName+" "+prisoner.lastName+"'s learning?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                  }
+                },
+                hint: {
+                  text: "For example, British Sign Language or autism training."
+                },
+                items: [
+                  {
+                    value: "Yes",
+                    text: "Yes",
+                    checked: checked("san-"+v+"-"+ref+"-create-knowledgeskills","Yes"),
+                    conditional: {
+                      html: detailsHtml
+                    }
+                  },
+                  {
+                    value: "No",
+                    text: "No",
+                    checked: checked("san-"+v+"-"+ref+"-create-knowledgeskills","No")
+                  }
+                ]
+              }) }}
 
-      </form>
+              {{ govukButton({
+                text: "Continue"
+              }) }}
 
-    </div>
-  </div>
-</div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
 
 {% endblock %}
