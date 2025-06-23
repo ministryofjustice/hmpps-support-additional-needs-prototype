@@ -58,20 +58,57 @@
         Education support plan
       </h2>
     
-      <section class="app-summary-card govuk-!-margin-bottom-6">
-        <div class="app-summary-card__body">
-          {% if ref == "G2911GD" and data['san-'+v+'-create-reviewdate'] %}
-          <p class="govuk-body govuk-!-margin-top-3">This prisoner's education support plan will be shown here.</p>
-          {% else %}
-          <p class="govuk-body govuk-!-margin-top-3">This prisoner does not have an education support plan.</p>
-          {% endif %}
+      {% if ref == "G2911GD" and data['san-'+v+'-create-reviewdate'] %}
+      
+        <section class="app-summary-card govuk-!-margin-bottom-6">
+          <div class="app-summary-card__body">
+            <p class="govuk-body govuk-!-margin-top-3">This prisoner's education support plan will be shown here.</p>
+
+          </div>
+        </section>
+
+      {% else %}
+
+        <div class="hmpps-actions-block govuk-!-margin-bottom-5">
+          <ul class="hmpps-actions-block__list">
+            <li class="noflex">
+              {% if ref == "G2911GD" and data['san-v3-create-reviewdate'] %}
+                <strong class="govuk-tag govuk-tag--green">
+                  Plan created
+                </strong>
+              {% else %}
+                <strong class="govuk-tag govuk-tag--yellow">
+                  Due in 5 days
+                </strong>
+              {% endif %}
+            </li>
+            {% if ref == "G2911GD" and data['san-v3-create-reviewdate'] %}
+            <li>
+              Review due by {{ data["san-"+v+"-create-reviewdate"] }}
+            </li>
+            {% else %}
+            <li>
+              <img src="/public/images/icon-create.png" alt="">
+              <!--a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a-->
+              {% if ref == "G2911GD" %}
+              <a href="/{{ v }}/san/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+              {% else %}
+              <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+              {% endif %}
+            </li>
+            <li>
+              <img src="/public/images/icon-stamp.png" alt="">
+              <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Record refusal of education support plan</a>
+            </li>
+            {% endif %}
+          </ul>
         </div>
-      </section>
+
+      {% endif %}
 
     </div>
     
     <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
-      {% include "includes/"+v+"/san-aside-plan.html" %}
       {% include "includes/"+v+"/san-actions-add.html" %}
     </div>
     

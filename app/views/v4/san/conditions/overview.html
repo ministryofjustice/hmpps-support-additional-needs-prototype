@@ -69,7 +69,7 @@
           </header-->
           <div class="app-summary-card__body">
             <dl class="govuk-summary-list san-needs-list">
-              {# Loop through all conditions of prisoner #}
+              {# Loop through conditions of prisoner #}
               {% for condition in prisoner.conditions %}
 
                 <div class="govuk-summary-list__row san-needs-list">
@@ -83,6 +83,25 @@
                     <!--p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
                     <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p-->
                     <span class="govuk-body-s">Added {{ condition.conditionDate }} by {{ condition.conditionAuthor }}</span>
+                  </dd>
+                </div>
+              
+              {% endfor %}
+
+              {# Loop through other conditions of prisoner #}
+              {% for othercondition in prisoner.otherConditions %}
+
+                <div class="govuk-summary-list__row san-needs-list">
+                  <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                    {{ othercondition.conditionName | safe }}
+                    {% if othercondition.conditionDetail %}
+                    <br><span class="govuk-body-s">{{ othercondition.conditionDetail | safe }}</span>
+                    {% endif %}
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    <!--p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
+                    <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p-->
+                    <span class="govuk-body-s">Added {{ othercondition.conditionDate }} by {{ othercondition.conditionAuthor }}</span>
                   </dd>
                 </div>
               

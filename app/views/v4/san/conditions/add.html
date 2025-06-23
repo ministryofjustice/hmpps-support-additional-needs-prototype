@@ -33,11 +33,14 @@
 
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
-          <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-            <div class="govuk-grid-column-one-half">
 
-              {% for prisoner in data[v+'prisoners'] %}
-                {% if prisoner.prisonerNumber == ref %}
+          {% for prisoner in data[v+'prisoners'] %}
+            {% if prisoner.prisonerNumber == ref %}
+
+              <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                <div class="govuk-grid-column-one-half">
+                  
+                  <div class="govuk-hint">Select all that apply</div>
 
                   {% set conCount = 1 %}
                   {% for conditionlisted in data[v+'conditionlist'] %}
@@ -84,8 +87,62 @@
                     {% set conCount = conCount + 1 %}
 
                   {% endfor %}
-                {% endif %}
-              {% endfor %}
+
+                </div>
+                <div class="govuk-grid-column-one-half">
+                  
+                  <div class="govuk-hint">Or any other:</div>
+
+                  {% set otherconCount = 1 %}
+                  {% for otherconditionlisted in data[v+'otherconditionlist'] %}
+
+                    <div class="govuk-checkboxes__item">
+                      <input 
+                        class="govuk-checkboxes__input" 
+                        id="san-{{v}}-{{ref}}-otherconditions{% if otherconCount > 1 %}-{{otherconCount}}{% endif %}" name="san-{{v}}-{{ref}}-otherconditions" 
+                        type="checkbox" 
+                        value="{{otherconditionlisted.conditionName}}"
+                        {% if otherconditionlisted.conditionDetail %} 
+                          data-aria-controls="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}-conditional"
+                        {% endif %}
+                        {% for selectedCondition in prisoner.otherConditions %}
+                          {% if selectedCondition.conditionName == otherconditionlisted.conditionName %}
+                            checked
+                          {% endif %}
+                        {% endfor %}>
+                      <label class="govuk-label govuk-checkboxes__label" for="san-{{v}}-{{ref}}-otherconditions{% if otherconCount > 1 %}-{{otherconCount}}{% endif %}">
+                        {{otherconditionlisted.conditionName}}
+                      </label>
+                    </div>
+                    {% if otherconditionlisted.conditionDetail %}
+                      <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}-conditional">
+                        <div class="govuk-form-group">
+                          <label class="govuk-label" for="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}">
+                            Add details
+                          </label>
+                          <input
+                            class="govuk-input govuk-!-width-three-quarters"
+                            id="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}"
+                            name="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}"
+                            type="text"
+                            {% for selectedCondition in prisoner.otherConditions %}
+                              {% if selectedCondition.conditionName == otherconditionlisted.conditionName %}
+                                value="{{selectedCondition.conditionDetail}}"
+                              {% endif %}
+                            {% endfor %}
+                          >
+                            
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% set otherconCount = otherconCount + 1 %}
+
+                  {% endfor %}
+                </div>
+
+              </div>
+            {% endif %}
+          {% endfor %}
     
             <!--div class="govuk-grid-column-one-half">
               <div class="govuk-checkboxes__item">
@@ -186,9 +243,7 @@
               </div>        
             </div>
             <div class="govuk-grid-column-one-half"-->
-            </div>
 
-          </div>
         </fieldset>
       </div>
 

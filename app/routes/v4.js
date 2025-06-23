@@ -259,6 +259,41 @@ module.exports = function(router) {
           });
         }
       }
+
+      if (req.session.data["san-"+v+"-"+ref+"-otherconditions"]){
+
+        if (req.session.data["san-" + v + "-" + ref + "-otherconditions"]) {
+          const selectedOtherConditions = req.session.data["san-" + v + "-" + ref + "-otherconditions"];
+          const fullOtherConditionList = req.session.data[v + "otherconditionlist"] || [];
+        
+          selectedOtherConditions.forEach((selectedConditionName) => {
+            // Find the matching condition from the full list
+            const matchingOtherCondition = fullOtherConditionList.find(
+              (cond) => cond.conditionName === selectedConditionName
+            );
+        
+            if (matchingOtherCondition) {
+              const newOtherConditionEntry = {
+                conditionName: selectedConditionName,
+                conditionDate: getFormattedDate(),
+                conditionAuthor: "W. Knight"
+              };
+        
+              // If it needs extra detail, try to get it from the session data
+              if (matchingOtherCondition.conditionDetail && matchingOtherCondition.conditionID) {
+                const detailFieldName = `san-${v}-${ref}-otherconditions-${matchingOtherCondition.conditionID}`;
+                const detailValue = req.session.data[detailFieldName];
+        
+                if (detailValue && detailValue.trim() !== "") {
+                  newOtherConditionEntry.conditionDetail = detailValue.trim();
+                }
+              }
+        
+              thisprisoner.otherConditions.push(newOtherConditionEntry);
+            }
+          });
+        }
+      }
 /*
       if (req.session.data["san-"+v+"-"+ref+"-otherconditions"]){
         let countOtherCon = 0;
