@@ -63,19 +63,98 @@
               <section class="app-summary-card govuk-!-margin-bottom-6">
                 <div class="app-summary-card__body">
                   
-              <dl class="govuk-summary-list san-needs-list">
+                  <dl class="govuk-summary-list san-needs-list">
 
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                        {{ prisoner.educationPlan.personWhoMet | safe }}
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        <!--span class="govuk-body-s">Added {{ needs.needsSupportDate }} by {{ needs.needsSupportAuthor }}</span-->
-                      </dd>
-                    </div>
+                    {% for plan in prisoner.educationPlan %}
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Did you meet with the prisoner?
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.personWhoMet }}
+                          </dd>
+                        </div>
+
+                        {% if plan.personWhoMet == "No" %}
+                            ...
+                        {% endif %}
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Other people consulted or involved
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.otherPeople }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Adjustments to teaching
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.teachingAdjust }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Adjustments to environment or materials
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.environmentAdjust }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Specific knowledge or training
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.knowledgeSkills }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Exam access arrangements
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.examsAssessments }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Has a current EHCP
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.ehcp }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            LNSP support in the classroom
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.lnspSupport }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Review date
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.reviewDate }}
+                          </dd>
+                        </div>
+                        
+                    {% endfor %}
                 
-              </dl>        
-
+                  </dl>        
 
                 </div>
               </section>
@@ -102,7 +181,8 @@
                   {% else %}
                   <li>
                     <img src="/public/images/icon-create.png" alt="">
-                    <a href="/{{ v }}/san/{{ ref }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+                    <!--a href="/{{ v }}/san/{{ ref }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a-->
+                    <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
                   </li>
                   <li>
                     <img src="/public/images/icon-stamp.png" alt="">

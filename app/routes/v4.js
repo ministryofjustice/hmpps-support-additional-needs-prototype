@@ -452,7 +452,7 @@ module.exports = function(router) {
     /* Store data in prisoner object */
     let newPlanEntry = {
       personWhoMet: req.session.data["san-"+v+"-"+ref+"-create-personwhomet"],
-      otherPeople: req.session.data["san-"+v+"-"+ref+"-create-otherpeople"],
+      otherPeople: req.session.data["san-"+v+"-"+ref+"-create-otherpeopleconsulted"],
       teachingAdjust: req.session.data["san-"+v+"-"+ref+"-create-teachingadjust"],
       environmentAdjust: req.session.data["san-"+v+"-"+ref+"-create-environmentadjust"],
       knowledgeSkills: req.session.data["san-"+v+"-"+ref+"-create-knowledgeskills"],
