@@ -85,7 +85,7 @@
         </thead>
         <tbody class="govuk-table__body">
 
-          {% for prisoner in data['prisoners'] %}
+          {% for prisoner in data['v3prisoners'] %}
 
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/">{{ prisoner.lastName }}, {{ prisoner.firstName }}</a></td>

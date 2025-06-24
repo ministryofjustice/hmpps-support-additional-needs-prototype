@@ -1,4 +1,4 @@
-{% extends "/layouts/v3.html" %}
+{% extends "/layouts/v4.html" %}
 
 {% set currentpage = "overview" %}
 
@@ -272,7 +272,7 @@
         
           <section class="app-summary-card govuk-!-margin-bottom-6">
             <div class="app-summary-card__body">
-              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies, challenges, strengths or conditions recorded.</p>
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies, challenges or strengths recorded.</p>
             </div>
           </section>
 
@@ -346,8 +346,8 @@
     </div>
     
     <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
-      {% include "includes/"+v+"/san-aside-plan.html" %}
       {% include "includes/"+v+"/san-actions-add.html" %}
+      {% include "includes/"+v+"/san-aside-plan.html" %}
     </div>
   </div>
 

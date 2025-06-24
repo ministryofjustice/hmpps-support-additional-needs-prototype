@@ -1,0 +1,210 @@
+{% extends "/layouts/v4.html" %}
+
+{% set currentpage = "supportplan" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/{{ v }}/">Digital Prison Services</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/{{ v }}/san/">Support for additional needs</a>
+        </li>
+      </ol>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+        
+          <!-- TITLE PAGE + print-->
+          <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs</h1>
+          </div>
+
+          <div class="govuk-grid-column-full">
+
+            {% if data['prevurl'] == "check-answers" %}
+              {{ mojAlert({
+                variant: "success",
+                title: "Education suppport plan created",
+                dismissible: false
+              }) }}
+            {% endif %}
+          
+            {% include "includes/"+v+"/san-miniprofile.html" %}
+
+          </div>
+        
+        </div>
+        <div class="govuk-grid-row">
+          {% include "includes/"+v+"/san-subnav.html" %}
+        </div>
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            <h2 class="govuk-heading-m">
+              Education support plan
+            </h2>
+          
+            {% if prisoner.educationPlan %}
+
+              <section class="app-summary-card govuk-!-margin-bottom-6">
+                <div class="app-summary-card__body">
+                  
+                  <dl class="govuk-summary-list san-needs-list">
+
+                    {% for plan in prisoner.educationPlan %}
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Did you meet with the prisoner?
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.personWhoMet }}
+                          </dd>
+                        </div>
+
+                        {% if plan.personWhoMet == "No" %}
+                            ...
+                        {% endif %}
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Other people consulted or involved
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.otherPeople }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Adjustments to teaching
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.teachingAdjust }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Adjustments to environment or materials
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.environmentAdjust }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Specific knowledge or training
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.knowledgeSkills }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Exam access arrangements
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.examsAssessments }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Has a current EHCP
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.ehcp }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            LNSP support in the classroom
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.lnspSupport }}
+                          </dd>
+                        </div>
+    
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            Review date
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ plan.reviewDate }}
+                          </dd>
+                        </div>
+                        
+                    {% endfor %}
+                
+                  </dl>        
+
+                </div>
+              </section>
+
+            {% else %}
+
+              <div class="hmpps-actions-block govuk-!-margin-bottom-5">
+                <ul class="hmpps-actions-block__list">
+                  <li class="noflex">
+                    {% if ref == "G2911GD" and data['san-v3-create-reviewdate'] %}
+                      <strong class="govuk-tag govuk-tag--green">
+                        Plan created
+                      </strong>
+                    {% else %}
+                      <strong class="govuk-tag govuk-tag--yellow">
+                        Due in 5 days
+                      </strong>
+                    {% endif %}
+                  </li>
+                  {% if ref == "G2911GD" and data['san-v3-create-reviewdate'] %}
+                  <li>
+                    Review due by {{ data["san-"+v+"-create-reviewdate"] }}
+                  </li>
+                  {% else %}
+                  <li>
+                    <img src="/public/images/icon-create.png" alt="">
+                    <!--a href="/{{ v }}/san/{{ ref }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a-->
+                    <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+                  </li>
+                  <li>
+                    <img src="/public/images/icon-stamp.png" alt="">
+                    <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Record refusal of education support plan</a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+
+            {% endif %}
+
+          </div>
+          
+          <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
+            {% include "includes/"+v+"/san-actions-add.html" %}
+          </div>
+          
+        </div>
+
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

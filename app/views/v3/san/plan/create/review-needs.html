@@ -25,7 +25,7 @@
       <form method="post">
 
 
-        {% for prisoner in data['prisoners'] %}
+        {% for prisoner in data[v+'prisoners'] %}
           {% if prisoner.prisonerNumber == "G2911GD" %}
 
             {# set tracker for categories prisoner has content it #}
@@ -40,7 +40,7 @@
             %}
 
               {# Loop through all categories of need #}
-              {% for categories in data['categories'] %}
+              {% for categories in data[v+'categories'] %}
 
                 {# Loop through all support needs of prisoner #}
                 {% for needs in prisoner.needsSupport %}

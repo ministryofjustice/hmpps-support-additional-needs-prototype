@@ -1,6 +1,6 @@
-{% extends "/layouts/v3.html" %}
+{% extends "/layouts/v4.html" %}
 
-{% set currentpage = "conditions" %}
+{% set currentpage = "challenges" %}
 
 {% block beforeContent %}
   <div class="govuk-width-container ">
@@ -55,7 +55,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h2 class="govuk-heading-m">
-        Conditions
+        Challenges
       </h2>
 
         {# set tracker for categories prisoner has content it #}
@@ -63,16 +63,16 @@
 
         {# Check if prisoner has any recorded challenges #}
         {%
-          if prisoner.needsConditions
+          if prisoner.needsChallenges
         %}
 
           {# Loop through all categories of need #}
           {% for categories in data[v+'categories'] %}
 
             {# Loop through all challenges of prisoner #}
-            {% for needs in prisoner.needsConditions %}
+            {% for needs in prisoner.needsChallenges %}
               {# Check if needsSupport has an item in this category #}
-              {% if needs.needsonditionCategory == categories.categoryName %}
+              {% if needs.needsChallengeCategory == categories.categoryName %}
                 {# Add this category to an array of categories associated with this prisoner #}
                 {% if not categories.categoryName in cats %}
                   {% set cats = (cats.push(categories.categoryName), cats) %}
@@ -95,19 +95,19 @@
                 
                   {% set countCha = 0 %}
                   {# Loop through all support needs of prisoner #}
-                  {% for needs in prisoner.needsConditions %}
-                    {# Check if needsConditions has an item in this category #}
-                    {% if needs.needsonditionCategory == cat %}
+                  {% for needs in prisoner.needsChallenges %}
+                    {# Check if needsChallenges has an item in this category #}
+                    {% if needs.needsChallengeCategory == cat %}
                       {% set countCha = countCha + 1 %}
 
                       <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                          {{ needs.needsonditionDescription | safe }}
+                          {{ needs.needsChallengeDescription | safe }}
                         </dt>
                         <dd class="govuk-summary-list__value">
                           <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
                           <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
-                          <span class="govuk-body-s">Added {{ needs.needsonditionDate }} by {{ needs.needsonditionAuthor }}</span>
+                          <span class="govuk-body-s">Added {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</span>
                         </dd>
                       </div>
                   
@@ -124,7 +124,7 @@
         
           <section class="app-summary-card govuk-!-margin-bottom-6">
             <div class="app-summary-card__body">
-              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no conditions recorded.</p>
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no challenges recorded.</p>
             </div>
           </section>
 

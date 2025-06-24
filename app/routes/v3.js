@@ -2,7 +2,7 @@ var v = "v3";
 
 function matchref(req){
   // find matching ref in session data
-  objIndex = req.session.data["prisoners"].findIndex(obj => obj.prisonerNumber === req.params.ref);
+  objIndex = req.session.data[v+"prisoners"].findIndex(obj => obj.prisonerNumber === req.params.ref);
   // store selected ref in a ession variable
   let ref = req.params.ref;
   return ref;
@@ -99,7 +99,7 @@ module.exports = function(router) {
       needsSupportAuthor: "W. Knight"
     };
 
-    let thisprisoner = req.session.data['prisoners'].find(p => p.prisonerNumber === ref);
+    let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
     if (!Array.isArray(thisprisoner.needsSupport)) {
       thisprisoner.needsSupport = [];
     }
@@ -145,7 +145,7 @@ module.exports = function(router) {
       needsChallengeAuthor: "W. Knight"
     };
 
-    let thisprisoner = req.session.data['prisoners'].find(p => p.prisonerNumber === ref);
+    let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
     if (!Array.isArray(thisprisoner.needsChallenges)) {
       thisprisoner.needsChallenges = [];
     }
@@ -192,7 +192,7 @@ module.exports = function(router) {
       needsStrengthAuthor: "W. Knight"
     };
 
-    let thisprisoner = req.session.data['prisoners'].find(p => p.prisonerNumber === ref);
+    let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
     if (!Array.isArray(thisprisoner.needsStrengths)) {
       thisprisoner.needsStrengths = [];
     }

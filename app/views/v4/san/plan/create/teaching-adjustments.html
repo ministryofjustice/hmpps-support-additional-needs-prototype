@@ -1,0 +1,78 @@
+{% extends "/layouts/v4.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            <form method="post">
+              <span class="govuk-caption-l">Create an education support plan</span>
+
+              {% set detailsHtml %}
+                {{ govukTextarea({
+                  id: "san-"+v+"-"+ref+"-create-teachingadjust-details",
+                  name: "san-"+v+"-"+ref+"-create-teachingadjust-details",
+                  label: {
+                    text: "Add details"
+                  },
+                  value: data["san-"+v+"-"+ref+"-create-teachingadjust-details"]
+                }) }}
+              {% endset -%}
+
+              {{ govukRadios({
+                name: "san-"+v+"-"+ref+"-create-teachingadjust",
+                fieldset: {
+                  legend: {
+                    text: "Does "+prisoner.firstName+" "+prisoner.lastName+" need any  adjustments to teaching?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                  }
+                },
+                hint: {
+                  text: "Things like modifying the curriculum or adapting teaching."
+                },
+                items: [
+                  {
+                    value: "Yes",
+                    text: "Yes",
+                    checked: checked("san-"+v+"-"+ref+"-create-teachingadjust","Yes"),
+                    conditional: {
+                      html: detailsHtml
+                    }
+                  },
+                  {
+                    value: "No",
+                    text: "No",
+                    checked: checked("san-"+v+"-"+ref+"-create-teachingadjust","No")
+                  }
+                ]
+              }) }}
+
+              {{ govukButton({
+                text: "Continue"
+              }) }}
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

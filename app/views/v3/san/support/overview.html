@@ -21,7 +21,7 @@
 
 {% block content %}
 
-{% for prisoner in data['prisoners'] %}
+{% for prisoner in data[v+'prisoners'] %}
   {% if prisoner.prisonerNumber == ref %}
 
 <div class="govuk-width-container">
@@ -42,14 +42,14 @@
         }) }}
       {% endif %}
 
-      {% include "includes/san-miniprofile.html" %}      
+      {% include "includes/"+v+"/san-miniprofile.html" %}      
 
     </div>
   
   </div>
   <div class="govuk-grid-row">
     
-    {% include "includes/san-subnav.html" %}
+    {% include "includes/"+v+"/san-subnav.html" %}
 
   </div>
 
@@ -69,7 +69,7 @@
       %}
 
         {# Loop through all categories of need #}
-        {% for categories in data['categories'] %}
+        {% for categories in data[v+'categories'] %}
 
           {# Loop through all support needs of prisoner #}
           {% for needs in prisoner.needsSupport %}
@@ -135,7 +135,7 @@
     </div>
     
     <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
-      {% include "includes/san-actions-add.html" %}
+      {% include "includes/"+v+"/san-actions-add.html" %}
     </div>
 
   </div>

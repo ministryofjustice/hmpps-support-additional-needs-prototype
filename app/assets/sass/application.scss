@@ -948,3 +948,13 @@ p,
 .govuk-grid-column-one-third .app-summary-card__body p:last-of-type {
   margin-bottom: 0;
 }
+
+.app-summary-card .app-summary-card__body {
+  padding: 5px 15px;
+}
+
+.list-conditions .govuk-checkboxes__divider {
+  margin-top: 1em;
+  text-align: left;
+  width: 100%;
+}
