@@ -11,3 +11,35 @@ const addFilter = govukPrototypeKit.views.addFilter
 addFilter('nl2br', function(str) {
     return str.replace(/\r|\n|\r\n/g, '<br />')
 })
+
+addFilter('toGovDate', function(str) {
+
+    const thisdate = new Date(str);
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr",
+                        "May", "Jun", "Jul", "Aug",
+                        "Sep", "Oct", "Nov", "Dec"];
+    
+    const day = thisdate.getDate();
+    
+    const monthIndex = thisdate.getMonth();
+    const monthName = monthNames[monthIndex];
+    
+    const year = thisdate.getFullYear();
+    
+    return `${day} ${monthName} ${year}`;
+
+})
+
+addFilter('dateReplaceSlash', function (str) {
+
+    const dateArray = str.split("/");
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr",
+                        "May", "Jun", "Jul", "Aug",
+                        "Sep", "Oct", "Nov", "Dec"];
+                    
+    const monthName = monthNames[dateArray[1]];
+    
+    return `${dateArray[0]} ${monthName} ${dateArray[2]}`;
+})

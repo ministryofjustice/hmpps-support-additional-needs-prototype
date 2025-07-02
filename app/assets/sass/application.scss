@@ -907,6 +907,9 @@ p,
 .profile-action-links {
   padding: 8px 0 !important;
 }
+.profile-needs-links {
+  padding: 4px 0 !important;
+}
 
 /* SAN profile styles */
 
@@ -951,6 +954,9 @@ p,
 
 .app-summary-card .app-summary-card__body {
   padding: 5px 15px;
+}
+.app-summary-card .app-summary-card__title-link {
+  font-size: 16px;
 }
 
 .list-conditions .govuk-checkboxes__divider {

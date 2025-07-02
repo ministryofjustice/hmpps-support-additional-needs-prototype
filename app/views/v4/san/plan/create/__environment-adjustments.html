@@ -24,32 +24,32 @@
 
               {% set detailsHtml %}
                 {{ govukTextarea({
-                  id: "san-"+v+"-"+ref+"-create-examsassessments-details",
-                  name: "san-"+v+"-"+ref+"-create-examsassessments-details",
+                  id: "san-"+v+"-"+ref+"-create-environmentadjust-details",
+                  name: "san-"+v+"-"+ref+"-create-environmentadjust-details",
                   label: {
                     text: "Add details"
                   },
-                  hint: {
-                    text: "Include if an assessment for access arrangements needs to happen."
-                  },
-                  value: data["san-"+v+"-"+ref+"-create-examsassessments-details"]
+                  value: data["san-"+v+"-"+ref+"-create-environmentadjust-details"]
                 }) }}
               {% endset -%}
 
               {{ govukRadios({
-                name: "san-"+v+"-"+ref+"-create-examsassessments",
+                name: "san-"+v+"-"+ref+"-create-environmentadjust",
                 fieldset: {
                   legend: {
-                    text: "Does "+prisoner.firstName+" "+prisoner.lastName+" need any access arrangements for exams or assessments?",
+                    text: "Does "+prisoner.firstName+" "+prisoner.lastName+" need adjustments to their learning environment or materials?",
                     isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                   }
+                },
+                hint: {
+                  text: "For example, a desk at the front of class or near the door, materials produced on coloured background, overlays, specific font sizes, diagrammatic materials and assistive technology."
                 },
                 items: [
                   {
                     value: "Yes",
                     text: "Yes",
-                    checked: checked("san-"+v+"-"+ref+"-create-examsassessments","Yes"),
+                    checked: checked("san-"+v+"-"+ref+"-create-environmentadjust","Yes"),
                     conditional: {
                       html: detailsHtml
                     }
@@ -57,7 +57,7 @@
                   {
                     value: "No",
                     text: "No",
-                    checked: checked("san-"+v+"-"+ref+"-create-examsassessments","No")
+                    checked: checked("san-"+v+"-"+ref+"-create-environmentadjust","No")
                   }
                 ]
               }) }}
@@ -68,9 +68,6 @@
 
             </form>
 
-          </div>
-          <div class="govuk-grid-column-one-third">
-            {% include "includes/"+v+"/san-aside-needs.html" %}
           </div>
         </div>
       </div>

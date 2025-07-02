@@ -27,9 +27,20 @@
                   id: "san-"+v+"-"+ref+"-create-lnspsupport-details",
                   name: "san-"+v+"-"+ref+"-create-lnspsupport-details",
                   label: {
-                    text: "Add support details including number of hours "
+                    text: "Add recommended support details"
                   },
                   value: data["san-"+v+"-"+ref+"-create-lnspsupport-details"]
+                }) }}
+                {{ govukInput({
+                  id: "san-"+v+"-"+ref+"-create-lnspsupport-hours",
+                  name: "san-"+v+"-"+ref+"-create-lnspsupport-hours",
+                  label: {
+                    text: "Add recommended number of hours"
+                  },
+                  hint: {
+                    text: "This can be an estimate"
+                  },
+                  value: data["san-"+v+"-"+ref+"-create-lnspsupport-hours"]
                 }) }}
               {% endset -%}
 
@@ -37,7 +48,7 @@
                 name: "san-"+v+"-"+ref+"-create-lnspsupport",
                 fieldset: {
                   legend: {
-                    text: "Does "+prisoner.firstName+" "+prisoner.lastName+" need support in the classroom from specialist learning needs staff?",
+                    text: "Do you recommend "+prisoner.firstName+" "+prisoner.lastName+" has support in the classroom from prison learning needs staff?",
                     isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                   }

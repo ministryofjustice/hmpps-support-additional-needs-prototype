@@ -21,28 +21,24 @@
 
             <form method="post">
               <span class="govuk-caption-l">Create an education support plan</span>
+             <h1 class="govuk-heading-l">Add details of person consulted or involved</h1>
 
-              {{ govukRadios({
-                name: "san-"+v+"-"+ref+"-create-otherpeopleconsulted",
-                fieldset: {
-                  legend: {
-                    text: "Were any other people consulted or involved?",
-                    isPageHeading: true,
-                    classes: "govuk-fieldset__legend--l"
-                  }
-                },
-                items: [
-                  {
-                    value: "Yes",
-                    text: "Yes",
-                    checked: checked("san-"+v+"-"+ref+"-create-otherpeopleconsulted","Yes")
-                  },
-                  {
-                    value: "No",
-                    text: "No",
-                    checked: checked("san-"+v+"-"+ref+"-create-otherpeopleconsulted","No")
-                  }
-                ]
+              {{ govukInput({
+                id: "san-"+v+"-"+ref+"-create-otherpeople-name",
+                name: "san-"+v+"-"+ref+"-create-otherpeople-name",
+                  classes: "govuk-!-width-one-half",
+                label: {
+                  text: "Full name"
+                }
+              }) }}
+
+              {{ govukInput({
+                id: "san-"+v+"-"+ref+"-create-otherpeople-job",
+                name: "san-"+v+"-"+ref+"-create-otherpeople-job",
+                  classes: "govuk-!-width-one-half",
+                label: {
+                  text: "Job role"
+                }
               }) }}
 
               {{ govukButton({
