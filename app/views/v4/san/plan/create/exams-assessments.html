@@ -30,7 +30,7 @@
                     text: "Add details"
                   },
                   hint: {
-                    text: "Highlight where there is a need for access arrangements in exams, or where an assessment has not yet taken place where an assessment for access arrangements will be required."
+                    text: "Include if an assessment for access arrangements needs to happen."
                   },
                   value: data["san-"+v+"-"+ref+"-create-examsassessments-details"]
                 }) }}
@@ -68,6 +68,9 @@
 
             </form>
 
+          </div>
+          <div class="govuk-grid-column-one-third">
+            {% include "includes/"+v+"/san-aside-needs.html" %}
           </div>
         </div>
       </div>

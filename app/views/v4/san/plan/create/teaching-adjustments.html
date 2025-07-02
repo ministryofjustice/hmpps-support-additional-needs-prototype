@@ -37,13 +37,13 @@
                 name: "san-"+v+"-"+ref+"-create-teachingadjust",
                 fieldset: {
                   legend: {
-                    text: "Does "+prisoner.firstName+" "+prisoner.lastName+" need any  adjustments to teaching?",
+                    text: "Does "+prisoner.firstName+" "+prisoner.lastName+" need any adjustments to teaching, learning environment or materials?",
                     isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                   }
                 },
                 hint: {
-                  text: "Things like modifying the curriculum or adapting teaching."
+                  text: "For teaching this could be breaking down tasks, revisiting key concepts or giving additional processing time. For materials and environment adjustments, a desk at the front of class or near the door, materials on coloured background, overlays, specific font sizes, diagrammatic materials and assistive technology."
                 },
                 items: [
                   {
@@ -68,6 +68,9 @@
 
             </form>
 
+          </div>
+          <div class="govuk-grid-column-one-third">
+            {% include "includes/"+v+"/san-aside-needs.html" %}
           </div>
         </div>
       </div>
