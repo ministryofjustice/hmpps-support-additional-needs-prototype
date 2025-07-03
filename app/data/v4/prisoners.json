@@ -409,7 +409,29 @@
         "legalStatus": "SENTENCED",
         "recall": false,
         "indeterminateSentence": false,
-        "planStatus": "Due"
+        "educationPlan": [
+          {
+            "personWhoMet": "Yes",
+            "personWhoMetName": "",
+            "personWhoMetJobRole": "",
+            "otherPeople": "No",
+            "prisonerView": "John doesn't want any support",
+            "teachingAdjust": "No",
+            "teachingAdjustDetails": "",
+            "knowledgeSkills": "No",
+            "knowledgeSkillsDetails": "",
+            "examsAssessments": "No",
+            "examsAssessmentsDetails": "",
+            "ehcp": "No",
+            "lnspSupport": "No",
+            "lnspSupportDetails": "",
+            "lnspSupportHours": "",
+            "otherDetails": "",
+            "reviewDate": "31/7/2025",
+            "dateCreated": "03 Jul 2025",
+            "author": "W. Knight"
+          }
+        ]
     },
     {
         "prisonerNumber": "A8560DY",
@@ -422,6 +444,39 @@
         "cellLocation": "RECP",
         "legalStatus": "SENTENCED",
         "recall": false,
-        "indeterminateSentence": false
+        "indeterminateSentence": false,
+        "educationPlan": [
+          {
+            "personWhoMet": "No",
+            "personWhoMetName": "Peter Parker",
+            "personWhoMetJobRole": "Photographer",
+            "otherPeople": "Yes",
+            "otherPeopleDetails": [
+              {
+                "otherPersonName": "J Jonah Jameson",
+                "otherPersonJob": "Editor"
+              },
+              {
+                "otherPersonName": "Gwen Stacy",
+                "otherPersonJob": "Reporter"
+              }
+            ],
+            "prisonerView": "Help communicating effectively with colleagues and tutors",
+            "teachingAdjust": "Yes",
+            "teachingAdjustDetails": "Breaking down tasks, revisiting key concepts or giving additional processing time.",
+            "knowledgeSkills": "Yes",
+            "knowledgeSkillsDetails": "British Sign Language",
+            "examsAssessments": "Yes",
+            "examsAssessmentsDetails": "An assessment for access arrangements needs to happen.",
+            "ehcp": "No",
+            "lnspSupport": "Yes",
+            "lnspSupportDetails": "One to one hel for specific issues",
+            "lnspSupportHours": "8",
+            "otherDetails": "Has a keen interest in secret identities",
+            "reviewDate": "17/7/2025",
+            "dateCreated": "03 Jul 2025",
+            "author": "Aunt May"
+          }
+        ]
     }
 ]

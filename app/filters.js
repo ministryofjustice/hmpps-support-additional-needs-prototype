@@ -38,8 +38,10 @@ addFilter('dateReplaceSlash', function (str) {
     const monthNames = ["Jan", "Feb", "Mar", "Apr",
                         "May", "Jun", "Jul", "Aug",
                         "Sep", "Oct", "Nov", "Dec"];
+
+    const monthNumber = parseInt(dateArray[1]) - 1;
                     
-    const monthName = monthNames[dateArray[1]];
+    const monthName = monthNames[monthNumber];
     
     return `${dateArray[0]} ${monthName} ${dateArray[2]}`;
 })

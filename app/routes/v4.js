@@ -376,17 +376,7 @@ module.exports = function(router) {
     let ref = matchref(req);
     res.render("/"+v+"/san/plan/create/teaching-adjustments", {ref});
   });
-
-  router.get("/"+v+"/san/:ref/plan/create/teaching-adjustments", function (req, res) {
-    let ref = matchref(req);
-    res.render("/"+v+"/san/plan/create/teaching-adjustments", {ref});
-  });
-/*
-  router.get("/"+v+"/san/:ref/plan/create/environment-adjustments", function (req, res) {
-    let ref = matchref(req);
-    res.render("/"+v+"/san/plan/create/environment-adjustments", {ref});
-  });
-*/
+  
   router.get("/"+v+"/san/:ref/plan/create/knowledge-skills", function (req, res) {
     let ref = matchref(req);
     res.render("/"+v+"/san/plan/create/knowledge-skills", {ref});
@@ -423,7 +413,7 @@ module.exports = function(router) {
   });
 
 
-  /* Routing for create edcation plan */
+/* Routing for create edcation plan */
 
   router.post("/"+v+"/san/:ref/plan/create/person-who-met", function (req, res) {
     let ref = matchref(req);
@@ -628,6 +618,214 @@ module.exports = function(router) {
     res.redirect("/"+v+"/san/"+ref+"/profile/plan");
   });
 
+
+/*********************************
+ * Review education support plan *
+ *********************************/
+
+  /* Render screens based on ref */
+
+  router.get("/"+v+"/san/:ref/plan/review/person-reviewing", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/person-reviewing", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-people-consulted", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/other-people-consulted", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-people-add", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/other-people-add", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-people-list", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/other-people-list", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-people-remove/:personid", function (req, res) {
+    let ref = matchref(req);
+    let personid = req.params.personid;
+    // remove item from list
+    req.session.data["san-"+v+"-"+ref+"-review-otherpeople"].splice(personid,1);
+    // if none left in list go to other-people-consulted
+    if (req.session.data["san-"+v+"-"+ref+"-review-otherpeople"].length === 0){
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/other-people-consulted");
+    } else {
+      // else show list again
+      res.render("/"+v+"/san/plan/review/other-people-list", {ref});
+    }
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/prisoner-progress", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/prisoner-progress", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/reviewer-progress", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/reviewer-progress", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-needs", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-needs", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-needs-strengths", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-needs-strengths", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-needs-challenges", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-needs-challenges", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-needs-support", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-needs-support", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/teaching-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/teaching-adjustments", {ref});
+  });
+  
+  router.get("/"+v+"/san/:ref/plan/review/knowledge-skills", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/knowledge-skills", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/exams-assessments", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/exams-assessments", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/lnsp-support", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/lnsp-support", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-details", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/other-details", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-date", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-date", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/check-answers", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/check-answers", {ref});
+  });
+
+
+/* Routing for review edcation plan */
+
+  router.post("/"+v+"/san/:ref/plan/review/person-reviewing", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/other-people-consulted");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/other-people-consulted", function (req, res) {
+    let ref = matchref(req);
+    if (req.session.data["san-"+v+"-"+ref+"-review-otherpeopleconsulted"] == "Yes") {
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/other-people-add");
+    } else {
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/prisoner-progress");
+    }
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/other-people-add", function (req, res) {
+    let ref = matchref(req);
+    /* Store data in temp object for other people consulted */
+    let tempOtherPerson = {
+      otherPersonName: req.session.data["san-"+v+"-"+ref+"-review-otherpeople-name"],
+      otherPersonJob: req.session.data["san-"+v+"-"+ref+"-review-otherpeople-job"]
+    };
+    //let otherPeople = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
+    if (!Array.isArray(req.session.data["san-"+v+"-"+ref+"-review-otherpeople"])) {
+      req.session.data["san-"+v+"-"+ref+"-review-otherpeople"] = [];
+    }
+    req.session.data["san-"+v+"-"+ref+"-review-otherpeople"].push(tempOtherPerson);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/other-people-list");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/other-people-list", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/prisoner-progress");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/prisoner-progress", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/reviewer-progress");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/reviewer-progress", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/review-needs");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-needs", function (req, res) {
+    let ref = matchref(req);
+    if (req.session.data["san-"+v+"-"+ref+"-review-reviewneeds"] == "Yes") {
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/review-needs-strengths");
+    } else {
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/teaching-adjustments");
+    }
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-needs-strengths", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/review-needs-challenges");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-needs-challenges", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/review-needs-support");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-needs-support", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/teaching-adjustments");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/teaching-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/knowledge-skills");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/knowledge-skills", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/exams-assessments");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/exams-assessments", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/lnsp-support");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/lnsp-support", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/other-details");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/other-details", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/review-date");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-date", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/check-answers");
+  });
+
+/* Review check answers submission and save to do next */
 
   module.exports = router;
 
