@@ -75,6 +75,8 @@
             <div class="summaryneeds-item">
               <h3 class="govuk-heading-s">Challenges</h3>
 
+              {% set areChallenges = 0 %}
+
               {% for categories in data[v+'categories'] %}
                 {# Loop through challenges of prisoner #}
                 {% for needs in prisoner.needsChallenges %}
@@ -91,15 +93,23 @@
                 {% for needs in prisoner.needsChallenges %}
                   {# Check if needsChallenges has an item in this category #}
                   {% if needs.needsChallengeCategory == cat %}
+                      {% set areChallenges = areChallenges + 1 %}
                     <p class="govuk-body">{{ cat }}</p>
                   {% endif %}
                 {% endfor %}
               {% endfor %}
-              <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="">View challenges</a></p>
+              {% if areChallenges > 0 %}
+              <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/challenges">View challenges</a></p>
+              {% else %}
+              <p class="govuk-body">No challenges recorded</p>
+              <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category">Add challenges</a></p>
+              {% endif %}
 
             </div>
             <div class="summaryneeds-item">
               <h3 class="govuk-heading-s">Strengths</h3>
+
+              {% set areStrengths = 0 %}
 
               {% for categories in data[v+'categories'] %}
                 {# Loop through challenges of prisoner #}
@@ -109,6 +119,7 @@
                     {# Add this category to an array of categories associated with this prisoner #}
                     {% if not categories.categoryName in cats %}
                       {% set cats = (cats.push(categories.categoryName), cats) %}
+                      {% set areStrengths = areStrengths + 1 %}
                     {% endif %}
                   {% endif %}
                 {% endfor %}
@@ -117,11 +128,17 @@
                 {% for needs in prisoner.needsStrengths %}
                   {# Check if needsStrengths has an item in this category #}
                   {% if needs.needsStrengthCategory == cat %}
+                      {% set areStrengths = areStrengths + 1 %}
                     <p class="govuk-body">{{ cat }}</p>
                   {% endif %}
                 {% endfor %}
               {% endfor %}
-              <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="">View strengths</a></p>
+              {% if areStrengths > 0 %}
+              <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/strengths">View strengths</a></p>
+              {% else %}
+              <p class="govuk-body">No strengths recorded</p>
+              <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category">Add strength</a></p>
+              {% endif %}
 
             </div>
           </div>
@@ -130,16 +147,15 @@
       </section>
 
 
-      {% if prisoner.needsSupport %}
 
         <section class="app-summary-card govuk-!-margin-bottom-6">
           <header class="app-summary-card__header">
             <h2 class="app-summary-card__title">
               Support strategies
             </h2>
-            <a class="govuk-link--no-visited-state" href="javascript:preventDefault();">View support strategies</a>
           </header>
           <div class="app-summary-card__body">
+      {% if prisoner.needsSupport %}
 
             <dl class="govuk-summary-list san-needs-list">
               {# Loop through all categories of need #}
@@ -180,18 +196,15 @@
               {% endfor %}
             </dl>
 
-          </div>
-        </section>
-
       {% else %}
-      
-        <section class="app-summary-card govuk-!-margin-bottom-6">
-          <div class="app-summary-card__body">
-            <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies, challenges or strengths recorded.</p>
-          </div>
-        </section>
+            <p class="govuk-body govuk-!-margin-top-3">No support strategies recorded</p>
+              <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category">Add support strategy</a></p>
+
 
       {% endif %}
+
+          </div>
+        </section>
 
     </div>
     

@@ -12,6 +12,7 @@
         "recall": false,
         "indeterminateSentence": false,
         "planStatus": "Due",
+        "nextActionDue": "12 Jul 2025",
         "needsSupport": [
             {
                 "needsSupportCategory": "Attention, organising and time management",
@@ -166,6 +167,7 @@
         "recall": false,
         "indeterminateSentence": false,
         "planStatus": "Due",
+        "nextActionDue": "7 Aug 2025",
         "needsSupport": [
             {
                 "needsSupportCategory": "Emotions and feelings",
@@ -260,6 +262,7 @@
         "recall": false,
         "indeterminateSentence": false,
         "planStatus": "Due",
+        "nextActionDue": "7 Jul 2025",
         "needsSupport": [
             {
                 "needsSupportCategory": "Attention, organising and time management",
