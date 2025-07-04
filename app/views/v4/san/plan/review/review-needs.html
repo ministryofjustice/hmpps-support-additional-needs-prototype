@@ -1,0 +1,62 @@
+{% extends "/layouts/v4.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            <span class="govuk-caption-l">Review an education support plan</span>
+
+            <form method="post">
+
+              {{ govukRadios({
+                name: "san-"+v+"-"+ref+"-review-reviewneeds",
+                fieldset: {
+                  legend: {
+                    text: "Do you want to review "+prisoner.firstName+" "+prisoner.lastName+"'s challenges, strengths and support strategies before reviewing the education support plan?",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                  }
+                },
+                items: [
+                  {
+                    value: "Yes",
+                    text: "Yes",
+                    checked: checked("san-"+v+"-"+ref+"-review-reviewneeds","Yes")
+                  },
+                  {
+                    value: "No, we have already reviewed them",
+                    text: "No, we have already reviewed them",
+                    checked: checked("san-"+v+"-"+ref+"-review-reviewneeds","No, we have already reviewed them")
+                  }
+                ]
+              }) }}
+
+              {{ govukButton({
+                text: "Continue"
+              }) }}
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

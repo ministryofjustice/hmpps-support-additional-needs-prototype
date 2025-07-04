@@ -114,8 +114,7 @@
 
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">
-                    Specific knowledge or skills 
-
+                    Specific knowledge or skills
                   </dt>
                   <dd class="govuk-summary-list__value">
                     {{ data["san-"+v+"-"+ref+"-create-knowledgeskills"] }}
@@ -213,7 +212,7 @@
                     Review date
                   </dt>
                   <dd class="govuk-summary-list__value">
-                    {{ data["san-"+v+"-"+ref+"-create-reviewdate"] }}
+                    {{ data["san-"+v+"-"+ref+"-create-reviewdate"] | dateReplaceSlash }}
                   </dd>
                   <dd class="govuk-summary-list__actions">
                     <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> review date</span></a>
@@ -225,7 +224,7 @@
               <!--input type="hidden" name="san-{{v}}-create-complete" value="true"-->
 
               {{ govukButton({
-                text: "Continue"
+                text: "Save and continue"
               }) }}
               
             </form>

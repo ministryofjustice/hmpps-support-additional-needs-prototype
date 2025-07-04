@@ -1,0 +1,53 @@
+{% extends "/layouts/v4.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            <span class="govuk-caption-l">Review an education support plan</span>
+
+            <form method="post">
+
+              {{ govukTextarea({
+                id: "san-"+v+"-"+ref+"-review-reviewerprogress",
+                name: "san-"+v+"-"+ref+"-review-reviewerprogress",
+                label: {
+                  text: "What is your view on "+prisoner.firstName+" "+prisoner.lastName+"'s progress?",
+                  isPageHeading: true,
+                  classes: "govuk-label--l"
+                },
+                value: data["san-"+v+"-"+ref+"-review-reviewerprogress"]
+              }) }}
+
+              {{ govukButton({
+                text: "Continue"
+              }) }}
+
+            </form>
+
+          </div>
+          <div class="govuk-grid-column-one-third">
+            {% include "includes/"+v+"/san-aside-needs.html" %}
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

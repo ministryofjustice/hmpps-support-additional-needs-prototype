@@ -1,4 +1,5 @@
-
+{% for prisoner in data[v+'prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
 
     <div class="hmpps-actions-block govuk-!-margin-bottom-5 govuk-!-padding-bottom-2">
       <ul class="hmpps-actions-block__list">
@@ -11,14 +12,19 @@
             {% for plan in prisoner.educationPlan %}
               Review due {{ plan.reviewDate | dateReplaceSlash }}
             {% endfor %}
+          {% else %}
+            {{ govukTag({
+              text: "Due in 5 days",
+              classes: "govuk-tag--yellow"
+            }) }} 
           {% endif %}
         </li>
 
         {% if prisoner.educationPlan %}
           <li>
             <img src="/public/images/icon-create.png" alt="">
-            <!--a href="/{{ v }}/san/{{ ref }}/plan/review" class="govuk-link govuk-link--no-visited-state">Review education support plan</a-->
-            <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Review education support plan</a>
+            <a href="/{{ v }}/san/{{ ref }}/plan/review/person-reviewing" class="govuk-link govuk-link--no-visited-state">Review education support plan</a>
+            <!--a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Review education support plan</a-->
           </li>
         {% else %}
           <li>
@@ -35,6 +41,8 @@
       </ul>
     </div>
 
+  {% endif %}
+{% endfor %}
 
 <!--div class="hmpps-actions-block govuk-!-margin-bottom-5">
   <ul class="hmpps-actions-block__list">

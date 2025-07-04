@@ -1,0 +1,71 @@
+{% extends "/layouts/v4.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            <form method="post">
+              <span class="govuk-caption-l">Review an education support plan</span>
+              <h1 class="govuk-heading-l">Details of people consulted or involved</h1>
+
+              <table class="govuk-table">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Name</th>
+                    <th scope="col" class="govuk-table__header">Job role</th>
+                    <th scope="col" class="govuk-table__header"></th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% set i = 0 %}
+                  {% for person in data["san-"+v+"-"+ref+"-review-otherpeople"] %}
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell">{{ person.otherPersonName }}</td>
+                      <td class="govuk-table__cell">{{ person.otherPersonJob }}</td>
+                      <td class="govuk-table__cell">
+                        <a href="/{{ v }}/san/{{ ref }}/plan/review/other-people-remove/{{ i }}" class="govuk-link">Remove</a>
+                      </td>
+                    </tr>
+                    {% set i = i + 1 %}
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              {{ govukButton({
+                classes: "govuk-button--secondary govuk-!-margin-bottom-5",
+                href: "/"+v+"/san/"+ref+"/plan/review/other-people-add",
+                text: "Add another person"
+              }) }}
+
+              <br>
+
+              {{ govukButton({
+                classes: "govuk-!-margin-top-5",
+                text: "Continue"
+              }) }}
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

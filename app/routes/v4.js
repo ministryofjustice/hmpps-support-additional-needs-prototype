@@ -376,17 +376,7 @@ module.exports = function(router) {
     let ref = matchref(req);
     res.render("/"+v+"/san/plan/create/teaching-adjustments", {ref});
   });
-
-  router.get("/"+v+"/san/:ref/plan/create/teaching-adjustments", function (req, res) {
-    let ref = matchref(req);
-    res.render("/"+v+"/san/plan/create/teaching-adjustments", {ref});
-  });
-/*
-  router.get("/"+v+"/san/:ref/plan/create/environment-adjustments", function (req, res) {
-    let ref = matchref(req);
-    res.render("/"+v+"/san/plan/create/environment-adjustments", {ref});
-  });
-*/
+  
   router.get("/"+v+"/san/:ref/plan/create/knowledge-skills", function (req, res) {
     let ref = matchref(req);
     res.render("/"+v+"/san/plan/create/knowledge-skills", {ref});
@@ -423,7 +413,7 @@ module.exports = function(router) {
   });
 
 
-  /* Routing for create edcation plan */
+/* Routing for create edcation plan */
 
   router.post("/"+v+"/san/:ref/plan/create/person-who-met", function (req, res) {
     let ref = matchref(req);
@@ -531,39 +521,6 @@ module.exports = function(router) {
   router.post("/"+v+"/san/:ref/plan/create/check-answers", function (req, res) {
     let ref = matchref(req);
 
-    /* SESSION DATA EXAMPLE    
-      "san-v4-G2911GD-create-personwhomet": "No",
-      "san-v4-G2911GD-create-personwhomet-name": "Mark Jacobs",
-      "san-v4-G2911GD-create-personwhomet-jobrole": "Tutor",
-      "san-v4-G2911GD-create-otherpeopleconsulted": "Yes",
-      "san-v4-G2911GD-create-otherpeople-name": "Peter Davidson",
-      "san-v4-G2911GD-create-otherpeople-job": "Healthcare Assitant",
-      "san-v4-G2911GD-create-otherpeople": [
-        {
-          "otherPersonName": "David Jones",
-          "otherPersonJob": "Mental Health"
-        },
-        {
-          "otherPersonName": "Peter Davidson",
-          "otherPersonJob": "Healthcare Assitant"
-        }
-      ],
-      "san-v4-G2911GD-create-reviewneeds": "Yes",
-      "san-v4-G2911GD-create-prisonerview": "settling into a classroom environment. Help dealing with loud environments",
-      "san-v4-G2911GD-create-teachingadjust": "Yes",
-      "san-v4-G2911GD-create-teachingadjust-details": " breaking down tasks and giving additional processing time",
-      "san-v4-G2911GD-create-knowledgeskills": "Yes",
-      "san-v4-G2911GD-create-knowledgeskills-details": "British sign language",
-      "san-v4-G2911GD-create-examsassessments": "Yes",
-      "san-v4-G2911GD-create-examsassessments-details": "Will need additional time in written exams",
-      "san-v4-G2911GD-create-ehcp": "Do not know",
-      "san-v4-G2911GD-create-lnspsupport": "Yes",
-      "san-v4-G2911GD-create-lnspsupport-details": "will need someone to break down tasks into smaller chunkc",
-      "san-v4-G2911GD-create-lnspsupport-hours": "6",
-      "san-v4-G2911GD-create-otherdetails": "no additional details",
-      "san-v4-G2911GD-create-reviewdate": "26/9/2025" 
-    */
-
     // convert line breaks to html
     let planPrisonerviewHTML = req.session.data["san-"+v+"-"+ref+"-create-prisonerview"].replace(/(?:\r\n|\r|\n)/g, '<br>');
     let planTeachingadjustHTML = req.session.data["san-"+v+"-"+ref+"-create-teachingadjust-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
@@ -574,6 +531,7 @@ module.exports = function(router) {
     
     /* Store data in prisoner object */
     let newPlanEntry = {
+      planType: "plan",
       personWhoMet: req.session.data["san-"+v+"-"+ref+"-create-personwhomet"],
       personWhoMetName: req.session.data["san-"+v+"-"+ref+"-create-personwhomet-name"],
       personWhoMetJobRole: req.session.data["san-"+v+"-"+ref+"-create-personwhomet-jobrole"],
@@ -624,6 +582,294 @@ module.exports = function(router) {
     delete req.session.data["san-"+v+"-"+ref+"-create-lnspsupport-hours"];
     delete req.session.data["san-"+v+"-"+ref+"-create-otherdetails"];
     delete req.session.data["san-"+v+"-"+ref+"-create-reviewdate"];
+
+    res.redirect("/"+v+"/san/"+ref+"/profile/plan");
+  });
+
+
+/*********************************
+ * Review education support plan *
+ *********************************/
+
+  /* Render screens based on ref */
+
+  router.get("/"+v+"/san/:ref/plan/review/person-reviewing", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/person-reviewing", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-people-consulted", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/other-people-consulted", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-people-add", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/other-people-add", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-people-list", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/other-people-list", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-people-remove/:personid", function (req, res) {
+    let ref = matchref(req);
+    let personid = req.params.personid;
+    // remove item from list
+    req.session.data["san-"+v+"-"+ref+"-review-otherpeople"].splice(personid,1);
+    // if none left in list go to other-people-consulted
+    if (req.session.data["san-"+v+"-"+ref+"-review-otherpeople"].length === 0){
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/other-people-consulted");
+    } else {
+      // else show list again
+      res.render("/"+v+"/san/plan/review/other-people-list", {ref});
+    }
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/prisoner-progress", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/prisoner-progress", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/reviewer-progress", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/reviewer-progress", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-needs", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-needs", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-needs-strengths", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-needs-strengths", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-needs-challenges", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-needs-challenges", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-needs-support", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-needs-support", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/teaching-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/teaching-adjustments", {ref});
+  });
+  
+  router.get("/"+v+"/san/:ref/plan/review/knowledge-skills", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/knowledge-skills", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/exams-assessments", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/exams-assessments", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/lnsp-support", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/lnsp-support", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/other-details", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/other-details", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/review-date", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/review-date", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/plan/review/check-answers", function (req, res) {
+    let ref = matchref(req);
+    res.render("/"+v+"/san/plan/review/check-answers", {ref});
+  });
+
+
+/* Routing for review edcation plan */
+
+  router.post("/"+v+"/san/:ref/plan/review/person-reviewing", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/other-people-consulted");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/other-people-consulted", function (req, res) {
+    let ref = matchref(req);
+    if (req.session.data["san-"+v+"-"+ref+"-review-otherpeopleconsulted"] == "Yes") {
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/other-people-add");
+    } else {
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/prisoner-progress");
+    }
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/other-people-add", function (req, res) {
+    let ref = matchref(req);
+    /* Store data in temp object for other people consulted */
+    let tempOtherPerson = {
+      otherPersonName: req.session.data["san-"+v+"-"+ref+"-review-otherpeople-name"],
+      otherPersonJob: req.session.data["san-"+v+"-"+ref+"-review-otherpeople-job"]
+    };
+    //let otherPeople = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
+    if (!Array.isArray(req.session.data["san-"+v+"-"+ref+"-review-otherpeople"])) {
+      req.session.data["san-"+v+"-"+ref+"-review-otherpeople"] = [];
+    }
+    req.session.data["san-"+v+"-"+ref+"-review-otherpeople"].push(tempOtherPerson);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/other-people-list");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/other-people-list", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/prisoner-progress");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/prisoner-progress", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/reviewer-progress");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/reviewer-progress", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/review-needs");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-needs", function (req, res) {
+    let ref = matchref(req);
+    if (req.session.data["san-"+v+"-"+ref+"-review-reviewneeds"] == "Yes") {
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/review-needs-strengths");
+    } else {
+      res.redirect("/"+v+"/san/"+ref+"/plan/review/teaching-adjustments");
+    }
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-needs-strengths", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/review-needs-challenges");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-needs-challenges", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/review-needs-support");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-needs-support", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/teaching-adjustments");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/teaching-adjustments", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/knowledge-skills");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/knowledge-skills", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/exams-assessments");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/exams-assessments", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/lnsp-support");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/lnsp-support", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/other-details");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/other-details", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/review-date");
+  });
+
+  router.post("/"+v+"/san/:ref/plan/review/review-date", function (req, res) {
+    let ref = matchref(req);
+    res.redirect("/"+v+"/san/"+ref+"/plan/review/check-answers");
+  });
+
+
+
+  router.post("/"+v+"/san/:ref/plan/review/check-answers", function (req, res) {
+    let ref = matchref(req);
+
+    let planPrisonerProgressHTML = "";
+    // convert line breaks to html
+    if (req.session.data["san-"+v+"-"+ref+"-review-declined"]){
+      planPrisonerProgressHTML = req.session.data["san-"+v+"-"+ref+"-review-declined"];
+    } else {
+      planPrisonerProgressHTML = req.session.data["san-"+v+"-"+ref+"-review-prisonerprogress"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    }
+    let planReviewerProgressHTML = req.session.data["san-"+v+"-"+ref+"-review-reviewerprogress"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planTeachingadjustHTML = req.session.data["san-"+v+"-"+ref+"-review-teachingadjust-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planKnowledgeskillsHTML = req.session.data["san-"+v+"-"+ref+"-review-knowledgeskills-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planExamsAssessmentsHTML = req.session.data["san-"+v+"-"+ref+"-review-examsassessments-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planLNSPSupportHTML = req.session.data["san-"+v+"-"+ref+"-review-lnspsupport-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planOtherDetailsHTML = req.session.data["san-"+v+"-"+ref+"-review-otherdetails-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+
+    
+    /* Store data in prisoner object */
+    let newPlanEntry = {
+      planType: "review",
+      personWhoMet: req.session.data["san-"+v+"-"+ref+"-review-personreviewing"],
+      personWhoMetName: req.session.data["san-"+v+"-"+ref+"-review-personreviewing-name"],
+      personreviewingJobRole: req.session.data["san-"+v+"-"+ref+"-review-personreviewing-jobrole"],
+      otherPeople: req.session.data["san-"+v+"-"+ref+"-review-otherpeopleconsulted"],
+      otherPeopleDetails: req.session.data["san-"+v+"-"+ref+"-review-otherpeople"],
+      prisonerProgress: planPrisonerProgressHTML,
+      reviewerProgress: planReviewerProgressHTML,
+      teachingAdjust: req.session.data["san-"+v+"-"+ref+"-review-teachingadjust"],
+      teachingAdjustDetails: planTeachingadjustHTML,
+      knowledgeSkills: req.session.data["san-"+v+"-"+ref+"-review-knowledgeskills"],
+      knowledgeSkillsDetails: planKnowledgeskillsHTML,
+      examsAssessments: req.session.data["san-"+v+"-"+ref+"-review-examsassessments"],
+      examsAssessmentsDetails: planExamsAssessmentsHTML,
+      lnspSupport: req.session.data["san-"+v+"-"+ref+"-review-lnspsupport"],
+      lnspSupportDetails: planLNSPSupportHTML,
+      lnspSupportHours: req.session.data["san-"+v+"-"+ref+"-review-lnspsupport-hours"],
+      otherDetails: planOtherDetailsHTML,
+      ehcp: req.session.data["san-"+v+"-"+ref+"-review-ehcp"],
+      reviewDate: req.session.data["san-"+v+"-"+ref+"-review-reviewdate"],
+      dateCreated: getFormattedDate(),
+      author: "W. Knight"
+    };
+
+    let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
+    // empty existing plan data
+    thisprisoner.educationPlan = [];
+
+    thisprisoner.educationPlan.push(newPlanEntry);
+
+    delete req.session.data["san-"+v+"-"+ref+"-review-personreviewing"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-personreviewing-name"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-personreviewing-jobrole"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherpeopleconsulted"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherpeople-name"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherpeople-job"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherpeople"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-prisonerprogress"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-declined"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-reviewerprogress"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-reviewneeds"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-prisonerview"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-teachingadjust"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-teachingadjust-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-knowledgeskills"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-knowledgeskills-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-examsassessments"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-examsassessments-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-lnspsupport"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-lnspsupport-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-lnspsupport-hours"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherdetails"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherdetails-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-ehcp"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-reviewdate"];
 
     res.redirect("/"+v+"/san/"+ref+"/profile/plan");
   });

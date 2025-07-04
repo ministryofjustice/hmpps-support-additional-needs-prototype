@@ -29,26 +29,63 @@
     <div class="govuk-grid-column-full-width">
       <!-- Search bar  -->
       <div class="govuk-form-group filter-box govuk-!-margin-top-4">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2"
-          style="padding-left:16px">
-          Search for a prisoner
-        </legend>
+        <!--form method="post"-->
+          <div class="govuk-!-padding-left-5">
 
-        <div class="govuk-grid-column-two-thirds">
-          <div class="moj-search">
-            <form method="post">
-              <div class="govuk-form-group">
-                <label class="govuk-label govuk-!-margin-bottom-2" for="search">
-                  Prisoner's name or prison number
-                </label>
-                <input class="govuk-input moj-search__input govuk-input govuk-!-width-one-half" id="search" name="search" type="search">
-                <a style="margin-left:14px" href="javascript:preventDefault();" role="button" draggable="false"
-                    class="govuk-button moj-button-menu__item" data-module="govuk-button">
-                    Search
-                  </a>
-              </div>
-            </form>
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2">
+              Filter by
+            </legend>
+            <div class="moj-search">
+                <div class="govuk-form-group">
+                  
+                  <div class="govuk-form-group govuk-!-margin-right-5">
+                    <label class="govuk-label" for="sort">
+                      Next action due
+                    </label>
+                    <select class="govuk-select" id="sort" name="sort">
+                      <option value="">Within next 14 days</option>
+                    </select>
+                  </div>
+                  
+                  <div class="govuk-form-group govuk-!-margin-right-5">
+                    <label class="govuk-label" for="sort">
+                      Next action
+                    </label>
+                    <select class="govuk-select" id="sort" name="sort">
+                      <option value="">Create plan</option>
+                    </select>
+                  </div>
+                  
+                  <div class="govuk-form-group govuk-!-margin-right-5">
+                    <label class="govuk-label" for="sort">
+                      Release date
+                    </label>
+                    <select class="govuk-select" id="sort" name="sort">
+                      <option value="">Within next 12 weeks</option>
+                    </select>
+                  </div>
+
+                </div>
+            </div>
           </div>
+          
+          <div class="govuk-grid-column-full-width govuk-!-margin-top-6 govuk-!-padding-left-5">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-2">
+              Search for a prisoner
+            </legend>
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-!-margin-bottom-2" for="search">
+                    Prisoner's name or prison number
+                  </label>
+                  <input class="govuk-input govuk-input govuk-input--width-20" id="search" name="search" type="search">
+                  <a style="margin-left:14px" href="javascript:preventDefault();" role="button" draggable="false"
+                      class="govuk-button moj-button-menu__item" data-module="govuk-button">
+                      Apply filters
+                    </a>
+                </div>
+
+          <!--/form-->
+
         </div>
       </div>
 
@@ -56,21 +93,83 @@
       <table class="govuk-table govuk-!-margin-top-6" data-module="moj-sortable-table" id="prisonerTable">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header" aria-sort="none">Prisoner name</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none">Prison number</th>
-            <th scope="col" class="govuk-table__header" aria-sort="none">Location</th>
-            <th scope="col" class="govuk-table__header"></th>
+            <th scope="col" class="govuk-table__header">Prisoner name</th>
+            <th scope="col" class="govuk-table__header">Location</th>
+            <th scope="col" class="govuk-table__header">Release date</th>
+            <th scope="col" class="govuk-table__header">Additional needs</th>
+            <th scope="col" class="govuk-table__header">Next action due</th>
+            <th scope="col" class="govuk-table__header">Status</th>
+
         </thead>
         <tbody class="govuk-table__body">
 
           {% for prisoner in data[v+'prisoners'] %}
 
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/">{{ prisoner.lastName }}, {{ prisoner.firstName }}</a></td>
-            <td class="govuk-table__cell">{{ prisoner.prisonerNumber }}</td>
-            <td class="govuk-table__cell">{{ prisoner.cellLocation }}</td>
-            <td class="govuk-table__cell"></td>
-          </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/">{{ prisoner.lastName }}, {{ prisoner.firstName }}</a><br>
+                {{ prisoner.prisonerNumber }}
+              </td>
+              <td class="govuk-table__cell">{{ prisoner.cellLocation }}</td>
+              <td class="govuk-table__cell">{{ prisoner.releaseDate }}</td>
+              <td class="govuk-table__cell">
+                {%
+                  if prisoner.needsSupport
+                  or prisoner.needsChallenges
+                %}
+                  Yes
+                {% else %}
+                  No
+                {% endif %}
+              </td>
+              <td class="govuk-table__cell">
+                {% if prisoner.educationPlan %}
+                  {% for plan in prisoner.educationPlan %}
+                    {{ plan.reviewDate | dateReplaceSlash }}
+                  {% endfor %}
+                {% else %}
+                  {%
+                    if prisoner.needsSupport
+                    or prisoner.needsChallenges
+                  %}
+                    {{ prisoner.nextActionDue }} 
+                  {% else %}
+                    N/A
+                  {% endif %}
+                {% endif %}
+              </td>
+              <td class="govuk-table__cell">
+
+                {% if prisoner.educationPlan %}
+                  {% for plan in prisoner.educationPlan %}
+
+                    {% if plan.planType === "plan" %}
+                      {{ govukTag({
+                        classes: "govuk-tag--green",
+                        text: "Has plan"
+                      }) }}
+                    {% endif %}
+
+                  {% endfor %}
+                {% else %}
+
+                  <!-- Prisoner does not have an education support plan -->
+                  {%
+                    if prisoner.needsSupport
+                    or prisoner.needsChallenges
+                  %} 
+                      {{ govukTag({
+                        classes: "govuk-tag--yellow",
+                        text: "Plan due"
+                      }) }}
+                  {% else %}
+                    N/A
+                  {% endif %}
+
+                {% endif %}
+                
+              </td>
+            </tr>
 
           {% endfor %}
           
@@ -84,10 +183,11 @@
             <a class="moj-pagination__link" href=""><span class="govuk-visually-hidden"> page</span></a>
           </li>
 
-          <li class="moj-pagination__item moj-pagination__item--active" aria-label="Page 2 of 30" aria-current="page">
+          <li class="moj-pagination__item moj-pagination__item--active" aria-label="Page 1 of 30" aria-current="page">
             1</li>
 
-          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#"" aria-label=" Page 2 of 30">2</a>
+          <li class="moj-pagination__item"><a class="moj-pagination__link" href="#" aria-label="Page 2 of 30">2</a>
+
           </li>
 
           <li class="moj-pagination__item"><a class="moj-pagination__link" href="#" aria-label="Page 3 of 30">3</a>
