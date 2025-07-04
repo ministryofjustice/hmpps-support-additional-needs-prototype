@@ -29,7 +29,7 @@
                   <div class="govuk-inset-text">
                     <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Current access arrangements</p>
                     <p class="govuk-body">
-                      {% if plan.examsAssessments === "Yes" %}
+                      {% if plan.examsAssessmentsDetails != "" %}
                         {{ plan.examsAssessmentsDetails | safe }}
                       {% else %}
                         None

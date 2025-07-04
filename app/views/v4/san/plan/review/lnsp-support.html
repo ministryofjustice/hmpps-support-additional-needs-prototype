@@ -27,7 +27,7 @@
                 {% for plan in prisoner.educationPlan %}
 
                   <div class="govuk-inset-text">
-                    {% if plan.lnspSupport === "Yes" %}
+                    {% if plan.lnspSupportDetails != "" %}
                       <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Recommended support details</p>
                       <p class="govuk-body">{{ plan.lnspSupportDetails | safe }}</p>
                       <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Recommended number of hours</p>

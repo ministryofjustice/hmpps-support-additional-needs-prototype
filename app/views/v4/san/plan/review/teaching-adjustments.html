@@ -29,7 +29,7 @@
                   <div class="govuk-inset-text">
                     <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Current adjustments</p>
                     <p class="govuk-body">
-                      {% if plan.teachingAdjust === "Yes" %}
+                      {% if plan.teachingAdjustDetails != "" %}
                         {{ plan.teachingAdjustDetails | safe }}
                       {% else %}
                         None

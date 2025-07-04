@@ -521,39 +521,6 @@ module.exports = function(router) {
   router.post("/"+v+"/san/:ref/plan/create/check-answers", function (req, res) {
     let ref = matchref(req);
 
-    /* SESSION DATA EXAMPLE    
-      "san-v4-G2911GD-create-personwhomet": "No",
-      "san-v4-G2911GD-create-personwhomet-name": "Mark Jacobs",
-      "san-v4-G2911GD-create-personwhomet-jobrole": "Tutor",
-      "san-v4-G2911GD-create-otherpeopleconsulted": "Yes",
-      "san-v4-G2911GD-create-otherpeople-name": "Peter Davidson",
-      "san-v4-G2911GD-create-otherpeople-job": "Healthcare Assitant",
-      "san-v4-G2911GD-create-otherpeople": [
-        {
-          "otherPersonName": "David Jones",
-          "otherPersonJob": "Mental Health"
-        },
-        {
-          "otherPersonName": "Peter Davidson",
-          "otherPersonJob": "Healthcare Assitant"
-        }
-      ],
-      "san-v4-G2911GD-create-reviewneeds": "Yes",
-      "san-v4-G2911GD-create-prisonerview": "settling into a classroom environment. Help dealing with loud environments",
-      "san-v4-G2911GD-create-teachingadjust": "Yes",
-      "san-v4-G2911GD-create-teachingadjust-details": " breaking down tasks and giving additional processing time",
-      "san-v4-G2911GD-create-knowledgeskills": "Yes",
-      "san-v4-G2911GD-create-knowledgeskills-details": "British sign language",
-      "san-v4-G2911GD-create-examsassessments": "Yes",
-      "san-v4-G2911GD-create-examsassessments-details": "Will need additional time in written exams",
-      "san-v4-G2911GD-create-ehcp": "Do not know",
-      "san-v4-G2911GD-create-lnspsupport": "Yes",
-      "san-v4-G2911GD-create-lnspsupport-details": "will need someone to break down tasks into smaller chunkc",
-      "san-v4-G2911GD-create-lnspsupport-hours": "6",
-      "san-v4-G2911GD-create-otherdetails": "no additional details",
-      "san-v4-G2911GD-create-reviewdate": "26/9/2025" 
-    */
-
     // convert line breaks to html
     let planPrisonerviewHTML = req.session.data["san-"+v+"-"+ref+"-create-prisonerview"].replace(/(?:\r\n|\r|\n)/g, '<br>');
     let planTeachingadjustHTML = req.session.data["san-"+v+"-"+ref+"-create-teachingadjust-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
@@ -564,6 +531,7 @@ module.exports = function(router) {
     
     /* Store data in prisoner object */
     let newPlanEntry = {
+      planType: "plan",
       personWhoMet: req.session.data["san-"+v+"-"+ref+"-create-personwhomet"],
       personWhoMetName: req.session.data["san-"+v+"-"+ref+"-create-personwhomet-name"],
       personWhoMetJobRole: req.session.data["san-"+v+"-"+ref+"-create-personwhomet-jobrole"],
@@ -825,7 +793,87 @@ module.exports = function(router) {
     res.redirect("/"+v+"/san/"+ref+"/plan/review/check-answers");
   });
 
-/* Review check answers submission and save to do next */
+
+
+  router.post("/"+v+"/san/:ref/plan/review/check-answers", function (req, res) {
+    let ref = matchref(req);
+
+    let planPrisonerProgressHTML = "";
+    // convert line breaks to html
+    if (req.session.data["san-"+v+"-"+ref+"-review-declined"]){
+      planPrisonerProgressHTML = req.session.data["san-"+v+"-"+ref+"-review-declined"];
+    } else {
+      planPrisonerProgressHTML = req.session.data["san-"+v+"-"+ref+"-review-prisonerprogress"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    }
+    let planReviewerProgressHTML = req.session.data["san-"+v+"-"+ref+"-review-reviewerprogress"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planTeachingadjustHTML = req.session.data["san-"+v+"-"+ref+"-review-teachingadjust-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planKnowledgeskillsHTML = req.session.data["san-"+v+"-"+ref+"-review-knowledgeskills-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planExamsAssessmentsHTML = req.session.data["san-"+v+"-"+ref+"-review-examsassessments-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planLNSPSupportHTML = req.session.data["san-"+v+"-"+ref+"-review-lnspsupport-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let planOtherDetailsHTML = req.session.data["san-"+v+"-"+ref+"-review-otherdetails-details"].replace(/(?:\r\n|\r|\n)/g, '<br>');
+
+    
+    /* Store data in prisoner object */
+    let newPlanEntry = {
+      planType: "review",
+      personWhoMet: req.session.data["san-"+v+"-"+ref+"-review-personreviewing"],
+      personWhoMetName: req.session.data["san-"+v+"-"+ref+"-review-personreviewing-name"],
+      personreviewingJobRole: req.session.data["san-"+v+"-"+ref+"-review-personreviewing-jobrole"],
+      otherPeople: req.session.data["san-"+v+"-"+ref+"-review-otherpeopleconsulted"],
+      otherPeopleDetails: req.session.data["san-"+v+"-"+ref+"-review-otherpeople"],
+      prisonerProgress: planPrisonerProgressHTML,
+      reviewerProgress: planReviewerProgressHTML,
+      teachingAdjust: req.session.data["san-"+v+"-"+ref+"-review-teachingadjust"],
+      teachingAdjustDetails: planTeachingadjustHTML,
+      knowledgeSkills: req.session.data["san-"+v+"-"+ref+"-review-knowledgeskills"],
+      knowledgeSkillsDetails: planKnowledgeskillsHTML,
+      examsAssessments: req.session.data["san-"+v+"-"+ref+"-review-examsassessments"],
+      examsAssessmentsDetails: planExamsAssessmentsHTML,
+      lnspSupport: req.session.data["san-"+v+"-"+ref+"-review-lnspsupport"],
+      lnspSupportDetails: planLNSPSupportHTML,
+      lnspSupportHours: req.session.data["san-"+v+"-"+ref+"-review-lnspsupport-hours"],
+      otherDetails: planOtherDetailsHTML,
+      ehcp: req.session.data["san-"+v+"-"+ref+"-review-ehcp"],
+      reviewDate: req.session.data["san-"+v+"-"+ref+"-review-reviewdate"],
+      dateCreated: getFormattedDate(),
+      author: "W. Knight"
+    };
+
+    let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
+    // empty existing plan data
+    thisprisoner.educationPlan = [];
+
+    thisprisoner.educationPlan.push(newPlanEntry);
+
+    delete req.session.data["san-"+v+"-"+ref+"-review-personreviewing"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-personreviewing-name"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-personreviewing-jobrole"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherpeopleconsulted"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherpeople-name"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherpeople-job"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherpeople"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-prisonerprogress"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-declined"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-reviewerprogress"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-reviewneeds"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-prisonerview"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-teachingadjust"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-teachingadjust-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-knowledgeskills"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-knowledgeskills-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-examsassessments"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-examsassessments-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-lnspsupport"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-lnspsupport-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-lnspsupport-hours"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherdetails"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-otherdetails-details"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-ehcp"];
+    delete req.session.data["san-"+v+"-"+ref+"-review-reviewdate"];
+
+    res.redirect("/"+v+"/san/"+ref+"/profile/plan");
+  });
+
 
   module.exports = router;
 

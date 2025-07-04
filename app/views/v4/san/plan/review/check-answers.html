@@ -109,7 +109,11 @@
                         {% if data["san-"+v+"-"+ref+"-review-teachingadjust"] == "Yes" %}
                           {{ data["san-"+v+"-"+ref+"-review-teachingadjust-details"] }}
                         {% else %}
-                          {{ plan.teachingAdjustDetails }}
+                          {% if plan.teachingAdjustDetails == "" %}
+                            None
+                          {% else %}
+                            {{ plan.teachingAdjustDetails | safe }}
+                          {% endif %}
                         {% endif %}
                       </dd>
                       <dd class="govuk-summary-list__actions">
@@ -125,7 +129,11 @@
                         {% if data["san-"+v+"-"+ref+"-review-knowledgeskills"] == "Yes" %}
                           {{ data["san-"+v+"-"+ref+"-review-knowledgeskills-details"] }}
                         {% else %}
-                          {{ plan.knowledgeSkillsDetails }}
+                          {% if plan.knowledgeSkillsDetails == "" %}
+                            None
+                          {% else %}
+                            {{ plan.knowledgeSkillsDetails | safe }}
+                          {% endif %}
                         {% endif %}
                       </dd>
                       <dd class="govuk-summary-list__actions">
@@ -141,7 +149,11 @@
                         {% if data["san-"+v+"-"+ref+"-review-examsassessments"] == "Yes" %}
                           {{ data["san-"+v+"-"+ref+"-review-examsassessments-details"] }}
                         {% else %}
-                          {{ plan.examsAssessmentsDetails }}
+                          {% if plan.examsAssessmentsDetails == "" %}
+                            None
+                          {% else %}
+                            {{ plan.examsAssessmentsDetails | safe }}
+                          {% endif %}
                         {% endif %}
                       </dd>
                       <dd class="govuk-summary-list__actions">
@@ -150,28 +162,14 @@
                     </div>
                     
                     {% if data["san-"+v+"-"+ref+"-review-lnspsupport"] == "No" %}
-                      {% if plan.lnspSupport === "No" %}
-
-                        <div class="govuk-summary-list__row">
-                          <dt class="govuk-summary-list__key">
-                            Learning needs classroom support 
-                          </dt>
-                          <dd class="govuk-summary-list__value">
-                            None
-                          </dd>
-                          <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> learning needs classroom support</span></a>
-                          </dd>
-                        </div>
-
-                      {% else %}
+                      {% if plan.lnspSupportDetails != "" %}
 
                         <div class="govuk-summary-list__row">
                           <dt class="govuk-summary-list__key">
                             Recommendations for learning needs classroom support 
                           </dt>
                           <dd class="govuk-summary-list__value">
-                            {{plan.lnspSupportDetails }}
+                            {{plan.lnspSupportDetails | safe }}
                           </dd>
                           <dd class="govuk-summary-list__actions">
                             <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> LNSP support in the classroom</span></a>
@@ -186,6 +184,20 @@
                           </dd>
                           <dd class="govuk-summary-list__actions">
                             <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> LNSP support in the classroom</span></a>
+                          </dd>
+                        </div>
+
+                      {% else %}
+
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Learning needs classroom support 
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            None
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> learning needs classroom support</span></a>
                           </dd>
                         </div>
 
@@ -222,10 +234,14 @@
                         Any other details
                       </dt>
                       <dd class="govuk-summary-list__value">
-                        {% if data["san-"+v+"-"+ref+"-review-otherdetails"] == "Yes" %}
+                        {% if data["san-"+v+"-"+ref+"-review-otherdetails-details"] != "" %}
                           {{ data["san-"+v+"-"+ref+"-review-otherdetails-details"] }}
                         {% else %}
-                          {{ plan.otherDetails }}
+                          {% if plan.otherDetails == "" %}
+                            None
+                          {% else %}
+                            {{ plan.otherDetails | safe }}
+                          {% endif %}
                         {% endif %}
                       </dd>
                       <dd class="govuk-summary-list__actions">
@@ -247,8 +263,11 @@
 
                   </dl>
 
+                  <input type="hidden" name="san-{{ v }}-{{ ref }}-review-ehcp" value="{{ plan.ehcp }}">
+
                 {% endfor %}
               {% endif %}
+
 
               {{ govukButton({
                 text: "Submit review"

@@ -29,7 +29,7 @@
                   <div class="govuk-inset-text">
                     <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Current need</p>
                     <p class="govuk-body">
-                      {% if plan.knowledgeSkills === "Yes" %}
+                      {% if plan.knowledgeSkillsDetails != "" %}
                         {{ plan.knowledgeSkillsDetails | safe }}
                       {% else %}
                         None

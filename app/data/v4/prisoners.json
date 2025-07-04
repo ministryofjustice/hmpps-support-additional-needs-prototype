@@ -411,6 +411,7 @@
         "indeterminateSentence": false,
         "educationPlan": [
           {
+            "planType": "plan",
             "personWhoMet": "Yes",
             "personWhoMetName": "",
             "personWhoMetJobRole": "",
@@ -447,6 +448,7 @@
         "indeterminateSentence": false,
         "educationPlan": [
           {
+            "planType": "plan",
             "personWhoMet": "No",
             "personWhoMetName": "Peter Parker",
             "personWhoMetJobRole": "Photographer",
@@ -470,7 +472,7 @@
             "examsAssessmentsDetails": "An assessment for access arrangements needs to happen.",
             "ehcp": "No",
             "lnspSupport": "Yes",
-            "lnspSupportDetails": "One to one hel for specific issues",
+            "lnspSupportDetails": "One to one help for specific issues",
             "lnspSupportHours": "8",
             "otherDetails": "Has a keen interest in secret identities",
             "reviewDate": "17/7/2025",

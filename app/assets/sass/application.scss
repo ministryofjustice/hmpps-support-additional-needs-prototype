@@ -964,3 +964,23 @@ p,
   text-align: left;
   width: 100%;
 }
+
+.summaryneeds {
+  display: flex;
+  margin: 0.5em 0;
+}
+
+.summaryneeds-item {
+  border-right: 1px solid #B1B4B6;
+  padding: 0 1em;
+  width: 50%;
+  &:first-of-type {
+    padding: 0 2em 0 0;
+  }
+  &:last-of-type {
+    border-right: none;
+  }
+  p {
+    margin-bottom: 0.5em;
+  }
+}
