@@ -9,19 +9,53 @@
         <div class="govuk-grid-column-two-thirds">
           
           <h2 class="govuk-heading-m">Version 4
+            <!--
             {{ govukTag({
               classes: "govuk-tag--red govuk-!-static-margin-left-3",
               text: "WIP"
             }) }}
+            -->
+            {{ govukTag({
+              classes: "govuk-tag--green govuk-!-static-margin-left-3",
+              text: "Ready for UR"
+            }) }}
           </h2>
           <h3 class="govuk-heading-s">Iterations from previous version</h3>
           <ul class="govuk-list govuk-list--bullet">
-            <li>...</li>
+            <li>Prisoner list updated with relevant data, and filters added to search (non-functioning)</li>
+            <li>Prisoner profile overview design updates</li>
+            <li>Ability to create an education support plan</li>
+            <li>Changes to reviewing existing needs in create education support plan journey</li>
+            <li>Ability to view an education support plan</li>
+            <li>Ability to review an education support plan</li>
           </ul>
           <h3 class="govuk-heading-s">Limitations</h3>
           <ul class="govuk-list govuk-list--bullet">
-            <li>Search bars are not functional</li>
+            <li>Search and filters not functional</li>
+            <li>Add conditions journey is not up to date with designs in Figma (avoid for UR)</li>
+            <li>No functionality to edit or archive support strategies, challenges or strengths</li>
           </ul>
+
+          <details class="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Related Jira tickets
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul class="govuk-list govuk-list--bullet">
+                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1568" class="govuk-link" target="_blank">RR-1568 Record education support plan review</a></li>
+                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1580" class="govuk-link" target="_blank">RR-1580 Design: view plan</a></li>
+                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1585" class="govuk-link" target="_blank">RR-1585 Design: review existing needs as part of support plan creation</a></li>
+                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1587" class="govuk-link" target="_blank">RR-1587 Design: prisoner list / manage caseload</a></li>
+                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1614" class="govuk-link" target="_blank">RR-1614 Design: Stakeholder iterations to Create an education support plan</a></li>
+                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1615" class="govuk-link" target="_blank">RR-1615 Design: Stakeholder iterations to Review an education support plan</a></li>
+                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1616" class="govuk-link" target="_blank">RR-1616 Design: Stakeholder iterations to Refuse an education support plan</a></li>
+                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1630" class="govuk-link" target="_blank">RR-1630 Design: content updates following stakeholder feedback</a></li>
+              </ul>  
+            </div>
+          </details>
+          
           {{ govukButton({
             href: "v4/",
             text: "View v4 prototype"
@@ -31,8 +65,8 @@
           
           <h2 class="govuk-heading-m">Version 3
             {{ govukTag({
-              classes: "govuk-tag--green govuk-!-static-margin-left-3",
-              text: "Ready for UR"
+              classes: "govuk-!-static-margin-left-3",
+              text: "Archived"
             }) }}
           </h2>
           <h3 class="govuk-heading-s">Iterations from previous version</h3>
