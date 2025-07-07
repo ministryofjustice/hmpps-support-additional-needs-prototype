@@ -152,6 +152,19 @@
                 "needsALNscreenerDate": "28 Sep 2024",
                 "needsALNscreenerAuthor": "M. Warner"
             }
+        ],
+        "conditions": [
+          {
+            "conditionName": "Acquired brain injury",
+            "conditionDate": "4 Jan 2025",
+            "conditionAuthor": "J. Smith"
+          },
+          {
+            "conditionName": "Mental health condition",
+            "conditionDate": "4 Jan 2025",
+            "conditionAuthor": "J. Smith",
+            "conditionDetail": "Anxiety, has experienced trauma"
+          }
         ]
     },
     {
