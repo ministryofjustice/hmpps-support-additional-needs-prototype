@@ -1,0 +1,42 @@
+[
+    {
+        "categoryName": "Attention, organising and time management",
+        "categoryHint": "Things like planning, task management, tidiness and focus"
+    },
+    {
+        "categoryName": "Emotions and feelings",
+        "categoryHint": "Things like confidence, empathy, managing emotions and impulses"
+    },
+    {
+        "categoryName": "Language and communication skills",
+        "categoryHint": "Things like taking turns, listening and language fluency"
+    },
+    {
+        "categoryName": "Literacy skills",
+        "categoryHint": "Things like reading, writing and spelling"
+    },
+    {
+        "categoryName": "Memory",
+        "categoryHint": "Things like remembering and recalling information "
+    },
+    {
+        "categoryName": "Numeracy skills",
+        "categoryHint": "Things like maths and managing money"
+    },
+    {
+        "categoryName": "Physical skills and coordination",
+        "categoryHint": "Things like learning new skills, co-ordination, stamina and fine motor skills"
+    },
+    {
+        "categoryName": "Processing speed",
+        "categoryHint": "Things like taking time to understand and follow instructions"
+    },
+    {
+        "categoryName": "Sensory",
+        "categoryHint": "Things like reacting to some environments or situations eg noise or being touched"
+    },
+    {
+        "categoryName": "General support need",
+        "categoryHint": ""
+    }
+]

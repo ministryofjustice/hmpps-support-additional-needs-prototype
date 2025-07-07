@@ -1,0 +1,77 @@
+{% for prisoner in data[v+'prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
+
+    <div class="hmpps-actions-block govuk-!-margin-bottom-5 govuk-!-padding-bottom-2">
+      <ul class="hmpps-actions-block__list">
+        <li class="noflex">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-0">Actions</h3>
+        </li>
+        <li class="noflex">
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Education support plan</h3>
+          {% if prisoner.educationPlan %}
+            {% for plan in prisoner.educationPlan %}
+              Review due {{ plan.reviewDate | dateReplaceSlash }}
+            {% endfor %}
+          {% else %}
+            {{ govukTag({
+              text: "Due in 5 days",
+              classes: "govuk-tag--yellow"
+            }) }} 
+          {% endif %}
+        </li>
+
+        {% if prisoner.educationPlan %}
+          <li>
+            <img src="/public/images/icon-create.png" alt="">
+            <a href="/{{ v }}/san/{{ ref }}/plan/review/person-reviewing" class="govuk-link govuk-link--no-visited-state">Review education support plan</a>
+            <!--a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Review education support plan</a-->
+          </li>
+        {% else %}
+          <li>
+            <img src="/public/images/icon-create.png" alt="">
+            <a href="/{{ v }}/san/{{ ref }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+          </li>
+          <li>
+            <img src="/public/images/icon-stamp.png" alt="">
+            <!--a href="/{{ v }}/san/{{ ref }}/plan/decline" class="govuk-link govuk-link--no-visited-state">Record prisoner declined an education support plan</a-->
+            <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Record prisoner declined an education support plan</a>
+          </li>
+        {% endif %}
+
+      </ul>
+    </div>
+
+  {% endif %}
+{% endfor %}
+
+         
+<!--div class="hmpps-actions-block govuk-!-margin-bottom-5">
+  <ul class="hmpps-actions-block__list">
+    <li class="noflex">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Education support plan</h3>
+      {% if ref == "G2911GD" and data['san-v3-create-reviewdate'] %}
+        <strong class="govuk-tag govuk-tag--green">
+          Plan created
+        </strong>
+      {% else %}
+        <strong class="govuk-tag govuk-tag--yellow">
+          Due in 5 days
+        </strong>
+      {% endif %}
+    </li>
+    {% if ref == "G2911GD" and data['san-v3-create-reviewdate'] %}
+    <li>
+      Review due by {{ data["san-"+v+"-create-reviewdate"] }}
+    </li>
+    {% else %}
+    <li>
+      <img src="/public/images/icon-create.png" alt="">
+      <a href="/{{ v }}/san/{{ ref }}/plan/create/person-who-met" class="govuk-link govuk-link--no-visited-state">Create education support plan</a>
+    </li>
+    <li>
+      <img src="/public/images/icon-stamp.png" alt="">
+      <a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Record refusal of education support plan</a>
+    </li>
+    {% endif %}
+  </ul>
+</div-->

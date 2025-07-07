@@ -8,6 +8,41 @@
         <div class="govuk-!-padding-bottom-6"></div>
         <div class="govuk-grid-column-two-thirds">
           
+          <h2 class="govuk-heading-m">Version 5
+            {{ govukTag({
+              classes: "govuk-tag--red govuk-!-static-margin-left-3",
+              text: "WIP"
+            }) }}
+          </h2>
+          <h3 class="govuk-heading-s">Iterations from previous version</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>...</li>
+          </ul>
+          <h3 class="govuk-heading-s">Limitations</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>...</li>
+          </ul>
+
+          <details class="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Related Jira tickets
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul class="govuk-list govuk-list--bullet">
+                <li><a href="" class="govuk-link" target="_blank"></a></li>
+              </ul>  
+            </div>
+          </details>
+          
+          {{ govukButton({
+            href: "v5/",
+            text: "View v5 prototype"
+          }) }}
+          
+          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+          
           <h2 class="govuk-heading-m">Version 4
             <!--
             {{ govukTag({
