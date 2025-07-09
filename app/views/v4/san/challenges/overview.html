@@ -103,12 +103,17 @@
                       <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
                           {{ needs.needsChallengeDescription | safe }}
+                          {% if needs.needsChallengeAuthor == "Additional Learning Needs Screener" %}
+                          <br><span class="govuk-body-s govuk-hint-s">Added {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</span>
+                          {% endif %}
                         </dt>
-                        <dd class="govuk-summary-list__value">
-                          <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
-                          <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
-                          <span class="govuk-body-s">Added {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</span>
-                        </dd>
+                        {% if needs.needsChallengeAuthor != "Additional Learning Needs Screener" %}
+                          <dd class="govuk-summary-list__value">
+                            <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
+                            <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
+                            <span class="govuk-body-s">Added {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</span>
+                          </dd>
+                        {% endif %}
                       </div>
                   
                     {% endif %}
