@@ -209,12 +209,17 @@ module.exports = function(router) {
  * Add condition *
  *****************/
 
-  router.get("/"+v+"/san/:ref/conditions/add", function (req, res){
+  router.get("/"+v+"/san/:ref/conditions/add/select", function (req, res){
     let ref = matchref(req);
-    res.render("/"+v+"/san/conditions/add", {ref});
+    res.render("/"+v+"/san/conditions/add/select", {ref});
+  });
+
+  router.get("/"+v+"/san/:ref/conditions/add/details", function (req, res){
+    let ref = matchref(req);
+    res.render("/"+v+"/san/conditions/add/details", {ref});
   });
   
-  router.post("/"+v+"/san/:ref/conditions/add", function (req, res) {
+  router.post("/"+v+"/san/:ref/conditions/add/select", function (req, res) {
     let ref = matchref(req);
     let thisprisoner = req.session.data[v+'prisoners'].find(p => p.prisonerNumber === ref);
     thisprisoner.conditions = [];
@@ -303,8 +308,25 @@ module.exports = function(router) {
     delete req.session.data["san-"+v+"-"+ref+"-otherconditions-otherlongterm"];
     delete req.session.data["san-"+v+"-"+ref+"-otherconditions-otherneurological"];
 
-    res.redirect("/"+v+"/san/"+ref+"/profile");
+    res.redirect("/"+v+"/san/"+ref+"/conditions/add/details");
   });
+
+  router.post("/"+v+"/san/:ref/conditions/add/details", function (req, res) {
+    let ref = matchref(req);
+
+    /*
+      create items to append to existing conditions:
+        - diagnosis
+        - detail
+
+        san-{{ v }}-{{ ref }}-condition-diagnosis-{{ conditionNum }}
+        san-{{ v }}-{{ ref }}-condition-detail-{{ conditionNum }}
+
+        add new elements to existing condition object based on count through loop
+    */
+    //res.redirect("/"+v+"/san/"+ref+"/conditions");
+    res.redirect("/"+v+"/san/"+ref+"/conditions/add/details");
+  })
 
 
 /*********************************

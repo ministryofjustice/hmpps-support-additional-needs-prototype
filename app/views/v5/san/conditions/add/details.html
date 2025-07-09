@@ -1,0 +1,104 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+{% for prisoner in data[v+'prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
+
+    <div class="govuk-width-container">
+      <form method="post">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <span class="govuk-caption-l">Add condition</span>
+            <h2 class="govuk-heading-l">
+              Select if the condition(s) is/are self-declared by {{ prisoner.firstName }} {{ prisoner.lastName }} or a confirmed diagnosis
+            </h2>
+            <div class='govuk-warning-text'>
+              <span class='govuk-warning-text__icon' aria-hidden='true'>!</span>
+              <strong class='govuk-warning-text__text'>
+                <span class='govuk-visually-hidden'>Warning</span>
+                You must have {{ prisoner.firstName }} {{ prisoner.lastName }}'s consent to share this information
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-grid-row">
+
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+
+                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                    <div class="govuk-grid-column-two-thirds">
+
+                      {% set conditionNum = 0 %}
+                      {% for condition in prisoner.conditions %}
+                        <div class="govuk-form-group">
+                          <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                              <h2 class="govuk-fieldset__heading">
+                                {{ condition.conditionName }}
+                              </h2>
+                            </legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                              <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="san-{{ v }}-{{ ref }}-condition-diagnosis-{{ conditionNum }}" name="san-{{ v }}-{{ ref }}-condition-diagnosis-{{ conditionNum }}" type="radio" value="Self-declared">
+                                <label class="govuk-label govuk-radios__label" for="san-{{ v }}-{{ ref }}-condition-diagnosis-{{ conditionNum }}">
+                                  Self-declared
+                                </label>
+                              </div>
+                              <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="san-{{ v }}-{{ ref }}-condition-diagnosis-{{ conditionNum }}" name="san-{{ v }}-{{ ref }}-condition-diagnosis-{{ conditionNum }}" type="radio" value="Confirmed diagnosis">
+                                <label class="govuk-label govuk-radios__label" for="san-{{ v }}-{{ ref }}-condition-diagnosis-{{ conditionNum }}">
+                                  Confirmed diagnosis
+                                </label>
+                              </div>
+                            </div>
+                            {{ govukTextarea({
+                              id: "san-"+v+"-"+ref+"-condition-detail-"+conditionNum,
+                              name: "san-"+v+"-"+ref+"-condition-detail-"+conditionNum,
+                              label: {
+                                text: "Provide more detail",
+                                classes: "govuk-label--s govuk-!-margin-top-4"
+                              },
+                              hint: {
+                                text: "Such as date, circumstances and evidence"
+                              },
+                              value: data["san-"+v+"-"+ref+"-condition-detail-"+conditionNum]
+                            }) }}
+                          </fieldset>
+                        </div>
+                        {% set conditionNum = conditionNum + 1 %}
+                      {% endfor %}
+
+                    </div>
+
+                  </div>
+
+            </fieldset>
+          </div>
+
+        </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+              {{ govukButton({
+                text: "Continue"
+              }) }}
+          </div>
+        </div>
+      </form>
+    </div>
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

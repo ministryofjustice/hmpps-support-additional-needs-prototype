@@ -1,0 +1,163 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <form method="post">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              <span class="govuk-caption-l">Add condition</span>
+              <h2 class="govuk-heading-l">
+                What self-declared or diagnosed condition do you want to record for {{ prisoner.firstName }} {{ prisoner.lastName }}?
+              </h2>
+              <div class='govuk-warning-text'>
+                <span class='govuk-warning-text__icon' aria-hidden='true'>!</span>
+                <strong class='govuk-warning-text__text'>
+                  <span class='govuk-visually-hidden'>Warning</span>
+                  You must have {{ prisoner.firstName }} {{ prisoner.lastName }}'s consent to share this information
+                </strong>
+              </div>
+            </div>
+          </div>
+          <div class="govuk-grid-row">
+
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset">
+
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                  <div class="govuk-grid-column-one-half">
+                    
+                    <div class="govuk-hint">Select all that apply</div>
+
+                    {% set conCount = 1 %}
+                    {% for conditionlisted in data[v+'conditionlist'] %}
+
+                      <div class="govuk-checkboxes__item">
+                        <input 
+                          class="govuk-checkboxes__input" 
+                          id="san-{{v}}-{{ref}}-conditions{% if conCount > 1 %}-{{conCount}}{% endif %}" name="san-{{v}}-{{ref}}-conditions" 
+                          type="checkbox" 
+                          value="{{conditionlisted.conditionName}}"
+                          {% if conditionlisted.conditionDetail %} 
+                            data-aria-controls="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}-conditional"
+                          {% endif %}
+                          {% for selectedCondition in prisoner.conditions %}
+                            {% if selectedCondition.conditionName == conditionlisted.conditionName %}
+                              checked
+                            {% endif %}
+                          {% endfor %}>
+                        <label class="govuk-label govuk-checkboxes__label" for="san-{{v}}-{{ref}}-conditions{% if conCount > 1 %}-{{conCount}}{% endif %}">
+                          {{conditionlisted.conditionName}}
+                        </label>
+                      </div>
+                      {% if conditionlisted.conditionDetail %}
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}-conditional">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label" for="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}">
+                              Add details
+                            </label>
+                            <input
+                              class="govuk-input govuk-!-width-three-quarters"
+                              id="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}"
+                              name="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}"
+                              type="text"
+                              {% for selectedCondition in prisoner.conditions %}
+                                {% if selectedCondition.conditionName == conditionlisted.conditionName %}
+                                  value="{{selectedCondition.conditionDetail}}"
+                                {% endif %}
+                              {% endfor %}
+                            >
+                              
+                          </div>
+                        </div>
+                      {% endif %}
+                      {% set conCount = conCount + 1 %}
+
+                    {% endfor %}
+
+                  </div>
+                  <div class="govuk-grid-column-one-half">
+                    
+                    <div class="govuk-hint">Or any other:</div>
+
+                    {% set otherconCount = 1 %}
+                    {% for otherconditionlisted in data[v+'otherconditionlist'] %}
+
+                      <div class="govuk-checkboxes__item">
+                        <input 
+                          class="govuk-checkboxes__input" 
+                          id="san-{{v}}-{{ref}}-otherconditions{% if otherconCount > 1 %}-{{otherconCount}}{% endif %}" name="san-{{v}}-{{ref}}-otherconditions" 
+                          type="checkbox" 
+                          value="{{otherconditionlisted.conditionName}}"
+                          {% if otherconditionlisted.conditionDetail %} 
+                            data-aria-controls="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}-conditional"
+                          {% endif %}
+                          {% for selectedCondition in prisoner.otherConditions %}
+                            {% if selectedCondition.conditionName == otherconditionlisted.conditionName %}
+                              checked
+                            {% endif %}
+                          {% endfor %}>
+                        <label class="govuk-label govuk-checkboxes__label" for="san-{{v}}-{{ref}}-otherconditions{% if otherconCount > 1 %}-{{otherconCount}}{% endif %}">
+                          {{otherconditionlisted.conditionName}}
+                        </label>
+                      </div>
+                      {% if otherconditionlisted.conditionDetail %}
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}-conditional">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label" for="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}">
+                              Add details
+                            </label>
+                            <input
+                              class="govuk-input govuk-!-width-three-quarters"
+                              id="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}"
+                              name="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}"
+                              type="text"
+                              {% for selectedCondition in prisoner.otherConditions %}
+                                {% if selectedCondition.conditionName == otherconditionlisted.conditionName %}
+                                  value="{{selectedCondition.conditionDetail}}"
+                                {% endif %}
+                              {% endfor %}
+                            >
+                              
+                          </div>
+                        </div>
+                      {% endif %}
+                      {% set otherconCount = otherconCount + 1 %}
+
+                    {% endfor %}
+                  </div>
+
+                </div>
+          
+              </fieldset>
+            </div>
+
+          </div>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+                {{ govukButton({
+                  text: "Continue"
+                }) }}
+            </div>
+          </div>
+        </form>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}
