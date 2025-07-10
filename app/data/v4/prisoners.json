@@ -428,18 +428,44 @@
         "indeterminateSentence": false
     },
     {
-        "prisonerNumber": "A8773DY",
-        "firstName": "Ryan",
-        "lastName": " Holmes",
-        "dateOfBirth": "22 Aug 1991",
-        "enteredPrison": "22 April 2022",
-        "releaseDate": "N/A",
-        "prisonId": "BXI",
-        "cellLocation": "RECP",
-        "legalStatus": "SENTENCED",
-        "recall": false,
-        "indeterminateSentence": false,
-        "planStatus": "Due"
+      "prisonerNumber": "A8773DY",
+      "firstName": "Ryan",
+      "lastName": " Holmes",
+      "dateOfBirth": "22 Aug 1991",
+      "enteredPrison": "22 April 2022",
+      "releaseDate": "N/A",
+      "prisonId": "BXI",
+      "cellLocation": "RECP",
+      "legalStatus": "SENTENCED",
+      "recall": false,
+      "indeterminateSentence": false,
+      "nextActionDue": "16 Jul 2025",
+      "needsChallenges": [
+        {
+          "needsChallengeCategory": "Attention, organising and time management",
+          "needsChallengeDescription": "Challenges: Task switching",
+          "needsChallengeDate": "28 Sep 2024",
+          "needsChallengeAuthor": "Additional Learning Needs Screener"
+        },
+        {
+          "needsChallengeCategory": "Emotions and feelings",
+          "needsChallengeDescription": "Challenges: Managing change (adaptability)",
+          "needsChallengeDate": "28 Sep 2024",
+          "needsChallengeAuthor": "Additional Learning Needs Screener"
+        },
+        {
+          "needsChallengeCategory": "Language and communication skills",
+          "needsChallengeDescription": "Challenges: Communication - Social adaptability - Social nuances",
+          "needsChallengeDate": "28 Sep 2024",
+          "needsChallengeAuthor": "Additional Learning Needs Screener"
+        },
+        {
+          "needsChallengeCategory": "Sensory",
+          "needsChallengeDescription": "Challenges: Sensory processing",
+          "needsChallengeDate": "28 Sep 2024",
+          "needsChallengeAuthor": "Additional Learning Needs Screener"
+        }
+      ]
     },
     {
         "prisonerNumber": "A8494DY",
