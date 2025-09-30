@@ -1,0 +1,47 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+  
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+        <span class="govuk-caption-l">Add support strategy</span>
+        
+        {{ govukTextarea({
+          id: "san-"+v+"-"+ref+"-support-desc",
+          name: "san-"+v+"-"+ref+"-support-desc",
+          label: {
+            text: "Description of support strategy for "+data["san-"+v+"-"+ref+"-support-category"] | lower,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          },
+          value: data["san-"+v+"-"+ref+"-support-desc"]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      
+      </form>
+    </div>
+    <div class="govuk-grid-column-one-third">
+
+      {% include "includes/"+v+"/san-aside-challenges.html" %}
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

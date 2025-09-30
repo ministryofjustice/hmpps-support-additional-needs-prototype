@@ -1,0 +1,304 @@
+{% extends "/layouts/v5.html" %}
+
+{% set currentpage = "supportplan" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/{{ v }}/">Digital Prison Services</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/{{ v }}/san/">Support for additional needs</a>
+        </li>
+      </ol>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+        
+          <!-- TITLE PAGE + print-->
+          <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs</h1>
+          </div>
+
+          <div class="govuk-grid-column-full">
+
+            {% if data['prevurl'] == "check-answers" %}
+              {% if prisoner.educationPlan %}
+                {% for plan in prisoner.educationPlan %}
+                  {% if plan.planType == "plan" %}
+                    {{ mojAlert({
+                      variant: "success",
+                      title: "Education suppport plan created",
+                      dismissible: false
+                    }) }}
+                  {% endif %}
+                  {% if plan.planType == "review" %}
+                    {{ mojAlert({
+                      variant: "success",
+                      title: "Education suppport plan updated",
+                      dismissible: false
+                    }) }}
+                  {% endif %}
+                  {% if plan.planType == "declined" %}
+                    {{ mojAlert({
+                      variant: "success",
+                      title: "Education suppport plan declined",
+                      dismissible: false
+                    }) }}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endif %}
+          
+            {% include "includes/"+v+"/san-miniprofile.html" %}
+
+          </div>
+        
+        </div>
+        <div class="govuk-grid-row">
+          {% include "includes/"+v+"/san-subnav.html" %}
+        </div>
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+          
+            {% if prisoner.educationPlan %}
+              
+              {% for plan in prisoner.educationPlan %}
+
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">
+                      Education support plan
+                    </h2>
+                  </header>
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list">
+
+                      <div class="govuk-summary-list__row ">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-3">
+                          <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Adjustments to teaching, learning environment or materials</p>
+                          {% if plan.teachingAdjustDetails %}
+                            {{ plan.teachingAdjustDetails | safe }}
+                          {% else %}
+                            None
+                          {% endif %}
+                        </dt>
+                      </div>
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-4">
+                          <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Specific knowledge or skills needed to support learner</p>
+                          {% if plan.knowledgeSkillsDetails %}
+                            {{ plan.knowledgeSkillsDetails | safe }}
+                          {% else %}
+                            None
+                          {% endif %}
+                        </dt>
+                      </div>
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-4">
+                          <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Exam access arrangements</p>
+                          {% if plan.examsAssessmentsDetails %}
+                            {{ plan.examsAssessmentsDetails | safe }}
+                          {% else %}
+                            None
+                          {% endif %}
+                        </dt>
+                      </div>
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-4">
+                          <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Learning needs classroom support </p>
+                          {% if plan.lnspSupportDetails %}
+                            {{ plan.lnspSupportDetails | safe }}
+                          {% else %}
+                            None
+                          {% endif %}
+                        </dt>
+                      </div>
+
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-4">
+                          <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Other details</p>
+                          {% if plan.otherDetails %}
+                            {{ plan.otherDetails | safe }}
+                          {% else %}
+                            None
+                          {% endif %}
+                        </dt>
+                      </div>
+                      
+                    </dl>
+                  </div>
+                </section>
+
+                {% if plan.planType == "plan" %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list">
+                      <div class="govuk-summary-list__row ">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-3">
+                          <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">{{ prisoner.firstName }} {{ prisoner.lastName }}'s view on the support needed</p>
+                          {% if plan.prisonerView %}
+                            {{ plan.prisonerView | safe }}
+                          {% else %}
+                            None
+                          {% endif %}
+                        </dt>
+                      </div>
+                    </dl>
+                  </div>
+                </section>
+                {% endif %}
+
+                {% if plan.planType == "review" %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list">
+                      <div class="govuk-summary-list__row ">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-3">
+                          <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Prisoner's view on progress</p>
+                          {{ plan.prisonerProgress | safe }}
+                        </dt>
+                      </div>
+                    </dl>
+                  </div>
+                </section>
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list">
+                      <div class="govuk-summary-list__row ">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-3">
+                          <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Reviewer's view on progress</p>
+                          {{ plan.reviewerProgress | safe }}
+                        </dt>
+                      </div>
+                    </dl>
+                  </div>
+                </section>
+                {% endif %}
+
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list">
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          {% if plan.planType == "plan" %}
+                            Created by
+                          {% endif %}
+                          {% if plan.planType == "review" %}
+                            Reviewed by
+                          {% endif %}
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ plan.author }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          {% if plan.planType == "plan" %}
+                            Created on
+                          {% endif %}
+                          {% if plan.planType == "review" %}
+                            Reviewed on
+                          {% endif %}
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ plan.dateCreated | toGovDate }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Review due on
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ plan.reviewDate | dateReplaceSlash }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Other people consulted or involved
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {% if plan.otherPeople === "Yes" %}
+                            {% for person in plan.otherPeopleDetails %}
+                              <p class="govuk-body">{{ person.otherPersonName }} ({{ person.otherPersonJob }})</p>
+                            {% endfor %}
+                          {% else %}
+                            No
+                          {% endif %}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Current EHCP
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ plan.ehcp }}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </section>
+
+              {% endfor %}
+
+            {% else %}
+
+              <section class="app-summary-card govuk-!-margin-bottom-6">
+                <header class="app-summary-card__header">
+                  <h2 class="app-summary-card__title">
+                    Education support plan
+                  </h2>
+                </header>
+                <div class="app-summary-card__body">
+                  <dl class="govuk-summary-list san-needs-list">
+
+                    <div class="govuk-summary-list__row ">
+                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular govuk-!-padding-bottom-4 govuk-!-padding-top-3">
+                        <p class="govuk-body">
+                          No education support plan recorded.
+                        </p>
+                        <p class="govuk-body">
+                          <a href="/{{ v }}/san/{{ ref }}/plan/create/person-who-met" class="govuk-link">Create education support plan</a>
+                        </p>
+                        <p class="govuk-body govuk-!-margin-bottom-0">
+                          <a href="javascript:preventDefault();" class="govuk-link">Record prisoner declined an education support plan</a>
+                        </p>
+                      </dt>
+                    </div>
+
+                  </dl>
+                </div>
+              </section>
+
+            {% endif %}
+
+          </div>
+          
+          <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
+            {% include "includes/"+v+"/san-aside-plan.html" %}
+          </div>
+          
+        </div>
+
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

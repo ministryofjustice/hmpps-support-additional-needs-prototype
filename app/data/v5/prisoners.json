@@ -16,31 +16,37 @@
       "needsSupport": [
         {
           "needsSupportCategory": "Attention, organising and time management",
-          "needsSupportDescription": "Keep meetings short to prevent attention wandering<br>Check in regularly to bring him back to tasks<br>Encourage him not to over exercise<br>Ensure he's eating enough to match the high level of exercise",
+          "needsSupportDescription": "Keep meetings short to prevent attention wandering. Check in regularly to bring him back to tasks",
+          "needsSupportDate": "4 Jan 2025",
+          "needsSupportAuthor": "J. Smith"
+        },
+        {
+          "needsSupportCategory": "Attention, organising and time management",
+          "needsSupportDescription": "Encourage him not to over exercise. Ensure he's eating enough to match the high level of exercise",
           "needsSupportDate": "4 Jan 2025",
           "needsSupportAuthor": "J. Smith"
         },
         {
           "needsSupportCategory": "Memory",
-          "needsSupportDescription": "Ask to repeat back instructions to check he understands<br>Keep instructions clear and simple<br>Break information down into small chunks<br>Remind him of appointments regularly<br>Remind him of previous conversations as he may not remember",
+          "needsSupportDescription": "Ask to repeat back instructions to check he understands. Keep instructions clear and simple. Break information down into small chunks. Remind him of appointments regularly. Remind him of previous conversations as he may not remember",
           "needsSupportDate": "4 Jan 2025",
           "needsSupportAuthor": "J. Smith"
         },
         {
           "needsSupportCategory": "Language and communication skills",
-          "needsSupportDescription": "Have patience and give him time to say things.<br>Don't put words in his mouth or finish sentences for him.<br>Check on him regularly to see if he needs help<br>Remind him of boundaries if he does things he shouldn't, like touching staff member's arms, but don't get angry - it's an automatic behaviour",
+          "needsSupportDescription": "Have patience and give him time to say things. Don't put words in his mouth or finish sentences for him. Check on him regularly to see if he needs help. Remind him of boundaries if he does things he shouldn't, like touching staff member's arms, but don't get angry - it's an automatic behaviour",
           "needsSupportDate": "4 Jan 2025",
           "needsSupportAuthor": "J. Smith"
         },
         {
           "needsSupportCategory": "Emotions and feelings",
-          "needsSupportDescription": "Have patience with him and give him time to get words out.<br>Remind him of boundaries",
+          "needsSupportDescription": "Have patience with him and give him time to get words out. Remind him of boundaries",
           "needsSupportDate": "4 Jan 2025",
           "needsSupportAuthor": "J. Smith"
         },
         {
           "needsSupportCategory": "Literacy skills",
-          "needsSupportDescription": "Use large print and coloured paper.<br>Break writing down into sections.<br>Use pictures next to written information. <br>Read instructions aloud if possible",
+          "needsSupportDescription": "Use large print and coloured paper. Break writing down into sections. Use pictures next to written information. . Read instructions aloud if possible",
           "needsSupportDate": "07 Jul 2025",
           "needsSupportAuthor": "W. Knight"
         }
@@ -48,25 +54,25 @@
       "needsChallenges": [
         {
           "needsChallengeCategory": "Attention, organising and time management",
-          "needsChallengeDescription": "Finds it difficult to stay focussed and engaged.<br>Struggles with executive function - planning and organising things and managing time<br>Attention wanders if in a meeting or doing something for too long",
+          "needsChallengeDescription": "Finds it difficult to stay focussed and engaged. Struggles with executive function - planning and organising things and managing time. Attention wanders if in a meeting or doing something for too long",
           "needsChallengeDate": "4 Jan 2025",
           "needsChallengeAuthor": "J. Smith"
         },
         {
           "needsChallengeCategory": "Memory",
-          "needsChallengeDescription": "Very forgetful - will not remember things unless reminded often<br>Loses things often<br>Struggles to remember instructions, especially long ones<br>Forgets appointments unless reminded frequently<br>Forgets conversations and other things that happened in the past",
+          "needsChallengeDescription": "Very forgetful - will not remember things unless reminded often. Loses things often. Struggles to remember instructions, especially long ones. Forgets appointments unless reminded frequently. Forgets conversations and other things that happened in the past",
           "needsChallengeDate": "4 Jan 2025",
           "needsChallengeAuthor": "J. Smith"
         },
         {
           "needsChallengeCategory": "Language and communication skills",
-          "needsChallengeDescription": "Struggles to ask for help when needed<br>Struggles to get words out and to put thoughts into words. Gets frustrated by this - may come across as rude.<br>Can get confused easily<br>Demonstrates some out of control behaviours like touching people or things, putting fingers in his mouth, tapping his arms and saying things out of context e.g 'mars bar'. These are automatic behaviours, not deliberate.<br>Can appear aggressive when he feels passionately about something.",
+          "needsChallengeDescription": "Struggles to ask for help when needed. Struggles to get words out and to put thoughts into words. Gets frustrated by this - may come across as rude. Can get confused easily. Demonstrates some out of control behaviours like touching people or things, putting fingers in his mouth, tapping his arms and saying things out of context e.g 'mars bar'. These are automatic behaviours, not deliberate. Can appear aggressive when he feels passionately about something.",
           "needsChallengeDate": "4 Jan 2025",
           "needsChallengeAuthor": "J. Smith"
         },
         {
           "needsChallengeCategory": "Emotions and feelings",
-          "needsChallengeDescription": "Gets frustrated when struggling to get words out and may come across as rude.<br>Triggered when people think he is 'stupid'.<br>Can appear aggressive when he feels passionately about something.<br>Struggles to cope when his routine is changed.",
+          "needsChallengeDescription": "Gets frustrated when struggling to get words out and may come across as rude. Triggered when people think he is 'stupid'. Can appear aggressive when he feels passionately about something. Struggles to cope when his routine is changed.",
           "needsChallengeDate": "4 Jan 2025",
           "needsChallengeAuthor": "J. Smith"
         },
@@ -78,7 +84,7 @@
         },
         {
           "needsChallengeCategory": "Literacy skills",
-          "needsChallengeDescription": "Chris struggles to read, particularly long bits of writing - he loses track of where he is.<br>Chris finds long words difficult to read and spell.<br>",
+          "needsChallengeDescription": "Chris struggles to read, particularly long bits of writing - he loses track of where he is. Chris finds long words difficult to read and spell. ",
           "needsChallengeIdentified": "Identified while creating education support plan. ",
           "needsChallengeDate": "07 Jul 2025",
           "needsChallengeAuthor": "W. Knight"
@@ -87,7 +93,7 @@
       "needsStrengths": [
         {
           "needsStrengthCategory": "Attention, organising and time management",
-          "needsStrengthDescription": "Follows and maintains routines well<br>Uses exercise to cope and builds that into his routine (though can over exercise)",
+          "needsStrengthDescription": "Follows and maintains routines well. Uses exercise to cope and builds that into his routine (though can over exercise)",
           "needsStrengthDate": "4 Jan 2025",
           "needsStrengthAuthor": "J. Smith"
         },
@@ -99,7 +105,7 @@
         },
         {
           "needsStrengthCategory": "Emotions and feelings",
-          "needsStrengthDescription": "Good sense of humour - will laugh at himself.<br>Knows exercise helps him manage his emotions and makes lots of time for it.<br>Close with children and sister.",
+          "needsStrengthDescription": "Good sense of humour - will laugh at himself. Knows exercise helps him manage his emotions and makes lots of time for it. Close with children and sister.",
           "needsStrengthDate": "4 Jan 2025",
           "needsStrengthAuthor": "J. Smith"
         },
@@ -205,9 +211,9 @@
               "otherPersonJob": "Functional skills tutor"
             }
           ],
-          "prisonerView": "Chris needs people to be patient and give him time to explain things, instead of rushing him. <br>He wants people to remind him of what he needs to do and make sure it is clear. <br>He'd like help with reading and writing. ",
+          "prisonerView": "Chris needs people to be patient and give him time to explain things, instead of rushing him. . He wants people to remind him of what he needs to do and make sure it is clear. . He'd like help with reading and writing. ",
           "teachingAdjust": "Yes",
-          "teachingAdjustDetails": "Blue paper or blue overlay.<br>Enlarge everthing.<br>Pictures as well as written instructions.<br>Discuss routine ahead of the lessons.<br>Break sessions up into small chunks and give breaks.<br>Talk things through and make sure he understands instructions<br>Reduced timetable",
+          "teachingAdjustDetails": "Blue paper or blue overlay. Enlarge everthing. Pictures as well as written instructions. Discuss routine ahead of the lessons. Break sessions up into small chunks and give breaks. Talk things through and make sure he understands instructions. Reduced timetable",
           "knowledgeSkills": "No",
           "knowledgeSkillsDetails": "",
           "examsAssessments": "Yes",
@@ -240,13 +246,13 @@
         "needsSupport": [
             {
                 "needsSupportCategory": "Emotions and feelings",
-                "needsSupportDescription": "Use simple words<br>Take things at a slow pace<br>Give them time - they may take several attempts to get something right so be patient<br>Get them to repeat things back so you know they have understood<br>Break things down - give them smaller, achievable targets<br>Manage their expectations - if something gets cancelled, explain why as they will not understand and become frustrated ",
+                "needsSupportDescription": "Use simple words. Take things at a slow pace. Give them time - they may take several attempts to get something right so be patient. Get them to repeat things back so you know they have understood. Break things down - give them smaller, achievable targets. Manage their expectations - if something gets cancelled, explain why as they will not understand and become frustrated ",
                 "needsSupportDate": "10 Feb 2025",
                 "needsSupportAuthor": "J. Smith"
             },
             {
                 "needsSupportCategory": "Literacy skills",
-                "needsSupportDescription": "Give them things in writing after meetings to take away - use simple language and large fonts<br>Is a visual learner - tell them how to do something first<br>Talk them through instructions rather than writing them down<br>Include a picture of a clock on appointment slips (where possible) as well as writing the time in",
+                "needsSupportDescription": "Give them things in writing after meetings to take away - use simple language and large fonts. Is a visual learner - tell them how to do something first. Talk them through instructions rather than writing them down. Include a picture of a clock on appointment slips (where possible) as well as writing the time in",
                 "needsSupportDate": "10 Feb 2025",
                 "needsSupportAuthor": "J. Smith"
             }
@@ -254,7 +260,7 @@
         "needsChallenges": [
             {
                 "needsChallengeCategory": "Emotions and feelings",
-                "needsChallengeDescription": "Is emotional<br>Has low confidence<br>Overthinks things, focuses on the negative<br>Will go quiet if struggling<br>Can have angry outbursts if they aren’t helped, gets frustrated, can lead to crying<br>Is not concerned that outbursts are in front of others, can be disruptive<br>Hates not being busy",
+                "needsChallengeDescription": "Is emotional. Has low confidence. Overthinks things, focuses on the negative. Will go quiet if struggling. Can have angry outbursts if they aren’t helped, gets frustrated, can lead to crying. Is not concerned that outbursts are in front of others, can be disruptive. Hates not being busy",
                 "needsChallengeDate": "4 Jan 2025",
                 "needsChallengeAuthor": "J. Smith"
             }
@@ -262,7 +268,7 @@
         "needsStrengths": [
             {
                 "needsStrengthCategory": "Emotions and feelings",
-                "needsStrengthDescription": "Is chatty and likes speaking in front of others<br>Wants to improve communication with staff<br>Wants to get into work and get ROTL",
+                "needsStrengthDescription": "Is chatty and likes speaking in front of others. Wants to improve communication with staff. Wants to get into work and get ROTL",
                 "needsStrengthDate": "4 Jan 2025",
                 "needsStrengthAuthor": "J. Smith"
             }
@@ -335,7 +341,7 @@
         "needsSupport": [
             {
                 "needsSupportCategory": "Attention, organising and time management",
-                "needsSupportDescription": "Print out their timetable in large font each week.<br>They are allowed a wrist watch and alarm clock.<br>Prompt them for their next activity if possible.<br>Break tasks downs and give enough time to do them.<br>Give them time to understand instructions - break these down into no more than 3 steps at time.<br>Limit distractions.",
+                "needsSupportDescription": "Print out their timetable in large font each week. They are allowed a wrist watch and alarm clock. Prompt them for their next activity if possible. Break tasks downs and give enough time to do them. Give them time to understand instructions - break these down into no more than 3 steps at time. Limit distractions.",
                 "needsSupportDate": "4 Jan 2025",
                 "needsSupportAuthor": "J. Smith"
             }
@@ -343,25 +349,25 @@
         "needsChallenges": [
             {
                 "needsChallengeCategory": "Attention, organising and time management",
-                "needsChallengeDescription": "Finds it hard to manage their time.<br>Worries they will be late and becomes anxious.<br>When they are late can get angry if it's made an issue.",
+                "needsChallengeDescription": "Finds it hard to manage their time. Worries they will be late and becomes anxious. When they are late can get angry if it's made an issue.",
                 "needsChallengeDate": "12 Apr 2025",
                 "needsChallengeAuthor": "J. Smith"
             },
             {
                 "needsChallengeCategory": "Attention, organising and time management",
-                "needsChallengeDescription": "Needs help focussing to plan and finish  an activity.<br>Can get distracted and try to task switch and not finish.",
+                "needsChallengeDescription": "Needs help focussing to plan and finish  an activity. Can get distracted and try to task switch and not finish.",
                 "needsChallengeDate": "27 Mar 2025",
                 "needsChallengeAuthor": "J. Smith"
             },
             {
                 "needsChallengeCategory": "Attention, organising and time management",
-                "needsChallengeDescription": "Finds it hard to follow lengthy instructions.<br>Gets frustrated if they do not understand what they need to do.<br>Doesn't feel confident to speak up.",
+                "needsChallengeDescription": "Finds it hard to follow lengthy instructions. Gets frustrated if they do not understand what they need to do. Doesn't feel confident to speak up.",
                 "needsChallengeDate": "27 Mar 2025",
                 "needsChallengeAuthor": "J. Smith"
             },
             {
                 "needsChallengeCategory": "Literacy skills",
-                "needsChallengeDescription": "Finds it hard to write quickly, has poor grip.<br>Can get frustrated if needs to note things down quickly.",
+                "needsChallengeDescription": "Finds it hard to write quickly, has poor grip. Can get frustrated if needs to note things down quickly.",
                 "needsChallengeDate": "27 Mar 2025",
                 "needsChallengeAuthor": "J. Smith"
             }

@@ -1,0 +1,95 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            <form method="post">
+              <span class="govuk-caption-l">Review an education support plan</span>
+              <h1 class="govuk-heading-l">Are there any other details you would like to include? (optional)</h1>
+
+              {% if prisoner.educationPlan %}
+                {% for plan in prisoner.educationPlan %}
+
+                  <div class="govuk-inset-text">
+                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Current details</p>
+                    <p class="govuk-body">
+                      {% if plan.otherDetails %}
+                        {{ plan.otherDetails | safe }}
+                      {% else %}
+                        None
+                      {% endif %}
+                    </p>
+                  </div>
+
+                  {% set detailsHtml %}
+                    {{ govukTextarea({
+                      id: "san-"+v+"-"+ref+"-review-otherdetails-details",
+                      name: "san-"+v+"-"+ref+"-review-otherdetails-details",
+                      label: {
+                        text: "Add details"
+                      },
+                      value: plan.otherDetails | safe
+                    }) }}
+                  {% endset -%}
+
+                  {{ govukRadios({
+                    name: "san-"+v+"-"+ref+"-review-otherdetails",
+                    fieldset: {
+                      legend: {
+                        text: "Do you want to change this?",
+                        classes: "govuk-fieldset__legend--m"
+                      }
+                    },
+                    items: [
+                      {
+                        value: "Yes",
+                        text: "Yes",
+                        checked: checked("san-"+v+"-"+ref+"-review-otherdetails","Yes"),
+                        conditional: {
+                          html: detailsHtml
+                        }
+                      },
+                      {
+                        value: "No",
+                        text: "No",
+                        checked: checked("san-"+v+"-"+ref+"-review-otherdetails","No")
+                      }
+                    ]
+                  }) }}
+
+                  {{ govukButton({
+                    text: "Continue"
+                  }) }}
+
+                {% endfor %}
+              {% endif %}
+
+            </form>
+
+          </div>
+          <div class="govuk-grid-column-one-third">
+            {% include "includes/"+v+"/san-aside-needs.html" %}
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}
