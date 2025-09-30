@@ -59,13 +59,11 @@
       <h2 class="govuk-heading-m">
         Support strategies
       </h2>
-      
-      
-      
-      
 
       {# set tracker for categories prisoner has content it #}
       {% set cats = [] %}
+      {% set countArchive = 0 %}
+      {% set countCurrent = 0 %}
 
       
 {% set currentHtml %}
@@ -107,6 +105,7 @@
 -->
 
                     {% if not needs.needsSupportArchiveReason %}
+                    {% set countCurrent = countCurrent + 1 %}
 
                     <section class="app-summary-card govuk-!-margin-bottom-6">
                       <header class="app-summary-card__header">
@@ -178,7 +177,6 @@
 
 
         {% for cat in cats %}
-
                 
                 {% set countSup = 0 %}
                 {% set prevCat = "" %}
@@ -188,6 +186,8 @@
                   {% if needs.needsSupportCategory == cat %}
 
                     {% if needs.needsSupportArchiveReason %}
+                    {% set countArchive = countArchive + 1 %}
+
                     <section class="app-summary-card govuk-!-margin-bottom-6">
                       <header class="app-summary-card__header">
                         <h2 class="app-summary-card__title">
@@ -227,14 +227,14 @@
       {{ govukTabs({
         items: [
           {
-            label: "Current",
+            label: "Current ("+countCurrent+")",
             id: "current",
             panel: {
               html: currentHtml
             }
           },
           {
-            label: "History",
+            label: "History ("+countArchive+")",
             id: "history",
             panel: {
               html: historyHtml

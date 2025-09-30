@@ -877,7 +877,7 @@ module.exports = function(router) {
 
 
 /**
- * The following content has been added for editing and archiving support strategies
+ * The following content has been added for editing and archiving functionality
  */
 
 /************************
@@ -960,9 +960,6 @@ router.post("/"+v+"/san/:ref/support/archive/:thiscat/:thiscount", function (req
   res.redirect("/"+v+"/san/"+ref+"/profile/support-strategies/");
 
 });
-
-
-
 
   module.exports = router;
 
