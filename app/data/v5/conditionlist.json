@@ -1,0 +1,71 @@
+[
+    {
+        "conditionName": "Acquired brain injury",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Attention deficit hyperactivity disorder (ADHD or ADD)",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Autism spectrum disorder",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Developmental language disorder",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Down's syndrome",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Dyscalculia",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Dyslexia",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Dyspraxia or developmental coordination disorder",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Foetal alcohol spectrum disorder",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Hearing impairment",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Learning disabilities",
+        "conditionID": "learningdisabilities",
+        "conditionDetail": true
+    },
+    {
+        "conditionName": "Mental health condition",
+        "conditionID": "mentalhealth",
+        "conditionDetail": true
+    },
+    {
+        "conditionName": "Neurodegenerative condition",
+        "conditionID": "neurodegenerative",
+        "conditionDetail": true
+    },
+    {
+        "conditionName": "Restricted mobility or dexterity condition",
+        "conditionID": "restrictedmobility",
+        "conditionDetail": true
+    },
+    {
+        "conditionName": "Tourette's syndrome or tic disorder",
+        "conditionDetail": false
+    },
+    {
+        "conditionName": "Visual impairment",
+        "conditionID": "visualimpairment",
+        "conditionDetail": true
+    }
+]

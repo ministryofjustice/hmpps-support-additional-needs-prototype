@@ -1,0 +1,57 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            <form method="post">
+              <span class="govuk-caption-l">Review an education support plan</span>
+             <h1 class="govuk-heading-l">Add details of person consulted or involved</h1>
+
+              {{ govukInput({
+                id: "san-"+v+"-"+ref+"-review-otherpeople-name",
+                name: "san-"+v+"-"+ref+"-review-otherpeople-name",
+                  classes: "govuk-!-width-one-half",
+                label: {
+                  text: "Full name"
+                }
+              }) }}
+
+              {{ govukInput({
+                id: "san-"+v+"-"+ref+"-review-otherpeople-job",
+                name: "san-"+v+"-"+ref+"-review-otherpeople-job",
+                  classes: "govuk-!-width-one-half",
+                label: {
+                  text: "Job role"
+                }
+              }) }}
+
+              {{ govukButton({
+                text: "Continue"
+              }) }}
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

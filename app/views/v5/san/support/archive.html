@@ -1,0 +1,91 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+
+
+    {% for prisoner in data[v+'prisoners'] %}
+      {% if prisoner.prisonerNumber == ref %}
+  
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+        <!--span class="govuk-caption-l">Edit support strategy</span-->
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l">
+            Move {{ prisoner.firstName }} {{ prisoner.lastName }}'s support strategy to the History
+          </label>
+        </h1>
+
+        <p class="govuk-body govuk-hint">Support strategies in the History tab are view only and cannot be reactivated.</p>
+
+        <div class="govuk-inset-text">   
+          {% set countSup = 0 %}
+          {% for needs in prisoner.needsSupport %}
+          {% set countSup = countSup + 1 %}
+            {# Check if needsSupport has an item in this category #}
+            {% if thiscount == countSup %}
+
+            <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
+              {{thiscat}}
+            </h2>
+            <p class="govuk-body govuk-!-margin-bottom-2">
+              {{ needs.needsSupportDescription | safe }}
+            </p>
+            <p class="govuk-hint govuk-!-font-size-16">
+              {% if needs.needsSupportLastAction %}{{ needs.needsSupportLastAction }} {% else %}Added{% endif %} {{ needs.needsSupportDate }} by {{ needs.needsSupportAuthor }}
+            </p>
+
+            {% endif %}
+          {% endfor %}
+        </div>
+              
+      {% set countSup = 0 %}
+      {% for needs in prisoner.needsSupport %}
+      {% set countSup = countSup + 1 %}
+        {# Check if needsSupport has an item in this category #}
+
+          {% if thiscount == countSup %}
+
+          <input type="hidden" name="san-{{v}}-{{ref}}-support-desc" value="{{ needs.needsSupportDescription | safe }}">
+            
+        {{ govukTextarea({
+          id: "san-"+v+"-"+ref+"-support-archive",
+          name: "san-"+v+"-"+ref+"-support-archive",
+          label: {
+            text: "Reason for moving this support strategy to the History"
+          }
+        }) }}
+
+        {% endif %}
+      {% endfor %}
+
+        {{ govukButton({
+          text: "Move support strategy"
+        }) }}
+      
+      </form>
+    </div>
+    <div class="govuk-grid-column-one-third">
+
+      {% include "includes/"+v+"/san-aside-challenges.html" %}
+
+    </div>
+  </div>
+</div>
+
+
+    {% endif %}
+  {% endfor %}
+{% endblock %}
