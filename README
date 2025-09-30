@@ -1,0 +1,6 @@
+Whenever we have needed to use this set of prototypes for testing in user research, we have had to deply to a free Render instance (render.com). This was due to complications in trying to host on the development setup for live apps, so we had to resort to an alternative method to be able to test with users.
+
+For whomever picks this prototype up in future, you will either need a proper prototype deployment setup within the organisations infrastructure, or find an alternate method to host (such as Render).
+
+The latest updates to this prototype were made to show an example of edit and archive functionality  for support strategies in v5.
+
