@@ -1,10 +1,10 @@
-{% extends "/layouts/v4.html" %}
-
+{% extends "/layouts/v5.html" %}
+{%- from "moj/components/banner/macro.njk" import mojBanner -%}
 {% set currentpage = "challenges" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block beforeContent %}
   <div class="govuk-width-container ">
-
     <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
@@ -15,7 +15,6 @@
         </li>
       </ol>
     </nav>
-
   </div>
 {% endblock %}
 
@@ -26,8 +25,7 @@
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
-  
-    <!-- TITLE PAGE + print-->
+
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs</h1>
     </div>
@@ -37,16 +35,43 @@
       {% if data['prevurl'] == "check-answers" %}
         {{ mojAlert({
           variant: "success",
-          title: "Education suppport plan created",
+          title: "Education support plan created",
           dismissible: false
         }) }}
       {% endif %}
     
-      {% include "includes/"+v+"/san-miniprofile.html" %}
+      {% include "includes/" + v + "/san-miniprofile.html" %}
 
+      {% if data.challengeUpdated %}
+        {{ mojBanner({ type: "success", text: "Challenge updated" }) }}
+      {% elseif data.challengeArchived %}
+        {{ mojBanner({ type: "success", text: "Challenge moved to History" }) }}
+      {% endif %}
+
+      {% if data.challengeUpdated or data.challengeArchived %}
+        <script>
+          // Clear the banner flag from sessionStorage once viewed
+          fetch(window.location.pathname + '?clearBanner=true', { method: 'POST' });
+        </script>
+      {% endif %}
     </div>
-  
   </div>
+
+  {% if data.challengeUpdated or data.challengeArchived %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const banner = document.querySelector(".moj-banner");
+      const tabs = document.querySelectorAll(".govuk-tabs__tab");
+      tabs.forEach(tab => {
+        tab.addEventListener("click", function() {
+          if (banner) banner.remove();
+        });
+      });
+    });
+  </script>
+  {% endif %}
+
+
   <div class="govuk-grid-row">
     {% include "includes/"+v+"/san-subnav.html" %}
   </div>
@@ -54,98 +79,180 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h2 class="govuk-heading-m">
-        Challenges
-      </h2>
+      <h2 class="govuk-heading-m">Challenges</h2>
 
-        {# set tracker for categories prisoner has content it #}
+      {# ===================== CURRENT TAB ===================== #}
+      {% set currentHtml %}
         {% set cats = [] %}
+        {% set countCurrent = 0 %}
 
-        {# Check if prisoner has any recorded challenges #}
-        {%
-          if prisoner.needsChallenges
-        %}
+        {% if prisoner.needsChallenges and prisoner.needsChallenges.length %}
+          {# collect categories that have NON-archived items #}
+          {% for c in prisoner.needsChallenges %}
+            {% if not c.needsChallengeArchiveReason and not (c.needsChallengeCategory in cats) %}
+              {% set cats = (cats.push(c.needsChallengeCategory), cats) %}
+            {% endif %}
+          {% endfor %}
 
-          {# Loop through all categories of need #}
-          {% for categories in data[v+'categories'] %}
-
-            {# Loop through all challenges of prisoner #}
-            {% for needs in prisoner.needsChallenges %}
-              {# Check if needsSupport has an item in this category #}
-              {% if needs.needsChallengeCategory == categories.categoryName %}
-                {# Add this category to an array of categories associated with this prisoner #}
-                {% if not categories.categoryName in cats %}
-                  {% set cats = (cats.push(categories.categoryName), cats) %}
+          {% if cats.length %}
+            {% for cat in cats %}
+              {# build array with sortable effectiveISO and the item itself #}
+              {% set items = [] %}
+              {% for c in prisoner.needsChallenges %}
+                {% if c.needsChallengeCategory == cat and not c.needsChallengeArchiveReason %}
+                  {% set eff = c.needsChallengeUpdatedISO or c.needsChallengeDateISO %}
+                  {% set items = (items.push({ item:c, effectiveISO: eff, absIndex: loop.index }), items) %}
                 {% endif %}
+              {% endfor %}
+              {% set items = items | sort(false, false, 'effectiveISO') | reverse %}
+
+              {% if items.length %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">{{ cat }}</h2>
+                  </header>
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                      {% for row in items %}
+                        {% set c = row.item %}
+                        {% set displayDate = c.needsChallengeUpdated or c.needsChallengeDate %}
+                        {% set countCurrent = countCurrent + 1 %}
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            {{ c.needsChallengeDescription | safe }}
+                            {% if c.needsChallengeIdentified %}
+                              <div class="govuk-!-margin-top-3">
+                                {{ govukDetails({
+                                  summaryText: "How was this identified",
+                                  html: c.needsChallengeIdentified | safe
+                                }) }}
+                              </div>
+                            {% endif %}
+                            <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                              Last updated {{ displayDate }} by {{ c.needsChallengeAuthor }}
+                            </p>
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            <span class="san-inline-actions">
+                              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/edit/{{ c.needsChallengeCategory }}/{{ row.absIndex }}"
+                                 class="govuk-link govuk-link--no-visited-state">Edit</a>
+                              <span aria-hidden="true"> | </span>
+                              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/archive/{{ c.needsChallengeCategory }}/{{ row.absIndex }}"
+                                 class="govuk-link govuk-link--no-visited-state">Move to History</a>
+                            </span>
+                          </dd>
+                        </div>
+                      {% endfor %}
+                    </dl>
+                  </div>
+                </section>
               {% endif %}
             {% endfor %}
-
-          {% endfor %}
-
-          {% for cat in cats %}
-
+            <p class="govuk-body govuk-!-margin-top-6">
+              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/add/category"
+                 class="govuk-link govuk-link--no-visited-state">
+                Add a Challenge
+              </a>
+            </p>
+          {% else %}
             <section class="app-summary-card govuk-!-margin-bottom-6">
-              <header class="app-summary-card__header">
-                <h2 class="app-summary-card__title">
-                  {{ cat }}
-                </h2>
-              </header>
               <div class="app-summary-card__body">
-                <dl class="govuk-summary-list san-needs-list">
-                
-                  {% set countCha = 0 %}
-                  {# Loop through all support needs of prisoner #}
-                  {% for needs in prisoner.needsChallenges %}
-                    {# Check if needsChallenges has an item in this category #}
-                    {% if needs.needsChallengeCategory == cat %}
-                      {% set countCha = countCha + 1 %}
-
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                          {{ needs.needsChallengeDescription | safe }}
-                          {% if needs.needsChallengeAuthor == "Additional Learning Needs Screener" %}
-                          <br><span class="govuk-body-s govuk-hint-s">Added {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</span>
-                          {% endif %}
-                        </dt>
-                        {% if needs.needsChallengeAuthor != "Additional Learning Needs Screener" %}
-                          <dd class="govuk-summary-list__value">
-                            <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
-                            <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
-                            <span class="govuk-body-s">Added {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</span>
-                          </dd>
-                        {% endif %}
-                      </div>
-                  
-                    {% endif %}
-                  {% endfor %}
-                </dl>        
-
+                <p class="govuk-body govuk-!-margin-top-3">This prisoner has no challenges recorded.</p>
               </div>
             </section>
-            {% set countSup = 0 %}
-          {% endfor %}
-
+          {% endif %}
         {% else %}
-        
           <section class="app-summary-card govuk-!-margin-bottom-6">
             <div class="app-summary-card__body">
               <p class="govuk-body govuk-!-margin-top-3">This prisoner has no challenges recorded.</p>
             </div>
           </section>
-
         {% endif %}
+      {% endset -%}
+
+      {# ===================== HISTORY TAB ===================== #}
+      {% set historyHtml %}
+        {% set cats = [] %}
+        {% set countArchive = 0 %}
+
+        {% if prisoner.needsChallenges and prisoner.needsChallenges.length %}
+          {% for c in prisoner.needsChallenges %}
+            {% if c.needsChallengeArchiveReason and not (c.needsChallengeCategory in cats) %}
+              {% set cats = (cats.push(c.needsChallengeCategory), cats) %}
+            {% endif %}
+          {% endfor %}
+          {% if cats.length %}
+            {% for cat in cats %}
+              {% set items = [] %}
+              {% for c in prisoner.needsChallenges %}
+                {% if c.needsChallengeCategory == cat and c.needsChallengeArchiveReason %}
+                  {% set eff = c.needsChallengeArchiveISO or c.needsChallengeUpdatedISO or c.needsChallengeDateISO %}
+                  {% set items = (items.push({ item:c, effectiveISO: eff }), items) %}
+                {% endif %}
+              {% endfor %}
+              {% set items = items | sort(false, false, 'effectiveISO') | reverse %}
+              {% if items.length %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">{{ cat }}</h2>
+                  </header>
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                      {% for row in items %}
+                        {% set c = row.item %}
+                        {% set countArchive = countArchive + 1 %}
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            {{ c.needsChallengeDescription | safe }}
+                            <p class="govuk-heading-0 govuk-!-margin-top-2 govuk-!-margin-bottom-1">
+                              <strong>Reason for moving to History</strong>
+                            </p>
+                            <p class="govuk-body govuk-!-margin-bottom-3">
+                              {{ c.needsChallengeArchiveReason | safe }}
+                            </p>
+                            <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                              Moved to History {{ c.needsChallengeDate }} by {{ c.needsChallengeAuthor }}
+                            </p>
+                          </dt>
+                          <dd class="govuk-summary-list__value"></dd>
+                        </div>
+                      {% endfor %}
+                    </dl>
+                  </div>
+                </section>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <div class="app-summary-card__body">
+                <p class="govuk-body govuk-!-margin-top-3">This prisoner has no challenges moved to History.</p>
+              </div>
+            </section>
+          {% endif %}
+        {% else %}
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <div class="app-summary-card__body">
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no challenges moved to History.</p>
+            </div>
+          </section>
+        {% endif %}
+      {% endset -%}
+
+      {{ govukTabs({
+        items: [
+          { label: "Current ("+countCurrent+")", id: "current", panel: { html: currentHtml } },
+          { label: "History ("+countArchive+")", id: "history", panel: { html: historyHtml } }
+        ]
+      }) }}
 
     </div>
-    
+
     <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
       {% include "includes/"+v+"/san-actions-add.html" %}
     </div>
-
   </div>
-
 </div>
 
 {% endif %}
 {% endfor %}
-
 {% endblock %}

@@ -1,0 +1,86 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+  </div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+
+    {% for prisoner in data[v+'prisoners'] %}
+      {% if prisoner.prisonerNumber == ref %}
+  
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+        <span class="govuk-caption-l">Edit challenge</span>
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l">
+            Edit description of {{ prisoner.firstName }} {{ prisoner.lastName }}'s challenge
+          </label>
+        </h1>
+
+        <h2 class="govuk-heading-m">
+          Category of challenge
+        </h2>
+        <p class="govuk-body">{{ thiscat }}</p>
+
+        <h2 class="govuk-heading-m">
+          Description of challenge
+        </h2>
+        <p class="govuk-body govuk-hint">
+          Describe the nature of the challenge or difficulty experienced by this individual.
+        </p>
+        
+        {% set countChal = 0 %}
+        {% for needs in prisoner.needsChallenges %}
+          {% set countChal = countChal + 1 %}
+          {% if thiscount == countChal %}
+            {{ govukTextarea({
+              id: "san-" + v + "-" + ref + "-challenge-desc",
+              name: "san-" + v + "-" + ref + "-challenge-desc",
+              value: needs.needsChallengeDescription | safe
+            }) }}
+          {% endif %}
+        {% endfor %}
+
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">
+          How was this challenge identified?
+        </h2>
+        <p class="govuk-body govuk-hint">
+          Explain how this challenge was identified — for example, through screening, education review, or staff observation.
+        </p>
+
+        {% set countChal = 0 %}
+        {% for needs in prisoner.needsChallenges %}
+          {% set countChal = countChal + 1 %}
+          {% if thiscount == countChal %}
+            {{ govukTextarea({
+              id: "san-" + v + "-" + ref + "-challenge-ident",
+              name: "san-" + v + "-" + ref + "-challenge-ident",
+              value: needs.needsChallengeIdentified | safe
+            }) }}
+          {% endif %}
+        {% endfor %}
+
+        {{ govukButton({
+          text: "Update challenge"
+        }) }}
+      
+      </form>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      {% include "includes/" + v + "/san-aside-challenges.html" %}
+    </div>
+
+  </div>
+</div>
+
+      {% endif %}
+    {% endfor %}
+{% endblock %}

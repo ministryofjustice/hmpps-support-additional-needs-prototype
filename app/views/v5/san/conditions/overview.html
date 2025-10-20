@@ -1,10 +1,9 @@
 {% extends "/layouts/v5.html" %}
-
+{%- from "moj/components/banner/macro.njk" import mojBanner -%}
 {% set currentpage = "conditions" %}
 
 {% block beforeContent %}
   <div class="govuk-width-container ">
-
     <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
@@ -15,122 +14,182 @@
         </li>
       </ol>
     </nav>
-
   </div>
 {% endblock %}
 
 {% block content %}
-
 {% for prisoner in data[v+'prisoners'] %}
   {% if prisoner.prisonerNumber == ref %}
-
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
-  
-    <!-- TITLE PAGE + print-->
+
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs</h1>
+      <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}’s support for additional needs</h1>
     </div>
 
     <div class="govuk-grid-column-full">
+      {% include "includes/" + v + "/san-miniprofile.html" %}
 
-      {% if data['prevurl'] == "check-answers" %}
-        {{ mojAlert({
-          variant: "success",
-          title: "Education suppport plan created",
-          dismissible: false
-        }) }}
+      {% if data.conditionAdded %}
+        {{ mojBanner({ type: "success", text: "Condition added" }) }}
+      {% elseif data.conditionUpdated %}
+        {{ mojBanner({ type: "success", text: "Condition updated" }) }}
+      {% elseif data.conditionArchived %}
+        {{ mojBanner({ type: "success", text: "Condition moved to History" }) }}
       {% endif %}
-    
-      {% include "includes/"+v+"/san-miniprofile.html" %}
-
     </div>
-  
   </div>
+
   <div class="govuk-grid-row">
     {% include "includes/"+v+"/san-subnav.html" %}
   </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">Conditions</h2>
 
-      <h2 class="govuk-heading-m">
-        Conditions
-      </h2>
+      {# ---------------- SPLIT CONDITIONS CLEANLY ---------------- #}
+      {% set confirmed = [] %}
+      {% set selfdeclared = [] %}
 
-        {# Check if prisoner has any recorded conditions #}
-        {% if prisoner.conditions %}
+      {% for c in prisoner.conditions %}
+        {% if c.conditionType and (c.conditionType | lower) == "confirmed diagnosis" %}
+          {% set confirmed = (confirmed.push(c), confirmed) %}
+        {% elif c.conditionType and (c.conditionType | lower) == "self-declared" %}
+          {% set selfdeclared = (selfdeclared.push(c), selfdeclared) %}
+        {% endif %}
+      {% endfor %}
 
-        <section class="app-summary-card govuk-!-margin-bottom-6">
-          <!--header class="app-summary-card__header">
-            <h2 class="app-summary-card__title">
-              {{ cat }}
-            </h2>
-          </header-->
-          <div class="app-summary-card__body">
-            <dl class="govuk-summary-list san-needs-list">
-              {# Loop through conditions of prisoner #}
-              {% for condition in prisoner.conditions %}
+      {% set countCurrent = (confirmed.length + selfdeclared.length) %}
 
-                <div class="govuk-summary-list__row san-needs-list">
-                  <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                    {{ condition.conditionName | safe }}
-                    {% if condition.conditionDetail %}
-                    <br><span class="govuk-body-s">{{ condition.conditionDetail | safe }}</span>
-                    {% endif %}
-                  </dt>
-                  <dd class="govuk-summary-list__value">
-                    <!--p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
-                    <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p-->
-                    <span class="govuk-body-s">Added {{ condition.conditionDate }} by {{ condition.conditionAuthor }}</span>
-                  </dd>
-                </div>
-              
-              {% endfor %}
+      {# ------------------ CURRENT TAB ------------------ #}
+      {% set currentHtml %}
+        {% if confirmed.length %}
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <header class="app-summary-card__header">
+              <h2 class="app-summary-card__title">Confirmed diagnoses</h2>
+            </header>
+            <div class="app-summary-card__body">
+              <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                {% for c in confirmed %}
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                      <strong>{{ c.conditionName }}</strong>
+                      {% if c.conditionDetail %}
+                        <p class="govuk-body govuk-!-margin-top-1 govuk-!-margin-bottom-1">{{ c.conditionDetail }}</p>
+                      {% endif %}
+                      <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1 govuk-!-margin-bottom-0">
+                        Last updated {{ c.conditionDate }} by {{ c.conditionAuthor }}
+                      </p>
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      <span class="san-inline-actions">
+                        <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/edit/{{ c.conditionName | urlencode }}/{{ loop.index }}"
+                           class="govuk-link govuk-link--no-visited-state">Edit</a>
+                        <span aria-hidden="true"> | </span>
+                        <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/archive/{{ c.conditionName | urlencode }}/{{ loop.index }}"
+                           class="govuk-link govuk-link--no-visited-state">Move to History</a>
+                      </span>
+                    </dd>
+                  </div>
+                {% endfor %}
+              </dl>
+            </div>
+          </section>
+        {% endif %}
 
-              {# Loop through other conditions of prisoner #}
-              {% for othercondition in prisoner.otherConditions %}
+        {% if selfdeclared.length %}
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <header class="app-summary-card__header">
+              <h2 class="app-summary-card__title">Self-declared conditions</h2>
+            </header>
+            <div class="app-summary-card__body">
+              <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                {% for c in selfdeclared %}
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                      <strong>{{ c.conditionName }}</strong>
+                      {% if c.conditionDetail %}
+                        <p class="govuk-body govuk-!-margin-top-1 govuk-!-margin-bottom-1">{{ c.conditionDetail }}</p>
+                      {% endif %}
+                      <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1 govuk-!-margin-bottom-0">
+                        Last updated {{ c.conditionDate }} by {{ c.conditionAuthor }}
+                      </p>
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      <span class="san-inline-actions">
+                        <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/edit/{{ c.conditionName | urlencode }}/{{ loop.index }}"
+                           class="govuk-link govuk-link--no-visited-state">Edit</a>
+                        <span aria-hidden="true"> | </span>
+                        <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/archive/{{ c.conditionName | urlencode }}/{{ loop.index }}"
+                           class="govuk-link govuk-link--no-visited-state">Move to History</a>
+                      </span>
+                    </dd>
+                  </div>
+                {% endfor %}
+              </dl>
+            </div>
+          </section>
+        {% endif %}
 
-                <div class="govuk-summary-list__row san-needs-list">
-                  <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                    {{ othercondition.conditionName | safe }}
-                    {% if othercondition.conditionDetail %}
-                    <br><span class="govuk-body-s">{{ othercondition.conditionDetail | safe }}</span>
-                    {% endif %}
-                  </dt>
-                  <dd class="govuk-summary-list__value">
-                    <!--p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
-                    <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p-->
-                    <span class="govuk-body-s">Added {{ othercondition.conditionDate }} by {{ othercondition.conditionAuthor }}</span>
-                  </dd>
-                </div>
-              
-              {% endfor %}
-            </dl>
-          </div>
-        </section>
-
-        {% else %}
-        
+        {% if not confirmed.length and not selfdeclared.length %}
           <section class="app-summary-card govuk-!-margin-bottom-6">
             <div class="app-summary-card__body">
               <p class="govuk-body govuk-!-margin-top-3">This prisoner has no conditions recorded.</p>
             </div>
           </section>
-
         {% endif %}
 
+        <p class="govuk-body govuk-!-margin-top-6">
+          <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/add"
+             class="govuk-link govuk-link--no-visited-state">Add a condition</a>
+        </p>
+      {% endset %}
+
+      {# ------------------ HISTORY TAB ------------------ #}
+      {% set historyHtml %}
+        {% set countArchive = 0 %}
+        {% if prisoner.conditionsHistory and prisoner.conditionsHistory.length %}
+          {% for c in prisoner.conditionsHistory %}
+            {% set countArchive = countArchive + 1 %}
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <header class="app-summary-card__header">
+                <h2 class="app-summary-card__title">{{ c.conditionName }}</h2>
+              </header>
+              <div class="app-summary-card__body">
+                <p class="govuk-body">{{ c.conditionDetail | safe }}</p>
+                <p class="govuk-heading-0 govuk-!-margin-top-2 govuk-!-margin-bottom-1">
+                  <strong>Reason for moving to History</strong>
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-3">{{ c.conditionArchiveReason | safe }}</p>
+                <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                  Moved to History {{ c.conditionDate }} by {{ c.conditionAuthor }}
+                </p>
+              </div>
+            </section>
+          {% endfor %}
+        {% else %}
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <div class="app-summary-card__body">
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no conditions moved to History.</p>
+            </div>
+          </section>
+        {% endif %}
+      {% endset %}
+
+      {{ govukTabs({
+        items: [
+          { label: "Current ("+countCurrent+")", id: "current", panel: { html: currentHtml } },
+          { label: "History ("+countArchive+")", id: "history", panel: { html: historyHtml } }
+        ]
+      }) }}
     </div>
-    
+
     <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
       {% include "includes/"+v+"/san-actions-add.html" %}
     </div>
-      
   </div>
-
 </div>
-
 {% endif %}
 {% endfor %}
-
 {% endblock %}

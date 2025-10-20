@@ -26,3 +26,459 @@
 .govuk-button--link:hover {
   background: #144e81
 }
+
+.dps-template-page .prisoner-image {
+  width: 90px;
+  height: auto;
+}
+
+
+/* ==========================================================
+   DPS prisoner inset summary (location + needs)
+   ========================================================== */
+
+   .prisoner-overview-inset-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: govuk-spacing(2);
+    margin-top: govuk-spacing(4);
+    align-items: stretch; /* makes both equal height */
+  }
+  
+  /* Each inset panel container */
+  .prisoner-overview-inset {
+  
+    display: flex;
+    align-items: stretch;
+  }
+  
+  /* Inset text reset */
+  .prisoner-overview-inset .govuk-inset-text {
+    margin: 0;
+    border-left: 5px solid #b1b4b6; /* restores GOV.UK-style left border */
+    padding: govuk-spacing(2);
+    border-radius: 2px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* top-align content like DPS */
+    height: auto; /* don’t force tall stretch */
+  }
+  
+  /* Grey version */
+  .prisoner-overview-inset--grey .govuk-inset-text {
+    background-color: #f3f2f1;
+    color: #0b0c0c;
+  }
+  /* Centre the content inside the grey inset box */
+.prisoner-overview-inset--grey .govuk-inset-text {
+  display: flex;
+  align-items: center;      /* vertical centering */
+  justify-content: center;  /* horizontal centering */
+  text-align: center;       /* make sure text is centred */
+}
+
+  
+  /* Blue version */
+  .prisoner-overview-inset--blue .govuk-inset-text {
+    background-color: #E0EEF8;
+    border-left: 5px solid #1D70B8; /* DPS-style bold left border */
+    color: #1D70B8;
+  
+  
+    a.govuk-link {
+      color: #1D70B8;
+      text-decoration: underline;
+      font-weight: normal;
+  
+      &:hover {
+        color: #003078;
+      }
+    }
+  }
+  
+  /* Headings */
+  .prisoner-overview-inset h2 {
+    font-weight: bold;
+    margin-bottom: govuk-spacing(1);
+  }
+  /* ==========================================================
+   DPS-style prisoner header banner
+   ========================================================== */
+
+.prisoner-header-banner {
+  border-radius: 0px;
+  overflow: hidden; /* keeps corners neat */
+}
+
+/* --- Blue top area --- */
+.prisoner-header-banner__top {
+  background-color: #1D70B8; /* DPS blue */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: govuk-spacing(4);
+  gap: govuk-spacing(4);
+
+  @include govuk-media-query($until: tablet) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Prisoner photo */
+.prisoner-header-banner__image {
+  flex-shrink: 0;
+
+  img.prisoner-image {
+    width: 100px;
+    height: aut;
+    border-radius: 4px;
+    object-fit: cover;
+    
+  }
+}
+
+/* Prisoner details text */
+.prisoner-header-banner__details {
+  color: #fff;
+
+  h1,
+  li {
+    color: #fff !important;
+  }
+
+  ul {
+    margin-top: govuk-spacing(1);
+  }
+}
+/* ==========================================================
+   DPS second row of summary cards — one wide + one narrow
+   ========================================================== */
+
+/* ==========================================================
+   DPS second row of summary cards — 1 narrow + 1 double-width
+   ========================================================== */
+  
+ /* ==========================================================
+   DPS second row of summary cards — 1 narrow + 1 double-width
+   ========================================================== */
+
+.prisoner-overview-cards--mixed {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: govuk-spacing(4);
+  margin-top: govuk-spacing(4);
+  align-items: stretch;
+}
+
+/* Narrow card — takes 1 part of the available space */
+.govuk-summary-card--narrow {
+  flex: 1 1 0;
+  max-width: 32%;
+  border: 1px solid #b1b4b6;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Double-width card — takes 2 parts of the available space */
+.govuk-summary-card--double {
+  flex: 2 1 0;
+  max-width: 66%;
+  border: 1px solid #b1b4b6;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+}
+/* Double-width card — takes 2 parts of the available space */
+.govuk-summary-card--long {
+  flex: 2 1 0;
+  max-width: 100%;
+  border: 1px solid #b1b4b6;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================
+   DPS Staff Contacts – Two-column alignment inside summary card
+   ========================================================== */
+   .govuk-summary-card__content .staff-contact-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 0.25rem 0;
+  }
+  
+  .govuk-summary-card__content .staff-contact-row strong {
+    flex: 0 0 45%; /* ✅ fixed column for left labels */
+    font-weight: 700;
+    text-align: left;
+    display: inline-block;
+    white-space: normal;
+  }
+  
+  .govuk-summary-card__content .staff-contact-row span {
+    flex: 1;
+    text-align: right; /* ✅ aligns all right-hand text vertically */
+    display: inline-block;
+    white-space: normal;
+    word-break: break-word;
+  }
+  /* ===========================================================
+   Overlay styling for "Additional Needs" modal
+   =========================================================== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.overlay[hidden] {
+  display: none !important;
+}
+
+.overlay__content {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 0;
+  border-color: #0b0c0c;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  max-width: 960px; /* increased from 600px */
+  width: 90%;
+  max-height: 90vh; /* keep content inside viewport */
+  overflow-y: auto; /* allow scrolling if long content */
+}
+
+.overlay__close {
+  float: right;
+  margin-bottom: 1rem;
+}
+
+  
+
+
+/* --- Right-side Location column --- */
+.prisoner-header-banner__details-right {
+  margin-left: auto;              /* push right */
+  display: flex;
+  flex-direction: column;         /* stack Location + Hull vertically */
+  align-items: flex-start;          /* left-align text */
+  justify-content: center;
+  color: #fff;
+  text-align: left;
+  gap: govuk-spacing(1);          /* small gap between lines */
+  white-space: normal;            /* allow wrapping */
+
+  span, strong {
+    color: #fff;
+    font-size: 19px;
+    line-height: 1.3;
+  }
+}
+
+/* --- Grey bottom bar (sits flush to blue) --- */
+.prisoner-header-banner__bottom {
+  background-color: #f3f2f1;
+  color: #0b0c0c;
+  padding: govuk-spacing(2);
+  font-size: 16px;
+  margin-top: 0;        /* remove gap above */
+}
+.prisoner-header-banner__underlined {
+  display:inline;
+  border-bottom: 2px solid #fff;   /* white underline to match banner */
+  line-height: 1.2;
+
+}
+
+/* Scoped only to DPS Overview page cards */
+.prisoner-overview-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: govuk-spacing(4);
+  justify-content: space-between;
+
+  .govuk-summary-card {
+    flex: 1 1 calc(33.333% - govuk-spacing(4));
+    border: 1px solid #b1b4b6;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25); /* DPS-style flat shadow */
+  }
+}
+/* === Right-hand DPS actions panel (scoped safely) === */
+.dps-actions-panel {
+  border: 1px solid #b1b4b6;
+  border-radius: 0;                /* no rounding */
+  background: #fff;
+  padding: 20px;
+
+}
+
+/* Title */
+.dps-actions-panel__title {
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  margin: -20px -20px 16px -20px; /* stretch header edge-to-edge */
+  border-bottom: 1px solid #b1b4b6;
+}
+
+/* Section dividers (if more than one section) */
+.dps-actions-panel__section + .dps-actions-panel__section {
+  border-top: 1px solid #b1b4b6;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+/* === List styling === */
+.dps-actions-panel__list {
+  list-style: none;   /* remove bullets */
+  margin: 0;
+  padding: 0;
+}
+
+/* Each action item */
+.dps-actions-panel__list li {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #b1b4b6; /* divider line between links */
+}
+
+/* No divider on last item */
+.dps-actions-panel__list li:last-child {
+  border-bottom: none;
+}
+
+
+/* === DPS Actions panel: icon + link alignment === */
+.dps-actions-panel__list li {
+  display: flex;
+  align-items: left;       /* vertically center icon + link text */
+  border-bottom: 1px solid #b1b4b6; /* divider line between links */
+}
+
+.dps-actions-panel__list li:last-child {
+  border-bottom: none;
+}
+
+/* --- Link styling --- */
+.dps-action-link {
+  display: inline-flex;        /* aligns icon + text horizontally */
+  align-items: center;         /* vertical alignment */
+  gap: 8px;                    /* space between icon and text */
+  font-weight: 600;
+  color: #1d70b8;
+  text-decoration: underline;  /* ✅ underline by default */
+  line-height: 1.4;
+}
+
+/* --- Icon styling --- */
+.dps-action-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: left;
+  margin-top: -2px; /* ✅ optical alignment tweak */
+}
+
+/* ==========================================================
+   DPS Overview Layout — align Actions panel with tags
+   ========================================================== */
+
+/* Overall layout for cards + actions sidebar */
+.prisoner-overview-layout {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start; /* ✅ aligns top edges of tags & actions */
+  gap: govuk-spacing(4);   /* space between left + right columns */
+}
+
+/* Left column (summary cards) — make wider */
+.prisoner-overview-layout .govuk-grid-column-two-thirds {
+  flex: 0 0 75%;   /* ✅ makes the cards wider */
+  max-width: 75%;
+}
+
+/* Right column (actions + more info) — make narrower */
+.prisoner-overview-layout .govuk-grid-column-one-third {
+  flex: 0 0 25%;   /* ✅ makes the sidebar narrower */
+  margin-top: -100px; /* keep aligned with tags */
+}
+
+/* Panels fill the full width of the right column */
+.dps-actions-panel,
+.dps-more-info-panel {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Allow long links to wrap neatly */
+.dps-action-link {
+  display: inline-flex;
+  align-items: flex-start;  /* ✅ keeps wrapped lines aligned to text top */
+  gap: 8px;
+  white-space: normal;      /* ✅ allows wrapping like “Log an activity application” */
+  line-height: 1.4;
+}
+
+/* Optional — makes wrapped text align under text, not icon */
+.dps-action-link span {
+  display: inline-block;
+  padding-left: 0; /* can tweak to indent further if needed */
+}
+/* ==========================================================
+   DPS "More information" panel (below Actions)
+   ========================================================== */
+
+   .dps-more-info-panel {
+    border: 1px solid #b1b4b6;   /* ✅ visible box border */
+    border-radius: 0;            /* square corners like DPS */
+    background-color: #fff;      /* ✅ white box (matches Actions panel) */
+    padding: 16px 20px;          /* consistent inner spacing */
+    margin-top: govuk-spacing(4); /* space below the Actions panel */
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25); /* ✅ flat DPS-style shadow */
+  }
+  
+  /* Title */
+  .dps-more-info-panel__title {
+    font-weight: 700;
+    margin-bottom: govuk-spacing(2);
+    padding-bottom: govuk-spacing(1);
+    border-bottom: 1px solid #b1b4b6; /* ✅ underline title like Actions panel */
+  }
+  
+  /* List styling */
+  .dps-more-info-panel__list {
+    margin: 0;
+    padding: 14px;
+  
+    li {
+      padding: govuk-spacing(1) 0;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  
+    a.govuk-link {
+      color: #1d70b8;
+      text-decoration: underline;
+      font-weight: 600;
+  
+    }
+  }
+  

@@ -1,0 +1,107 @@
+{% extends "/layouts/v5.html" %}
+{% set currentpage = "search-results" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container">
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/">Digital Prison Services</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <h1 class="govuk-heading-l">Prisoner search results</h1>
+
+  <form class="govuk-form-group govuk-!-margin-bottom-6" method="get" action="/search-results">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <label class="govuk-label" for="search-name">Enter name or prison number</label>
+        <input class="govuk-input" id="search-name" name="name" type="text" value="{{ data.name or '' }}">
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        <label class="govuk-label" for="search-location">Select location</label>
+        <select class="govuk-select" id="search-location" name="location">
+          <option value="">Select location</option>
+          <option value="Wakefield (HMP)" selected>Wakefield (HMP)</option>
+          <option value="Brixton (HMP)">Brixton (HMP)</option>
+          <option value="Hull (HMP)">Hull (HMP)</option>
+        </select>
+      </div>
+      <div class="govuk-grid-column-one-quarter govuk-!-margin-top-6">
+        <button class="govuk-button" data-module="govuk-button">Search</button>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-top-2">
+      <div class="govuk-grid-column-full">
+        <a class="govuk-link govuk-!-margin-right-2" href="#">View by alerts</a>
+      </div>
+    </div>
+  </form>
+
+  <div class="govuk-grid-row govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-one-half">
+      <form class="govuk-form-group govuk-!-margin-bottom-0">
+        <label class="govuk-label govuk-!-margin-right-2" for="order-results">Order 1 results by</label>
+        <select class="govuk-select" id="order-results" name="order">
+          <option value="name-az">Last name, First name - A to Z</option>
+          <option value="name-za">Last name, First name - Z to A</option>
+          <option value="age-desc">Age - highest first</option>
+          <option value="age-asc">Age - lowest first</option>
+        </select>
+        <button class="govuk-button govuk-button--secondary govuk-!-margin-left-2" data-module="govuk-button">Reorder</button>
+      </form>
+    </div>
+
+    <div class="govuk-grid-column-one-half govuk-!-text-align-right">
+      <span class="govuk-body govuk-!-margin-right-3">List | <a href="#" class="govuk-link">Grid</a></span>
+      <a href="#" class="govuk-link govuk-!-margin-right-3">Print displayed results</a>
+    </div>
+  </div>
+
+  <table class="govuk-table govuk-!-margin-bottom-2" data-module="moj-sortable-table" style="text-align:center;">
+    <caption class="govuk-visually-hidden">Prisoner search results</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header govuk-!-width-one-quarter" aria-sort="ascending" style="text-align:center;">Name</th>
+        <th scope="col" class="govuk-table__header" style="text-align:center;">Prison number</th>
+        <th scope="col" class="govuk-table__header" style="text-align:center;">Location</th>
+        <th scope="col" class="govuk-table__header" style="text-align:center;">Incentive level</th>
+        <th scope="col" class="govuk-table__header" style="text-align:center;">Age</th>
+        <th scope="col" class="govuk-table__header" style="text-align:center;">Relevant alerts</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row" style="vertical-align:middle;">
+        <td class="govuk-table__cell" style="text-align:center;">
+            <img src="/public/images/profile-image.png" alt="Prisoner profile" width="100" height="130">
+            <a href="/{{ v }}/san//dps-template" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">
+              Chris, Atkinson
+            </a>
+          </div>
+        </td>
+        <td class="govuk-table__cell" style="text-align:center; vertical-align:middle;">G2911GD</td>
+        <td class="govuk-table__cell" style="text-align:center; vertical-align:middle;">A-2-014</td>
+        <td class="govuk-table__cell" style="text-align:center; vertical-align:middle;">Standard</td>
+        <td class="govuk-table__cell" style="text-align:center; vertical-align:middle;">50</td>
+        <td class="govuk-table__cell" style="text-align:center; vertical-align:middle;">
+          <strong class="govuk-tag govuk-tag--blue">Additional needs</strong>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-text-align-right">
+      <p class="govuk-body govuk-!-margin-top-1">Showing 1 to 1 of 1 results</p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

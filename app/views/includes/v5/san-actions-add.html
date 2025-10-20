@@ -1,19 +1,79 @@
-<div class="hmpps-actions-block govuk-!-margin-bottom-5 govuk-!-padding-bottom-3">
-  <ul class="hmpps-actions-block__list">
-    <li class="noflex">
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Actions</h3>
-    </li>
-    <li class="noflex noborder profile-action-links govuk-!-margin-top-2">
-      <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category" class="govuk-link govuk-link--no-visited-state">Add support strategy</a>
-    </li>
-    <li class="noflex noborder profile-action-links">
-      <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-link govuk-link--no-visited-state">Add challenge</a>
-    </li>
-    <li class="noflex noborder profile-action-links">
-      <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category" class="govuk-link govuk-link--no-visited-state">Add strength</a>
-    </li>
-    <li class="noflex noborder profile-action-links">
-      <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/add" class="govuk-link govuk-link--no-visited-state">Add condition</a>
-    </li>
-  </ul>
-</div>
+<aside class="app-actions-panel govuk-!-margin-bottom-6" aria-label="Actions">
+
+  <h2 class="govuk-heading-m app-actions-panel__title">Actions</h2>
+  <hr class="app-actions-panel__divider">
+
+  {# ---------- Education support plan ---------- #}
+  <section class="app-actions-panel__section">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Education support plan</h3>
+
+    {% set status = (prisoner.planStatus or "") | trim %}
+    {% set MAP = {
+      "Active plan":   { text: "Active plan",   class: "govuk-tag--green" },
+      "Plan overdue":  { text: "Plan overdue",  class: "govuk-tag--red" },
+      "Review overdue":{ text: "Review overdue",class: "govuk-tag--light-red" },
+      "Review due":    { text: "Review due",    class: "govuk-tag--yellow" },
+      "Plan due":      { text: "Plan due",      class: "govuk-tag--yellow" },
+      "Needs plan":    { text: "Needs plan",    class: "govuk-tag--light-green" },
+      "Inactive plan": { text: "Inactive plan", class: "govuk-tag--grey" },
+      "Plan declined": { text: "Plan declined", class: "govuk-tag--grey" }
+    } %}
+
+    {% if status and MAP[status] %}
+      {{ govukTag({ classes: MAP[status].class, text: MAP[status].text }) }}
+    {% endif %}
+
+    {% set review = "" %}
+    {% if prisoner.educationPlan and prisoner.educationPlan.length %}
+      {% for p in prisoner.educationPlan %}
+        {% if p.reviewDate %}{% set review = p.reviewDate %}{% endif %}
+      {% endfor %}
+    {% elif prisoner.nextActionDue %}
+      {% set review = prisoner.nextActionDue %}
+    {% endif %}
+
+    {% if review %}
+      <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2">
+        Review due {{ review | govukDate }}
+      </p>
+    {% endif %}
+    <div class="app-actions-panel__row">
+      <img src="/public/images/icon-review.png" alt="" class="app-actions-panel__icon">
+
+      <a href="/{{ v }}/san/{{ ref }}/plan/review/person-reviewing"
+         class="govuk-link govuk-link--no-visited-state">
+        Review education support plan
+      </a>
+    </div>
+  </section>
+
+  {# ---------- Screening and assessment ---------- #}
+  <section class="app-actions-panel__section">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Screening and assessment</h3>
+
+    <div class="app-actions-panel__row">
+      <img src="/public/images/icon-create.png" alt="" class="app-actions-panel__icon">
+
+      <a href="/{{ v }}/san/{{ ref }}/plan/review/person-reviewing"
+         class="govuk-link govuk-link--no-visited-state">
+        Record screener results
+      </a>
+    </div>
+  </section>
+
+  {# ---------- Additional needs ---------- #}
+  <section class="app-actions-panel__section">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Additional needs</h3>
+    <ul class="govuk-list govuk-!-margin-bottom-0">
+      <li><a class="govuk-link govuk-link--no-visited-state"
+             href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category">Add challenges</a></li>
+      <li><a class="govuk-link govuk-link--no-visited-state"
+             href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category">Add strengths</a></li>
+      <li><a class="govuk-link govuk-link--no-visited-state"
+             href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category">Add support strategies</a></li>
+      <li><a class="govuk-link govuk-link--no-visited-state"
+             href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/add">Add conditions</a></li>
+    </ul>
+  </section>
+
+</aside>

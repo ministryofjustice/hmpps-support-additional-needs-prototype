@@ -220,6 +220,15 @@ $govuk-assets-path: '/govuk/assets/';
   margin-bottom: 0px;
 }
 
+.govuk-hint {
+  font-size:medium;
+  display: block;
+  width: 100%;
+
+}
+
+
+
 .edit-steps-border {
   border-bottom: 1px solid #b1b4b6;
   padding: 0px 0px 16px 0px;
@@ -511,6 +520,20 @@ $govuk-assets-path: '/govuk/assets/';
   touch-action: manipulation;
 }
  */
+/* Make summary cards fill the height of their column */
+.app-card-col {
+  display: flex;               /* turns the column into a flex container */
+}
+.app-summary-card--fill {
+  display: flex;               /* make the card itself flex so it can stretch */
+  flex-direction: column;
+  flex: 1;                     /* fill available height */
+}
+
+/* Slightly tighter spacing inside the compact cards */
+.app-summary-card--compact .app-summary-card__header { margin-bottom: 8px; }
+.app-summary-card--compact p,
+.app-summary-card--compact .govuk-list li { margin-bottom: 4px; }
 
 
 .summary-history {
@@ -965,6 +988,65 @@ p,
   width: 100%;
 }
 
+/* put the two halves in a single flex row */
+.app-equal-cards {
+  display: flex;
+               /* space between the two cards */
+  align-items: stretch;     /* make columns equal height */
+}
+
+
+
+/* make the card fill the available column height */
+.app-summary-card--fill {
+  display: flex;
+  flex-direction: column;
+  flex: 1;                  /* stretch! */
+}
+
+/* stack normally on mobile */
+@media (max-width: 40.0625em) {
+  .app-equal-cards { display: block; }
+}
+
+.app-actions-panel {
+  border: 1px solid #B1B4B6;      /* GOV.UK border grey */
+  background: #FFF;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.app-actions-panel__title {
+  margin-bottom: 12px;
+}
+
+.app-actions-panel__section + .app-actions-panel__section {
+  border-top: 1px solid #B1B4B6;
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.app-actions-panel__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.app-actions-panel__icon {
+  height: 24px;         /* control just one side */
+  width: auto;          /* keep aspect ratio */
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  max-width: none;      /* ignore any global img max-width */
+}
+
+/* pastel tag tints used in your tables (if needed here too) */
+.govuk-tag--light-red   { background-color:#F6D7D2; color:#0B0C0C; }
+.govuk-tag--light-green { background-color:#C5E6CA; color:#0B0C0C; }
+
 .summaryneeds {
   display: flex;
   margin: 0.5em 0;
@@ -983,4 +1065,38 @@ p,
   p {
     margin-bottom: 0.5em;
   }
+}
+/* Remove underline from category heading rows in SAN needs list */
+.san-heading-row {
+  border-bottom: none !important;
+
+  /* GOV.UK adds border via key/value cells too, so clear those */
+  .govuk-summary-list__key,
+  .govuk-summary-list__value,
+  .govuk-summary-list__actions {
+    border-bottom: none !important;
+  }
+}
+.san-heading-row {
+  border-bottom: 0 !important;
+}
+.san-heading-row .govuk-summary-list__key,
+.san-heading-row .govuk-summary-list__value {
+  border-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* no underline under category heading row */
+.san-heading-row,
+.san-heading-row .govuk-summary-list__key,
+.san-heading-row .govuk-summary-list__value {
+  border-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+/* Remove the final bottom border from the very last Support Strategies item */
+.app-summary-card__body .san-needs-list:last-of-type .govuk-summary-list__row:last-of-type,
+.app-summary-card__body .san-needs-list:last-of-type .govuk-summary-list__row:last-of-type .govuk-summary-list__key,
+.app-summary-card__body .san-needs-list:last-of-type .govuk-summary-list__row:last-of-type .govuk-summary-list__value,
+.app-summary-card__body .san-needs-list:last-of-type .govuk-summary-list__row:last-of-type .govuk-summary-list__actions {
+  border-bottom: none !important;
 }
