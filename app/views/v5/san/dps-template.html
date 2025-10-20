@@ -1,0 +1,542 @@
+{# ==========================================================
+  DPS Template Page
+  Includes DPS Prisoner Profile + DPS-style Navigation Tabs
+  ========================================================== #}
+
+{% extends "/layouts/v5.html" %}
+{% set currentpage = "dps-template" %}
+{% set v = "v5" %}
+
+{% block pageTitle %}
+Prisoner profile - Digital Prison Services
+{% endblock %}
+
+{% block beforeContent %}
+ <div class="govuk-width-container">
+   <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+     <ol class="govuk-breadcrumbs__list">
+       <li class="govuk-breadcrumbs__list-item">
+         <a class="govuk-breadcrumbs__link" href="/{{ v }}/">Digital Prison Services</a>
+       </li>
+       <li class="govuk-breadcrumbs__list-item">
+         <a class="govuk-breadcrumbs__link" href="#">Welcome people into prison</a>
+       </li>
+       <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">People booked to arrive today</a>
+      </li>
+     </ol>
+   </nav>
+ </div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container govuk-!-margin-top-6">
+  {% set prisoner = prisoner or {
+    firstName: "Chris",
+    lastName: "Atkinson",
+    prisonerNumber: "G2911GD"
+  } %}
+  
+
+ {% if prisoner %}
+ <div class="prisoner-profile">
+   
+  <section class="prisoner-header-banner">
+    <div class="prisoner-header-banner__top">
+      
+      <!-- Left: photo -->
+      <div class="prisoner-header-banner__image">
+        <img src="/public/images/profile-image.png"
+             alt="Profile image of {{ prisoner.firstName }} {{ prisoner.lastName }}"
+             class="prisoner-image">
+      </div>
+  
+      <!-- Middle: name + prison number -->
+      <div class="prisoner-header-banner__details">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-1 govuk-!-font-weight-bold govuk-!-font-size-36">
+          {{ prisoner.firstName }} {{ prisoner.lastName }}
+        </h1>
+        <p class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-0 prisoner-number" style="color: white;">
+          {{ prisoner.prisonerNumber }}
+        </p>
+        
+        
+      </div>
+  
+      <!-- Right: location info -->
+      <div class="prisoner-header-banner__details-right">
+        <span class="govuk-body govuk-!-font-size-19 govuk-!-font-weight-bold govuk-!-margin-bottom-0">Incentive level</span>
+        <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-0 govuk-!-display-block prisoner-header-banner__underlined">
+          Standard
+        </span>
+      </div>
+      <div class="prisoner-header-banner__details-right">
+        <span class="govuk-body govuk-!-font-size-19 govuk-!-font-weight-bold govuk-!-margin-bottom-0">CSRA</span>
+        <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-0 govuk-!-display-block prisoner-header-banner__underlined">
+          Standard
+        </span>
+      </div>
+      <div class="prisoner-header-banner__details-right">
+        <span class="govuk-body govuk-!-font-size-19 govuk-!-font-weight-bold govuk-!-margin-bottom-0">Category</span>
+        <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-0 govuk-!-display-block prisoner-header-banner__underlined">
+          B
+        </span>
+      </div>
+      <div class="prisoner-header-banner__details-right">
+        <span class="govuk-body govuk-!-font-size-19 govuk-!-font-weight-bold govuk-!-margin-bottom-0">Location</span>
+        <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-0 govuk-!-display-block prisoner-header-banner__underlined">
+          Hull (HMP)
+        </span>
+      </div>
+      
+      
+    </div>
+  </section>
+    <div class="prisoner-header-banner__bottom">
+      <p class="govuk-body govuk-!-margin-8"></p>
+    </div>
+  </section>
+  
+
+  {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+
+{{ mojSubNavigation({
+  label: "Sub navigation",
+  items: [{
+    text: "Overview",
+    href: "#1",
+    active: true
+  }, {
+    text: "Personal",
+    href: "#2"
+  }, 
+  {
+    text: "Case notes",
+    href: "#2"
+  },  {
+    text: "Alerts",
+    href: "#2"
+  }, {
+    text: "Offences",
+    href: "#2"
+  },
+  {
+    text: "Work and skills",
+    href: "#3"
+  }]
+}) }}
+  
+<div class="govuk-heading-l">Overview</div>
+  <div class="prisoner-overview-inset-wrapper govuk-!-margin-bottom-6">
+  
+    <div class="prisoner-overview-inset prisoner-overview-inset--grey">
+      {% call govukInsetText({ classes: "govuk-!-margin-0" }) %}
+        <h2 class="govuk-heading-s govuk-!-margin-0">In Hull (HMP)</h2>
+      {% endcall %}
+    </div>
+  
+    <div class="prisoner-overview-inset prisoner-overview-inset--blue">
+      {% call govukInsetText({ classes: "govuk-!-margin-0" }) %}
+        <h2 class="govuk-heading-s govuk-!-margin-0 govuk-!-padding-bottom-1">Has additional needs</h2>
+        <ul class="govuk-list govuk-!-margin-bottom-0">
+          <li>
+            <a id="openAdditionalNeeds"
+            href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/needs"
+            class="govuk-link govuk-link--inverse">
+            View additional needs
+         </a>
+          </li>         
+        </ul>
+      {% endcall %}
+    </div>
+  </div>
+  <div>
+    <div class="govuk-grid-row prisoner-overview-layout">
+      <!-- LEFT COLUMN: summary cards -->
+    <!-- LEFT COLUMN: summary cards -->
+<div class="govuk-grid-column-two-thirds">
+  
+  <!-- FIRST ROW OF 3 SUMMARY CARDS -->
+  <div class="prisoner-overview-cards">
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">Money</h2>
+      </div>
+      <div class="govuk-summary-card__content govuk-!-padding-top-2">
+        <p class="govuk-body"><strong>Spends</strong></p>
+        <p class="govuk-body govuk-!-font-size-27"><strong>£ 0</strong></p>
+        <p class="govuk-body"><strong>Private cash</strong></p>
+        <p class="govuk-body govuk-!-font-size-27"><strong>£ 0</strong></p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="#">Transactions and savings</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">Adjudications</h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <p class="govuk-body govuk-!-margin-top-2"><strong>Proven in last 3 months</strong></p>
+        <p class="govuk-body govuk-!-font-size-27"><strong>0</strong></p>
+        <p class="govuk-body"><strong>Active</strong></p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="#">2 active punishments</a>
+        </p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="#">Adjudications history</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">Visits</h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <p class="govuk-body govuk-!-margin-top-2"><strong>Next visits date</strong></p>
+        <p class="govuk-body">None scheduled</p>
+        <p class="govuk-body"><strong>Remaining visits</strong></p>
+        <p class="govuk-body govuk-!-font-size-27"><strong>0</strong></p>
+      </div>
+    </div>
+  </div> <!-- ✅ closes the first row -->
+
+<!-- SECOND ROW OF SUMMARY CARDS -->
+<div class="prisoner-overview-cards prisoner-overview-cards--mixed">
+  <div class="govuk-summary-card govuk-summary-card--narrow">
+    <div class="govuk-summary-card__title-wrapper">
+      <h2 class="govuk-summary-card__title">Non-associations</h2>
+    </div>
+    <div class="govuk-summary-card__content">
+      <p class="govuk-body govuk-!-margin-top-2"><strong>In Hull (HMP)</strong></p>
+      <p class="govuk-body govuk-!-font-size-27"><strong>0</strong></p>
+      <p class="govuk-body"><strong>In other establishments</strong></p>
+      <p class="govuk-body govuk-!-font-size-27"><strong>0</strong></p>
+      <p class="govuk-body">
+        <a class="govuk-link" href="#">Non-associations</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="govuk-summary-card govuk-summary-card--double">
+    <div class="govuk-summary-card__title-wrapper">
+      <h2 class="govuk-summary-card__title">Staff contacts</h2>
+    </div>
+    <div class="govuk-summary-card__content">
+      <p class="govuk-body govuk-!-margin-top-2" 
+      style="display:flex; justify-content:flex-start; align-items:flex-start; gap:1rem;">
+     <strong style="flex:0 0 45%; text-align:left;">Key worker</strong>
+     <span style="flex:1; text-align:left;">Not associated</span>
+   </p>
+   
+   <p class="govuk-body" 
+      style="display:flex; justify-content:flex-start; align-items:flex-start; gap:1rem;">
+     <strong style="flex:0 0 45%; text-align:left;">Prison Offender Manager</strong>
+     <span style="flex:1; text-align:left;">Not assigned</span>
+   </p>
+   
+   <p class="govuk-body" 
+      style="display:flex; justify-content:flex-start; align-items:flex-start; gap:1rem;">
+     <strong style="flex:0 0 45%; text-align:left;">Co-working Prison Offender Manager</strong>
+     <span style="flex:1; text-align:left;">Not assigned</span>
+   </p>
+   
+   <p class="govuk-body" 
+      style="display:flex; justify-content:flex-start; align-items:flex-start; gap:1rem;">
+     <strong style="flex:0 0 45%; text-align:left;">Community Offender Manager</strong>
+     <span style="flex:1; text-align:left;">Not assigned</span>
+   </p>
+   
+      <p class="govuk-body">
+        <a class="govuk-link" href="#">View all professional contacts</a>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="govuk-summary-card govuk-summary-card--long">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">Personal</h2>
+  </div>
+  <div class="govuk-summary-card__content">
+
+    <p class="govuk-body govuk-!-margin-top-2"
+       style="display:flex; justify-content:flex-start; align-items:flex-start; gap:1rem;">
+      <strong style="flex:0 0 45%; text-align:left;">Preferred name</strong>
+      <span style="flex:1; text-align:left;">Not entered</span>
+    </p>
+
+    <p class="govuk-body govuk-!-margin-top-2"
+       style="display:flex; justify-content:flex-start; align-items:flex-start; gap:1rem;">
+      <strong style="flex:0 0 45%; text-align:left;">Date of birth</strong>
+      <span style="flex:1; text-align:left;">23 November 1979</span>
+    </p>
+
+    <p class="govuk-body"
+       style="display:flex; justify-content:flex-start; align-items:flex-start; gap:1rem;">
+      <strong style="flex:0 0 45%; text-align:left;">Age</strong>
+      <span style="flex:1; text-align:left;">50 years, 10 months</span>
+    </p>
+
+    <p class="govuk-body"
+       style="display:flex; justify-content:flex-start; align-items:flex-start; gap:1rem;">
+      <strong style="flex:0 0 45%; text-align:left;">Nationality</strong>
+      <span style="flex:1; text-align:left;">British</span>
+    </p>
+
+   
+
+  </div>
+</div>
+
+</div> 
+
+      <!-- RIGHT COLUMN: actions menu -->
+      <div class="govuk-grid-column-one-third">
+        <aside class="dps-actions-panel">
+          <h2 class="dps-actions-panel__title govuk-heading-">Actions</h2>
+    
+          <div class="dps-actions-panel__section">
+            <ul class="dps-actions-panel__list">
+              <li>
+                <a href="#" class="govuk-link dps-action-link">
+                  <img src="/public/images/icon-case.png" alt="" class="dps-action-icon dps-action-icon--case">
+                  Add case note
+                </a>
+              </li>
+            
+              <li>
+                <a href="#" class="govuk-link dps-action-link">
+                  <img src="/public/images/icon-appointment.png" alt="" class="dps-action-icon dps-action-icon--appointment">
+                  Add appointment
+                </a>
+              </li>
+            
+              <li>
+                <a href="#" class="govuk-link dps-action-link">
+                  <img src="/public/images/icon-force.png" alt="" class="dps-action-icon dps-action-icon--force">
+                  Report use of force
+                </a>
+              </li>
+            
+              <li>
+                <a href="#" class="govuk-link dps-action-link">
+                  <img src="/public/images/icon-activity.png" alt="" class="dps-action-icon dps-action-icon--activity">
+                  Log an activity application
+                </a>
+              </li>
+            
+              <li>
+                <a href="#" class="govuk-link dps-action-link">
+                  <img src="/public/images/icon-soc.png" alt="" class="dps-action-icon dps-action-icon--soc">
+                  Add to SOC
+                </a>
+              </li>
+            
+              <li>
+                <a href="#" class="govuk-link dps-action-link">
+                  <img src="/public/images/icon-category.png" alt="" class="dps-action-icon dps-action-icon--category">
+                  Manage category
+                </a>
+              </li>
+            </ul>
+            
+          </div>
+        </aside>
+        <!-- Smaller secondary menu: More information -->
+<aside class="dps-more-info-panel">
+  <h3 class="dps-more-info-panel__title govuk-heading-s">More information</h3>
+  <ul class="dps-more-info-panel__list">
+    <li><a href="#" class="govuk-link">Probation documents</a></li>
+    <li><a href="#" class="govuk-link">Pathfinder profile</a></li>
+    <li><a href="#" class="govuk-link">SOC profile</a></li>
+  </ul>
+</aside>
+      </div>
+    </div>
+
+</div>
+
+    
+          </div>
+    </div>
+   </div>
+ {% else %}
+   <p class="govuk-body">No prisoner data found.</p>
+ {% endif %}
+
+</div>
+</div>  {# closes the main content container #}
+
+<!-- Additional Needs Overlay -->
+<div id="additionalNeedsOverlay" class="overlay" hidden>
+  <div class="overlay__content">
+    <button class="overlay__close govuk-button govuk-button--secondary" type="button" id="closeOverlay">
+      Close
+    </button>
+    <h2 class="govuk-heading-m">Support for additional needs</h2>
+    <p class="govuk-body">Neurodiversity support managers and education teams record additional needs and support.</p>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Challenges
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">Attention, organising and time management</p>
+          <p class="govuk-body">Emotions and feelings</p>
+          <p class="govuk-body">Literacy skills</p>
+          <p class="govuk-body">Language and communication skills</p>
+          <p class="govuk-body">Memory</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Strengths
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">Attention, organising and time management</p>
+          <p class="govuk-body">Emotions and feelings</p>
+          <p class="govuk-body">Literacy skills</p>
+          <p class="govuk-body">Memory</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Support strategies
+        </dt>
+        <dd class="govuk-summary-list__value">
+         
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Attention, organising and time management
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">Encourage him not to over exercise. Ensure he's eating enough to match the high level of exercise.</p>
+        <p class="govuk-body">Keep meetings short to prevent attention wandering. Check in regularly to bring him back to tasks.</p>
+      </div>
+    </details>
+           
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+       Emotions and feelings
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">Have patience with him and give him time to get words out. Remind him of boundaries</p>
+      </div>
+    </details>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+       Literacy skills
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">Use large print and coloured paper. Break writing down into sections. Use pictures next to written information. Read instructions aloud if possible</p>
+      </div>
+    </details>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+       Language and communication skills
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">Have patience and give him time to say things. Don't put words in his mouth or finish sentences for him. Check on him regularly to see if he needs help. Remind him of boundaries if he does things he shouldn't, like touching staff member's arms, but don't get angry - it's an automatic behaviour</p>
+      </div>
+    </details>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+      Memory
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">Ask to repeat back instructions to check he understands. Keep instructions clear and simple. Break information down into small chunks. Remind him of appointments regularly. Remind him of previous conversations as he may not remember</p>
+      </div>
+    </details>
+        </dd>
+      
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Conditions
+        </dt>
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+           Diagnosed
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <p class="govuk-body"><strong>Visual impairment</strong></p>
+            <p class="govuk-body">Red green colour blindness (Deuteranomaly)</p>
+            <p class="govuk-body">Dianosed August 2018.</p>
+          </div>
+      </details>
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+           Self-declared
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <p class="govuk-body"><strong>Attention deficit hyperactivity disorder (ADHD or ADD)</strong></p>
+            <p class="govuk-body">Struggles to filter out distractions and maintain focus on a single activity.
+              Feels the need to move around, fidgeting, or having difficulty sitting still for extended periods</p>
+            <p class="govuk-body"><strong>Autism spectrum disorder</strong></p>
+            <p class="govuk-body">Difficulties with social skills, communication, and repetitive behaviours</p>
+          </div>
+      </details>
+      </div>
+    </dl>
+  </dd>
+  <p class="govuk-body">
+    <a 
+      class="govuk-link"
+      href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile" 
+      target="_blank" 
+      rel="noopener noreferrer"
+    >
+      View details in the Support for additional needs service (opens in a new tab)
+    </a>
+  </p>
+  
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const overlay = document.getElementById("additionalNeedsOverlay");
+      const openLink = document.getElementById("openAdditionalNeeds");
+      const closeBtn = document.getElementById("closeOverlay");
+
+      if (!overlay || !openLink || !closeBtn) {
+        console.warn("Overlay elements not found — check IDs.");
+        return;
+      }
+
+      openLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        overlay.hidden = false;
+      });
+
+      closeBtn.addEventListener("click", function () {
+        overlay.hidden = true;
+      });
+
+      overlay.addEventListener("click", function (event) {
+        if (event.target === overlay) overlay.hidden = true;
+      });
+    });
+  </script>
+{% endblock %}
+

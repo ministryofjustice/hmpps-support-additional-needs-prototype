@@ -1,10 +1,10 @@
 {% extends "/layouts/v5.html" %}
-
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{%- from "moj/components/banner/macro.njk" import mojBanner -%}
 {% set currentpage = "strengths" %}
 
 {% block beforeContent %}
-  <div class="govuk-width-container ">
-
+  <div class="govuk-width-container">
     <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
@@ -15,145 +15,245 @@
         </li>
       </ol>
     </nav>
-
   </div>
 {% endblock %}
 
 {% block content %}
-
 {% for prisoner in data[v+'prisoners'] %}
-  {% if prisoner.prisonerNumber == ref %}
+{% if prisoner.prisonerNumber == ref %}
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
-  
-    <!-- TITLE PAGE + print-->
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs</h1>
+      <h1 class="govuk-heading-l">
+        {{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs
+      </h1>
     </div>
 
     <div class="govuk-grid-column-full">
-
       {% if data['prevurl'] == "check-answers" %}
         {{ mojAlert({
           variant: "success",
-          title: "Education suppport plan created",
+          title: "Education support plan created",
           dismissible: false
         }) }}
       {% endif %}
     
       {% include "includes/"+v+"/san-miniprofile.html" %}
-
     </div>
-  
   </div>
-  <div class="govuk-grid-row">
-    
-    {% include "includes/"+v+"/san-subnav.html" %}
 
+  <div class="govuk-grid-row">
+    {% include "includes/"+v+"/san-subnav.html" %}
   </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h2 class="govuk-heading-m">
-        Strengths
-      </h2>
+      <h2 class="govuk-heading-m">Strengths</h2>
 
-      {# set tracker for categories prisoner has content it #}
-      {% set cats = [] %}
+      {# =====================================================
+         CURRENT TAB CONTENT
+      ===================================================== #}
+      {% set currentHtml %}
+        {% set cats = [] %}
+        {% set countCurrent = 0 %}
 
-      {# Check if prisoner has any recorded needs #}
-      {%
-        if prisoner.needsStrengths
-      %}
-
-        {# Loop through all categories of need #}
-        {% for categories in data[v+'categories'] %}
-
-          {# Loop through all strengths of prisoner #}
-          {% for needs in prisoner.needsStrengths %}
-            {# Check if needsSupport has an item in this category #}
-            {% if needs.needsStrengthCategory == categories.categoryName %}
-
-              {# Add this category to an array of categories associated with this prisoner #}
-              {% if not categories.categoryName in cats %}
-                {% set cats = (cats.push(categories.categoryName), cats) %}
-              {% endif %}
+        {% if prisoner.needsStrengths and prisoner.needsStrengths.length %}
+          {# collect categories that have NON-archived items #}
+          {% for n in prisoner.needsStrengths %}
+            {% if not n.needsStrengthArchiveReason and not (n.needsStrengthCategory in cats) %}
+              {% set cats = (cats.push(n.needsStrengthCategory), cats) %}
             {% endif %}
           {% endfor %}
 
-        {% endfor %}
+          {% if cats.length %}
+            {% for cat in cats %}
+              {% set items = [] %}
+              {% for n in prisoner.needsStrengths %}
+                {% if n.needsStrengthCategory == cat and not n.needsStrengthArchiveReason %}
+                  {% set eff = n.needsStrengthUpdatedISO or n.needsStrengthDateISO %}
+                  {% set items = (items.push({ item:n, effectiveISO: eff, absIndex: loop.index }), items) %}
+                {% endif %}
+              {% endfor %}
+              {% set items = items | sort(false, false, 'effectiveISO') | reverse %}
 
-        {% for cat in cats %}
+              {% if items.length %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">{{ cat }}</h2>
+                  </header>
 
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                      {% for row in items %}
+                        {% set n = row.item %}
+                        {% set label = "Last updated" %}
+                        {% set displayDate = n.needsStrengthUpdated or n.needsStrengthDate %}
+                        {% set countCurrent = countCurrent + 1 %}
+
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            {{ n.needsStrengthDescription | safe }}
+
+                            {% if n.needsStrengthIdentified %}
+                              <div class="govuk-!-margin-top-3">
+                                {{ govukDetails({
+                                  summaryText: "How was this identified",
+                                  html: n.needsStrengthIdentified | safe
+                                }) }}
+                              </div>
+                            {% endif %}
+
+                            <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                              {{ label }} {{ displayDate }} by {{ n.needsStrengthAuthor }}
+                            </p>
+                          </dt>
+                        </div>
+                      {% endfor %}
+                    </dl>
+                  </div>
+                </section>
+              {% endif %}
+
+              {# ✅ Insert static Memory card immediately after Literacy skills #}
+              {% if cat | lower == "literacy skills" %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">Memory</h2>
+                  </header>
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                          Long term memory
+                          <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                            From Additional Learning Needs Screener completed on 25 March 2024, Hull (HMP)
+                          </p>
+                        </dt>
+                      </div>
+                    </dl>
+                  </div>
+                </section>
+              {% endif %}
+            {% endfor %}
+
+            <p class="govuk-body govuk-!-margin-top-6">
+              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category"
+                 class="govuk-link govuk-link--no-visited-state">
+                Add a strength
+              </a>
+            </p>
+          {% else %}
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <div class="app-summary-card__body">
+                <p class="govuk-body govuk-!-margin-top-3">This prisoner has no strengths recorded.</p>
+              </div>
+            </section>
+          {% endif %}
+        {% else %}
           <section class="app-summary-card govuk-!-margin-bottom-6">
-            <header class="app-summary-card__header">
-              <h2 class="app-summary-card__title">
-                {{ cat }}
-              </h2>
-            </header>
             <div class="app-summary-card__body">
-              <dl class="govuk-summary-list san-needs-list">
-              
-                {% set countStr = 0 %}
-                {# Loop through all support needs of prisoner #}
-                {% for needs in prisoner.needsStrengths %}
-                  {# Check if needsStrengths has an item in this category #}
-                  {% if needs.needsStrengthCategory == cat %}
-                    {% if countStr == 0 %}
-                    <!--div class="govuk-summary-list__row san-needs-list-header">
-                      <dt class="govuk-summary-list__key">
-                        Strengths
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                      </dd>
-                    </div-->
-                    {% endif %}
-                    {% set countStr = countStr + 1 %}
-
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                        {{ needs.needsStrengthDescription | safe }}
-                      </dt>
-                      <dd class="govuk-summary-list__value">
-                        <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Edit</a></p>
-                        <p class="govuk-body-s"><a href="javascript:preventDefault();" class="govuk-link govuk-link--no-visited-state">Archive</a></p>
-                        <span class="govuk-body-s">Added {{ needs.needsStrengthDate }} by {{ needs.needsStrengthAuthor }}</span>
-                      </dd>
-                    </div>
-                
-                  {% endif %}
-                {% endfor %}
-
-              </dl>        
-
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no strengths recorded.</p>
             </div>
           </section>
-          {% set countSup = 0 %}
-        {% endfor %}
+        {% endif %}
+      {% endset -%}
 
-      {% else %}
-      
-        <section class="app-summary-card govuk-!-margin-bottom-6">
-          <div class="app-summary-card__body">
-            <p class="govuk-body govuk-!-margin-top-3">This prisoner has no strengths recorded.</p>
-          </div>
-        </section>
+      {# =====================================================
+         HISTORY TAB CONTENT
+      ===================================================== #}
+      {% set historyHtml %}
+        {% set cats = [] %}
+        {% set countArchive = 0 %}
 
-      {% endif %}
+        {% if prisoner.needsStrengths and prisoner.needsStrengths.length %}
+          {% for n in prisoner.needsStrengths %}
+            {% if n.needsStrengthArchiveReason and not (n.needsStrengthCategory in cats) %}
+              {% set cats = (cats.push(n.needsStrengthCategory), cats) %}
+            {% endif %}
+          {% endfor %}
+
+          {% if cats.length %}
+            {% for cat in cats %}
+              {% set items = [] %}
+              {% for n in prisoner.needsStrengths %}
+                {% if n.needsStrengthCategory == cat and n.needsStrengthArchiveReason %}
+                  {% set eff = n.needsStrengthArchiveISO or n.needsStrengthUpdatedISO or n.needsStrengthDateISO %}
+                  {% set items = (items.push({ item:n, effectiveISO: eff }), items) %}
+                {% endif %}
+              {% endfor %}
+              {% set items = items | sort(false, false, 'effectiveISO') | reverse %}
+
+              {% if items.length %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">{{ cat }}</h2>
+                  </header>
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                      {% for row in items %}
+                        {% set n = row.item %}
+                        {% set countArchive = countArchive + 1 %}
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            {{ n.needsStrengthDescription | safe }}
+                            <p class="govuk-heading-0 govuk-!-margin-top-2 govuk-!-margin-bottom-1">
+                              <strong>Reason for moving to History</strong>
+                            </p>
+                            <p class="govuk-body govuk-!-margin-bottom-3">
+                              {{ n.needsStrengthArchiveReason | safe }}
+                            </p>
+                            <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                              Moved to History {{ n.needsStrengthArchiveDate or n.needsStrengthDate }} by {{ n.needsStrengthAuthor }}
+                            </p>
+                          </dt>
+                          <dd class="govuk-summary-list__value"></dd>
+                        </div>
+                      {% endfor %}
+                    </dl>
+                  </div>
+                </section>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <div class="app-summary-card__body">
+                <p class="govuk-body govuk-!-margin-top-3">
+                  This prisoner has no strengths moved to History.
+                </p>
+              </div>
+            </section>
+          {% endif %}
+        {% else %}
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <div class="app-summary-card__body">
+              <p class="govuk-body govuk-!-margin-top-3">
+                This prisoner has no strengths moved to History.
+              </p>
+            </div>
+          </section>
+        {% endif %}
+      {% endset -%}
+
+      {% set countCurrent = countCurrent + 1 %} {# Include static Memory card #}
+
+{{ govukTabs({
+  items: [
+    { label: "Current ("+countCurrent+")", id: "current", panel: { html: currentHtml } },
+    { label: "History ("+countArchive+")", id: "history", panel: { html: historyHtml } }
+  ]
+}) }}
+
 
     </div>
-    
+
     <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
       {% include "includes/"+v+"/san-actions-add.html" %}
     </div>
-    
   </div>
-
 </div>
 
 {% endif %}
 {% endfor %}
-
 {% endblock %}

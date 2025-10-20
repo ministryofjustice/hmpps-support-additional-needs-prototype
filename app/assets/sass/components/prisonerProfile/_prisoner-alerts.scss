@@ -17,3 +17,38 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+/* ==========================================================
+   DPS Prisoner Alerts (below profile header)
+   ========================================================== */
+
+   .prisoner-alerts {
+    background-color: #f3f2f1; /* light grey strip */
+    padding: govuk-spacing(2) govuk-spacing(3);
+    border-radius: 4px;
+  }
+  
+  .prisoner-alerts__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: govuk-spacing(2);
+  }
+  
+  .prisoner-alerts__tag {
+    @include govuk-font($size: 16, $weight: bold);
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    line-height: 1.4;
+    white-space: nowrap;
+    color: #fff;
+  }
+  
+  .prisoner-alerts__tag--violence {
+    background-color: #d4351c; /* GOV.UK red */
+  }
+  
+  .prisoner-alerts__tag--selfharm {
+    background-color: #f47738; /* orange */
+  }
+  

@@ -1,0 +1,91 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+
+    {% for prisoner in data[v+'prisoners'] %}
+      {% if prisoner.prisonerNumber == ref %}
+
+        <div class="govuk-grid-column-two-thirds">
+          <form method="post">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--l">
+                Move {{ prisoner.firstName }} {{ prisoner.lastName }}’s challenge to the History
+              </label>
+            </h1>
+
+            <p class="govuk-body govuk-hint">
+              Challenges in the History tab are view only and cannot be reactivated.
+            </p>
+
+            <div class="govuk-inset-text">
+              {% set countCh = 0 %}
+              {% for c in prisoner.needsChallenges %}
+                {% set countCh = countCh + 1 %}
+                {% if thiscount == countCh %}
+                  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
+                    {{ thiscat }}
+                  </h2>
+
+                  <p class="govuk-body govuk-!-margin-bottom-2">
+                    {{ c.needsChallengeDescription | safe }}
+                  </p>
+
+                  {% if c.needsChallengeIdentified %}
+                    <div class="govuk-!-margin-bottom-2">
+                      <strong>How this was identified:</strong><br>
+                      <span class="govuk-body">{{ c.needsChallengeIdentified | safe }}</span>
+                    </div>
+                  {% endif %}
+
+                  <p class="govuk-hint govuk-!-font-size-16">
+                    {% if c.needsChallengeLastAction %}{{ c.needsChallengeLastAction }}{% else %}Added{% endif %}
+                    {{ c.needsChallengeDate }} by {{ c.needsChallengeAuthor }}
+                  </p>
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            {% set countCh = 0 %}
+            {% for c in prisoner.needsChallenges %}
+              {% set countCh = countCh + 1 %}
+              {% if thiscount == countCh %}
+                <input type="hidden" name="san-{{v}}-{{ref}}-challenge-desc" value="{{ c.needsChallengeDescription | safe }}">
+
+                {{ govukTextarea({
+                  id: "san-"+v+"-"+ref+"-challenge-archive-reason",
+                  name: "san-"+v+"-"+ref+"-challenge-archive-reason",
+                  label: {
+                    text: "Reason for moving this challenge to the History"
+                  }
+                }) }}
+              {% endif %}
+            {% endfor %}
+
+            {{ govukButton({
+              text: "Move challenge"
+            }) }}
+          </form>
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+          {% include "includes/"+v+"/san-aside-challenges.html" %}
+        </div>
+
+      {% endif %}
+    {% endfor %}
+
+  </div>
+</div>
+
+{% endblock %}
