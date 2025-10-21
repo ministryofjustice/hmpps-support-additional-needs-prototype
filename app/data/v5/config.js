@@ -8,16 +8,9 @@ module.exports = {
     'node_modules/@ministryofjustice/frontend/components'
   ],
 
-  // ✅ Store session data in cookies
-  useCookieSessionStore: true,
+  // ❌ Disable cookie-based sessions (too small for your data)
+  useCookieSessionStore: false,
 
-  // ✅ Trust reverse proxy (for correct HTTPS detection)
-  useHttps: true,
-
-  // ✅ Force cookies to be secure and not expire early
-  sessionCookieOptions: {
-    secure: true,      // required for Cloud Platform (https)
-    httpOnly: true,
-    sameSite: 'lax'
-  }
+  // ✅ Trust reverse proxy and enforce HTTPS for secure sessions
+  useHttps: true
 }
