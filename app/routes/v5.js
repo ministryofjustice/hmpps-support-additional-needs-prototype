@@ -89,11 +89,17 @@ module.exports = function (router) {
     res.render("/" + v + "/san/plan/overview", { ref });
   });
 
-  /************************
- * Add condition
+/************************
+ * Add condition (GET + POST)
  ************************/
 
+// ✅ GET route: show the Add Condition page
+router.get("/" + v + "/san/:ref/conditions/add", function (req, res) {
+  const ref = matchref(req);
+  res.render("/" + v + "/san/conditions/add", { ref });
+});
 
+// ✅ POST route: process the form and redirect
 router.post("/" + v + "/san/:ref/conditions/add", function (req, res) {
   const ref = matchref(req);
   const thisprisoner = req.session.data[v + "prisoners"].find(
@@ -107,16 +113,13 @@ router.post("/" + v + "/san/:ref/conditions/add", function (req, res) {
   const selected = req.session.data["san-" + v + "-" + ref + "-conditions"] || [];
   const otherSelected = req.session.data["san-" + v + "-" + ref + "-otherconditions"] || [];
 
-  // Clear existing ones
-  thisprisoner.conditions = [];
-  thisprisoner.otherConditions = [];
-
   // Add selected conditions
   selected.forEach((cond) => {
     const detailKey = "san-" + v + "-" + ref + "-conditions-" + cond.replace(/\s+/g, "-");
     const detail = req.session.data[detailKey] || "";
     thisprisoner.conditions.push({
       conditionName: cond,
+      conditionType: "self-declared", // default type
       conditionDetail: detail,
       conditionDate: getFormattedDate(),
       conditionAuthor: "W. Knight"
@@ -129,11 +132,13 @@ router.post("/" + v + "/san/:ref/conditions/add", function (req, res) {
     const detail = req.session.data[detailKey] || "";
     thisprisoner.otherConditions.push({
       conditionName: cond,
+      conditionType: "self-declared",
       conditionDetail: detail,
       conditionDate: getFormattedDate(),
       conditionAuthor: "W. Knight"
     });
   });
+
 
   // Set success flag for banner
   req.session.data.conditionAdded = true;
