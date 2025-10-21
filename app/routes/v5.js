@@ -107,6 +107,23 @@ router.get("/" + v + "/san/:ref/conditions/add", function (req, res) {
   res.render("/" + v + "/san/conditions/add", { ref });
 });
 
+/************************
+ * Add condition (POST → go to type)
+ ************************/
+router.post("/" + v + "/san/:ref/conditions/add", function (req, res) {
+  const ref = matchref(req);
+
+  // Capture selected checkboxes from the Add page
+  const selected = req.session.data["san-" + v + "-" + ref + "-conditions"] || [];
+  const otherSelected = req.session.data["san-" + v + "-" + ref + "-otherconditions"] || [];
+
+  // Store them in session for the next page
+  req.session.data["selectedConditions"] = [...selected, ...otherSelected];
+
+  // Redirect to the "type" page
+  res.redirect("/" + v + "/san/" + ref + "/conditions/type");
+});
+
 
 // ✅ POST: save conditions with type + detail
 router.post("/" + v + "/san/:ref/conditions/type", function (req, res) {
