@@ -14,7 +14,6 @@
 
 <div class="govuk-width-container">
   <form method="post" action="/{{ v }}/san/{{ ref }}/conditions/add">
-
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l">Add condition</span>
@@ -53,13 +52,9 @@
                         type="checkbox" 
                         value="{{conditionlisted.conditionName}}"
                         {% if conditionlisted.conditionDetail %} 
-                          data-aria-controls="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}-conditional"
+                          data-aria-controls="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}-conditional">
                         {% endif %}
-                        {% for selectedCondition in prisoner.conditions %}
-                          {% if selectedCondition.conditionName == conditionlisted.conditionName %}
-                            checked
-                          {% endif %}
-                        {% endfor %}>
+                       
                       <label class="govuk-label govuk-checkboxes__label" for="san-{{v}}-{{ref}}-conditions{% if conCount > 1 %}-{{conCount}}{% endif %}">
                         {{conditionlisted.conditionName}}
                       </label>
@@ -75,11 +70,7 @@
                             id="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}"
                             name="san-{{v}}-{{ref}}-conditions-{{conditionlisted.conditionID}}"
                             type="text"
-                            {% for selectedCondition in prisoner.conditions %}
-                              {% if selectedCondition.conditionName == conditionlisted.conditionName %}
-                                value="{{selectedCondition.conditionDetail}}"
-                              {% endif %}
-                            {% endfor %}
+                          
                           >
                             
                         </div>
@@ -104,13 +95,9 @@
                         type="checkbox" 
                         value="{{otherconditionlisted.conditionName}}"
                         {% if otherconditionlisted.conditionDetail %} 
-                          data-aria-controls="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}-conditional"
+                          data-aria-controls="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}-conditional">
                         {% endif %}
-                        {% for selectedCondition in prisoner.otherConditions %}
-                          {% if selectedCondition.conditionName == otherconditionlisted.conditionName %}
-                            checked
-                          {% endif %}
-                        {% endfor %}>
+                    
                       <label class="govuk-label govuk-checkboxes__label" for="san-{{v}}-{{ref}}-otherconditions{% if otherconCount > 1 %}-{{otherconCount}}{% endif %}">
                         {{otherconditionlisted.conditionName}}
                       </label>
@@ -126,11 +113,7 @@
                             id="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}"
                             name="san-{{v}}-{{ref}}-otherconditions-{{otherconditionlisted.conditionID}}"
                             type="text"
-                            {% for selectedCondition in prisoner.otherConditions %}
-                              {% if selectedCondition.conditionName == otherconditionlisted.conditionName %}
-                                value="{{selectedCondition.conditionDetail}}"
-                              {% endif %}
-                            {% endfor %}
+                        
                           >
                             
                         </div>
