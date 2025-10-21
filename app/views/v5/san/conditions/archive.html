@@ -1,0 +1,50 @@
+{% extends "/layouts/v5.html" %}
+{% set pageTitle = "Move condition to History" %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-2">Back</a>
+
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-6">
+        Move condition to History
+      </h1>
+
+      <form method="post" novalidate>
+
+        <div class="govuk-form-group">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+            {{ thiscond or condition.conditionName or "Condition name" }}
+          </h2>
+          <p class="govuk-body">
+            Once moved to History, this condition will no longer appear under Current conditions.
+          </p>
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="condition-archive-reason">
+            Reason for moving to History
+          </label>
+          <span id="condition-archive-hint" class="govuk-hint">
+            Include details of why this condition is no longer current, or if it was added in error.
+          </span>
+          <textarea class="govuk-textarea"
+                    id="condition-archive-reason"
+                    name="condition-archive-reason"
+                    rows="5">{{ data["condition-archive-reason"] }}</textarea>
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button">
+          Move to History
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

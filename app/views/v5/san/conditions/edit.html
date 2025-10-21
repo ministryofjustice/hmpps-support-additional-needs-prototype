@@ -1,0 +1,85 @@
+{% extends "/layouts/v5.html" %}
+{% set pageTitle = "Edit condition" %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-2">Back</a>
+
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-6">
+        Select if the condition is self-declared by Chris Atkinson or a confirmed diagnosis
+      </h1>
+
+      <form method="post" novalidate>
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h2 class="govuk-fieldset__heading">
+                {{ condition.conditionName or data["condition-name"] or "Autism spectrum disorder" }}
+              </h2>
+            </legend>
+
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input"
+                       id="self-declared"
+                       name="condition-type"
+                       type="radio"
+                       value="Self-declared"
+                       {% if condition and condition.conditionType == "Self-declared" %}
+                         checked
+                       {% elif data["condition-type"] == "Self-declared" %}
+                         checked
+                       {% endif %}>
+                <label class="govuk-label govuk-radios__label" for="self-declared">
+                  Self-declared
+                </label>
+              </div>
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input"
+                       id="confirmed-diagnosis"
+                       name="condition-type"
+                       type="radio"
+                       value="Confirmed diagnosis"
+                       {% if condition and condition.conditionType == "Confirmed diagnosis" %}
+                         checked
+                       {% elif data["condition-type"] == "Confirmed diagnosis" %}
+                         checked
+                       {% endif %}>
+                <label class="govuk-label govuk-radios__label" for="confirmed-diagnosis">
+                  Confirmed diagnosis
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="condition-detail">
+            Provide more detail
+          </label>
+          <span id="condition-detail-hint" class="govuk-hint">
+            Such as date, circumstances and evidence
+          </span>
+          <textarea class="govuk-textarea"
+                    id="condition-detail"
+                    name="condition-detail"
+                    rows="5">{{ data["condition-detail"] or condition.conditionDetail }}</textarea>
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button">
+          Save changes
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

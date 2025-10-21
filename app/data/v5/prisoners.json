@@ -128,23 +128,23 @@
     "conditions": [
       {
         "conditionName": "Visual impairment",
-        "conditionDetail": "Red green colour blindness (Deuteranomaly) Diagnosed Aug 2018",
+        "conditionDetail": "Red green colour blindness (Deuteranomaly). Diagnosed Aug 2025",
         "conditionType": "Confirmed diagnosis",
-        "conditionDate": "25 Mar 2024",
+        "conditionDate": "25 Sep 2024",
         "conditionAuthor": "Michael Warner, Hull (HMP)"
       },
       {
         "conditionName": "Attention deficit hyperactivity disorder (ADHD or ADD)",
         "conditionDetail": "Struggles to filter out distractions and maintain focus on a single activity. Feels the need to move around, fidgeting, or having difficulty sitting still for extended periods",
         "conditionType": "Self-declared",
-        "conditionDate": "25 Mar 2024",
+        "conditionDate": "25 Sep 2024",
         "conditionAuthor": "Michael Warner, Hull (HMP)"
       },
       {
         "conditionName": "Autism spectrum disorder",
         "conditionDetail": "Difficulties with social skills, communication, and repetitive behaviours",
         "conditionType": "Self-declared",
-        "conditionDate": "25 Mar 2024",
+        "conditionDate": "25 Sep 2024",
         "conditionAuthor": "Michael Warner, Hull (HMP)"
       }
     ],
@@ -164,7 +164,7 @@
         "ehcp": "Do not know",
         "lnspSupport": "No",
         "reviewDate": "12/11/2025",
-        "dateCreated": "07 Sep 2025",
+        "dateCreated": "14 Sep 2025",
         "author": "F. Knight"
       }
     ]
