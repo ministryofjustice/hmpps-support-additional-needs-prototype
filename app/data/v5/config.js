@@ -8,9 +8,17 @@ module.exports = {
     'node_modules/@ministryofjustice/frontend/components'
   ],
 
-  // ❌ Disable cookie-based sessions (too small for your data)
-  useCookieSessionStore: false,
+  // ✅ Use cookie-based sessions (safe now that data is smaller)
+  useCookieSessionStore: true,
 
-  // ✅ Trust reverse proxy and enforce HTTPS for secure sessions
-  useHttps: true
+  // ✅ Trust proxy for HTTPS
+  trustProxy: true,
+  useHttps: true,
+
+  // ✅ Secure cookie options for MOJ Cloud
+  sessionCookieOptions: {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'lax'
+  }
 }
