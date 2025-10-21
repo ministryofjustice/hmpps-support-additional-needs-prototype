@@ -90,62 +90,42 @@ module.exports = function (router) {
   });
 
 /************************
- * Add condition (GET + POST)
+ * Add condition - type (GET + POST)
  ************************/
 
-// ✅ GET route: show the Add Condition page
-router.get("/" + v + "/san/:ref/conditions/add", function (req, res) {
+// ✅ GET: show page to choose type (self-declared / confirmed diagnosis)
+router.get("/" + v + "/san/:ref/conditions/type", function (req, res) {
   const ref = matchref(req);
-  res.render("/" + v + "/san/conditions/add", { ref });
+  const selectedConditions = req.session.data["selectedConditions"] || [];
+  res.render("/" + v + "/san/conditions/type", { ref, selectedConditions });
 });
 
-// ✅ POST route: process the form and redirect
-router.post("/" + v + "/san/:ref/conditions/add", function (req, res) {
+// ✅ POST: save conditions with type + detail
+router.post("/" + v + "/san/:ref/conditions/type", function (req, res) {
   const ref = matchref(req);
-  const thisprisoner = req.session.data[v + "prisoners"].find(
-    (p) => p.prisonerNumber === ref
-  );
+  const selectedConditions = req.session.data["selectedConditions"] || [];
+  const thisprisoner = req.session.data[v + "prisoners"].find(p => p.prisonerNumber === ref);
+
+  const conditionType = req.body["condition-type"];
+  const conditionDetail = req.body["condition-detail"] || "";
 
   if (!Array.isArray(thisprisoner.conditions)) thisprisoner.conditions = [];
-  if (!Array.isArray(thisprisoner.otherConditions)) thisprisoner.otherConditions = [];
 
-  // Gather selected conditions from the form
-  const selected = req.session.data["san-" + v + "-" + ref + "-conditions"] || [];
-  const otherSelected = req.session.data["san-" + v + "-" + ref + "-otherconditions"] || [];
-
-  // Add selected conditions
-  selected.forEach((cond) => {
-    const detailKey = "san-" + v + "-" + ref + "-conditions-" + cond.replace(/\s+/g, "-");
-    const detail = req.session.data[detailKey] || "";
+  selectedConditions.forEach(cond => {
     thisprisoner.conditions.push({
       conditionName: cond,
-      conditionType: "self-declared", // default type
-      conditionDetail: detail,
+      conditionType: conditionType,
+      conditionDetail: conditionDetail,
       conditionDate: getFormattedDate(),
       conditionAuthor: "W. Knight"
     });
   });
 
-  // Add "other" selected conditions
-  otherSelected.forEach((cond) => {
-    const detailKey = "san-" + v + "-" + ref + "-otherconditions-" + cond.replace(/\s+/g, "-");
-    const detail = req.session.data[detailKey] || "";
-    thisprisoner.otherConditions.push({
-      conditionName: cond,
-      conditionType: "self-declared",
-      conditionDetail: detail,
-      conditionDate: getFormattedDate(),
-      conditionAuthor: "W. Knight"
-    });
-  });
-
-
-  // Set success flag for banner
   req.session.data.conditionAdded = true;
 
-  // Clean up form data
+  // Cleanup
+  delete req.session.data["selectedConditions"];
   delete req.session.data["san-" + v + "-" + ref + "-conditions"];
-  delete req.session.data["san-" + v + "-" + ref + "-otherconditions"];
 
   res.redirect("/" + v + "/san/" + ref + "/profile/conditions");
 });
