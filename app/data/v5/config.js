@@ -1,13 +1,23 @@
 // app/config.js
 module.exports = {
   nunjucksPaths: [
-    'app/views',                               // your views
-    'node_modules/govuk-frontend/',            // GOV.UK
+    'app/views',
+    'node_modules/govuk-frontend/',
     'node_modules/govuk-frontend/components',
-    'node_modules/@ministryofjustice/frontend/',        // MOJ
+    'node_modules/@ministryofjustice/frontend/',
     'node_modules/@ministryofjustice/frontend/components'
   ],
 
-  // 👇 Add this line to store session data in the browser cookie
-  useCookieSessionStore: true
+  // ✅ Store session data in cookies
+  useCookieSessionStore: true,
+
+  // ✅ Trust reverse proxy (for correct HTTPS detection)
+  useHttps: true,
+
+  // ✅ Force cookies to be secure and not expire early
+  sessionCookieOptions: {
+    secure: true,      // required for Cloud Platform (https)
+    httpOnly: true,
+    sameSite: 'lax'
+  }
 }
