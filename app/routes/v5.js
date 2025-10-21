@@ -92,10 +92,7 @@ module.exports = function (router) {
   /************************
  * Add condition
  ************************/
-router.get("/" + v + "/san/:ref/conditions/add", function (req, res) {
-  const ref = matchref(req);
-  res.render("/" + v + "/san/conditions/add", { ref });
-});
+
 
 router.post("/" + v + "/san/:ref/conditions/add", function (req, res) {
   const ref = matchref(req);
@@ -147,6 +144,110 @@ router.post("/" + v + "/san/:ref/conditions/add", function (req, res) {
 
   res.redirect("/" + v + "/san/" + ref + "/profile/conditions");
 });
+
+/************************
+ * Edit condition
+ ************************/
+router.get("/" + v + "/san/:ref/conditions/edit/:thiscond/:thiscount", function (req, res) {
+  const ref = matchref(req);
+  const thiscount = parseInt(req.params.thiscount, 10);
+  const prisoner = req.session.data[v + "prisoners"].find(p => p.prisonerNumber === ref);
+
+  if (!Array.isArray(prisoner.conditions)) prisoner.conditions = [];
+  const condition = prisoner.conditions[thiscount - 1];
+  if (!condition) return res.redirect("/" + v + "/san/" + ref + "/profile/conditions");
+
+  res.render("/" + v + "/san/conditions/edit", { ref, condition });
+});
+
+router.post("/" + v + "/san/:ref/conditions/edit/:thiscond/:thiscount", function (req, res) {
+  const ref = matchref(req);
+  const thiscount = parseInt(req.params.thiscount, 10);
+  const prisoner = req.session.data[v + "prisoners"].find(p => p.prisonerNumber === ref);
+
+  if (!Array.isArray(prisoner.conditions)) prisoner.conditions = [];
+  const condition = prisoner.conditions[thiscount - 1];
+  if (!condition) return res.redirect("/" + v + "/san/" + ref + "/profile/conditions");
+
+  // ✅ Get form data
+  const conditionType = req.body["condition-type"];
+  const conditionDetail = req.body["condition-detail"];
+
+  // ✅ Update the condition
+  condition.conditionType = conditionType;
+  condition.conditionDetail = conditionDetail;
+  condition.conditionDate = getFormattedDate();
+  condition.conditionAuthor = "W. Knight";
+
+  // ✅ Set success banner
+  req.session.data.conditionUpdated = true;
+
+  // ✅ Redirect back to conditions overview
+  res.redirect("/" + v + "/san/" + ref + "/profile/conditions");
+});
+
+/************************
+ * Archive condition
+ ************************/
+router.get("/" + v + "/san/:ref/conditions/archive/:thiscond/:thiscount", function (req, res) {
+  const ref = matchref(req);
+  const thiscond = decodeURIComponent(req.params.thiscond);
+  const thiscount = parseInt(req.params.thiscount, 10);
+  res.render("/" + v + "/san/conditions/archive", { ref, thiscond, thiscount });
+});
+
+router.post("/" + v + "/san/:ref/conditions/archive/:thiscond/:thiscount", function (req, res) {
+  const ref = matchref(req);
+  const thiscount = parseInt(req.params.thiscount, 10);
+  const thisprisoner = req.session.data[v + "prisoners"].find(
+    (p) => p.prisonerNumber === ref
+  );
+
+  if (!Array.isArray(thisprisoner.conditions)) thisprisoner.conditions = [];
+  if (!Array.isArray(thisprisoner.conditionsHistory)) thisprisoner.conditionsHistory = [];
+
+  const idx = thiscount - 1;
+  const condition = thisprisoner.conditions[idx];
+  if (!condition)
+    return res.redirect("/" + v + "/san/" + ref + "/profile/conditions");
+
+  const archiveReason = (
+    req.session.data["condition-archive-reason"] || ""
+  ).replace(/(?:\r\n|\r|\n)/g, "<br>");
+
+  // Move condition to History
+  condition.conditionArchiveReason = archiveReason;
+  condition.conditionDate = getFormattedDate();
+  condition.conditionAuthor = "W. Knight"; // adjust as needed
+  thisprisoner.conditionsHistory.push(condition);
+  thisprisoner.conditions.splice(idx, 1);
+
+  req.session.data.conditionArchived = true;
+  delete req.session.data["condition-archive-reason"];
+
+  res.redirect("/" + v + "/san/" + ref + "/profile/conditions");
+});
+router.get("/" + v + "/san/:ref/profile/conditions", function (req, res) {
+  const ref = matchref(req);
+
+  // ✅ Read temporary flags
+  const conditionAdded = req.session.data.conditionAdded;
+  const conditionUpdated = req.session.data.conditionUpdated;
+  const conditionArchived = req.session.data.conditionArchived;
+
+  // ✅ Clear them so they only show once
+  req.session.data.conditionAdded = false;
+  req.session.data.conditionUpdated = false;
+  req.session.data.conditionArchived = false;
+
+  res.render("/" + v + "/san/conditions/overview", {
+    ref,
+    conditionAdded,
+    conditionUpdated,
+    conditionArchived
+  });
+});
+
 
 
   /************************

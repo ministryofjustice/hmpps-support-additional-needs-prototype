@@ -213,21 +213,84 @@
           <header class="app-summary-card__header">
             <h2 class="app-summary-card__title">Conditions</h2>
             <div class="app-summary-card__actions">
-              <a class="govuk-link govuk-link--no-visited-state" href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/add">Add conditions</a>
+              <a class="govuk-link govuk-link--no-visited-state"
+              href="/v5/san/G2911GD/profile/conditions">
+                View conditions
+              </a>
             </div>
           </header>
+        
           <div class="app-summary-card__body">
-            {% if prisoner.needsConditions and prisoner.needsConditions.length %}
-              <ul class="govuk-list govuk-list--bullet">
-                {% for c in prisoner.needsConditions %}
-                  <li>{{ c }}</li>
-                {% endfor %}
-              </ul>
+            {% if prisoner.conditions and prisoner.conditions.length %}
+        
+              {# Split confirmed vs self-declared #}
+              {% set confirmed = [] %}
+              {% set selfdeclared = [] %}
+        
+              {% for c in prisoner.conditions %}
+                {% if c.conditionType and (c.conditionType | lower) == "confirmed diagnosis" %}
+                  {% set confirmed = (confirmed.push(c), confirmed) %}
+                {% elif c.conditionType and (c.conditionType | lower) == "self-declared" %}
+                  {% set selfdeclared = (selfdeclared.push(c), selfdeclared) %}
+                {% endif %}
+              {% endfor %}
+              {# Confirmed diagnoses section #}
+              {# Confirmed diagnoses section #}
+              {% if confirmed.length %}
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">Confirmed diagnoses</h3>
+              
+                <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                  {% for c in confirmed %}
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">{{ c.conditionName }}</p>
+                        {% if c.conditionDetail %}
+                          <p class="govuk-body govuk-!-margin-bottom-0">{{ c.conditionDetail }}</p>
+                        {% endif %}
+                      </dt>
+                      <dd class="govuk-summary-list__value"></dd>
+                    </div>
+                  {% endfor %}
+                </dl>
+              {% endif %}
+              
+              {# 🔹 Divider between confirmed and self-declared sections only #}
+              {% if confirmed.length and selfdeclared.length %}
+                <div style="border-top:1px solid #b1b4b6; margin:16px 0;"></div>
+              {% endif %}
+              
+              {# Self-declared conditions section #}
+              {% if selfdeclared.length %}
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">Self-declared conditions</h3>
+              
+                <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                  {% for c in selfdeclared %}
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">{{ c.conditionName }}</p>
+                        {% if c.conditionDetail %}
+                          <p class="govuk-body govuk-!-margin-bottom-0">{{ c.conditionDetail }}</p>
+                        {% endif %}
+                      </dt>
+                      <dd class="govuk-summary-list__value"></dd>
+                    </div>
+                  {% endfor %}
+                </dl>
+              {% endif %}
+              
+              {% if not confirmed.length and not selfdeclared.length %}
+                <p class="govuk-body govuk-!-margin-top-2">No conditions recorded</p>
+              {% endif %}
+        
             {% else %}
               <p class="govuk-body">No conditions recorded</p>
             {% endif %}
           </div>
         </section>
+        
+        
+
+
         {# Screening and assessment #}
 <section class="app-summary-card govuk-!-margin-bottom-6">
   <header class="app-summary-card__header">
@@ -242,7 +305,7 @@
 
   <div class="app-summary-card__body">
     <p class="govuk-body govuk-!-margin-bottom-4">
-      This information is from the education team entered in Curious.
+      This information is from the education team entered in Curious
     </p>
 
     {% if prisoner.screener %}
