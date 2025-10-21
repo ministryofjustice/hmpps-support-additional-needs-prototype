@@ -99,6 +99,14 @@ router.get("/" + v + "/san/:ref/conditions/type", function (req, res) {
   const selectedConditions = req.session.data["selectedConditions"] || [];
   res.render("/" + v + "/san/conditions/type", { ref, selectedConditions });
 });
+/************************
+ * Add condition (GET)
+ ************************/
+router.get("/" + v + "/san/:ref/conditions/add", function (req, res) {
+  const ref = matchref(req);
+  res.render("/" + v + "/san/conditions/add", { ref });
+});
+
 
 // ✅ POST: save conditions with type + detail
 router.post("/" + v + "/san/:ref/conditions/type", function (req, res) {
