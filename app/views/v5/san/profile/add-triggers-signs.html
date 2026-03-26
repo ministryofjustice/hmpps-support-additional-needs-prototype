@@ -1,0 +1,72 @@
+{% extends "/layouts/v5.html" %}
+
+{# Added the Character Count macro import #}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+      text: "Back",
+      href: "/" + v + "/san/" + ref + "/profile/"
+    }) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+      <form action="/{{ v }}/san/{{ ref }}/profile/save-triggers-signs" method="post">
+
+        {# 1. TRIGGERS SECTION WITH WORD COUNT #}
+        {{ govukCharacterCount({
+          name: "triggers",
+          id: "triggers",
+          maxwords: 500,
+          label: {
+            text: "Add triggers",
+            classes: "govuk-label--l govuk-!-font-weight-bold",
+            isPageHeading: false
+          },
+          hint: {
+            text: "Describe what things and situations can cause them to struggle"
+          },
+          rows: 8,
+          value: data['triggers']
+        }) }}
+
+        {# 2. SIGNS SECTION WITH WORD COUNT #}
+        <div class="govuk-!-margin-top-8">
+          {{ govukCharacterCount({
+            name: "signs",
+            id: "signs",
+            maxwords: 500,
+            label: {
+              text: "Add signs they are struggling",
+              classes: "govuk-label--l govuk-!-font-weight-bold",
+              isPageHeading: false
+            },
+            hint: {
+              text: "Describe the changes in behaviour, routine or communication staff should look out for"
+            },
+            rows: 8,
+            value: data['signs']
+          }) }}
+        </div>
+
+        {# 3. SAVE BUTTON #}
+        <div class="govuk-button-group govuk-!-margin-top-8">
+          {{ govukButton({
+            text: "Save to overview"
+          }) }}
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

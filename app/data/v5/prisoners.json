@@ -11,7 +11,7 @@
     "legalStatus": "SENTENCED",
     "recall": false,
     "indeterminateSentence": false,
-    "planStatus": "Active plan",
+    "planStatus": "Not required",
     "InEducation": "Yes",
     "screener": {
       "site": "Wakefield (HMP)",
@@ -19,155 +19,12 @@
       "outcome": "Additional needs identified",
       "referredTo": "Not recorded in Curious"
     },    
-    "needsSupport": [
-      {
-        "needsSupportCategory": "Attention, organising and time management",
-        "needsSupportDescription": "Keep meetings short to prevent attention wandering. Check in regularly to bring him back to tasks",
-        "needsSupportDate": "4 Sep 2025",
-        "needsSupportAuthor": "J. Smith"
-      },
-      {
-        "needsSupportCategory": "Attention, organising and time management",
-        "needsSupportDescription": "Encourage him not to over exercise. Ensure he's eating enough to match the high level of exercise",
-        "needsSupportDate": "4 Sep 2025",
-        "needsSupportAuthor": "J. Smith"
-      },
-      {
-        "needsSupportCategory": "Memory",
-        "needsSupportDescription": "Ask to repeat back instructions to check he understands. Keep instructions clear and simple. Break information down into small chunks. Remind him of appointments regularly. Remind him of previous conversations as he may not remember",
-        "needsSupportDate": "4 Sep 2025",
-        "needsSupportAuthor": "J. Smith"
-      },
-      {
-        "needsSupportCategory": "Language and communication skills",
-        "needsSupportDescription": "Have patience and give him time to say things. Don't put words in his mouth or finish sentences for him. Check on him regularly to see if he needs help. Remind him of boundaries if he does things he shouldn't, like touching staff member's arms, but don't get angry - it's an automatic behaviour",
-        "needsSupportDate": "4 Sep 2025",
-        "needsSupportAuthor": "J. Smith"
-      },
-      {
-        "needsSupportCategory": "Emotions and feelings",
-        "needsSupportDescription": "Have patience with him and give him time to get words out. Remind him of boundaries",
-        "needsSupportDate": "4 Sep 2025",
-        "needsSupportAuthor": "J. Smith"
-      },
-      {
-        "needsSupportCategory": "Literacy skills",
-        "needsSupportDescription": "Use large print and coloured paper. Break writing down into sections. Use pictures next to written information. Read instructions aloud if possible",
-        "needsSupportDate": "07 Oct 2025",
-        "needsSupportAuthor": "F. Knight"
-      }
-    ],
-    "needsChallenges": [
-      {
-        "needsChallengeCategory": "Attention, organising and time management",
-        "needsChallengeDescription": "Finds it difficult to stay focussed and engaged. Struggles with executive function - planning and organising things and managing time. Attention wanders if in a meeting or doing something for too long",
-        "needsChallengeIdentified": "Identified while creating education support plan.",
-        "needsChallengeDate": "4 Sep 2025",
-        "needsChallengeAuthor": "J. Smith"
-      },
-      {
-        "needsChallengeCategory": "Memory",
-        "needsChallengeDescription": "Very forgetful - will not remember things unless reminded often. Loses things often. Struggles to remember instructions, especially long ones. Forgets appointments unless reminded frequently. Forgets conversations and other things that happened in the past",
-        "needsChallengeIdentified": "Identified while creating education support plan.",
-        "needsChallengeDate": "4 Sep 2025",
-        "needsChallengeAuthor": "J. Smith"
-      },
-      {
-        "needsChallengeCategory": "Language and communication skills",
-        "needsChallengeDescription": "Struggles to ask for help when needed. Struggles to get words out and to put thoughts into words. Gets frustrated by this - may come across as rude. Can get confused easily. Demonstrates some out of control behaviours like touching people or things, putting fingers in his mouth, tapping his arms and saying things out of context e.g 'mars bar'. These are automatic behaviours, not deliberate. Can appear aggressive when he feels passionately about something.",
-        "needsChallengeIdentified": "Identified while creating education support plan.",
-        "needsChallengeDate": "4 Sep 2025",
-        "needsChallengeAuthor": "J. Smith"
-      },
-      {
-        "needsChallengeCategory": "Emotions and feelings",
-        "needsChallengeDescription": "Gets frustrated when struggling to get words out and may come across as rude. Triggered when people think he is 'stupid'. Can appear aggressive when he feels passionately about something. Struggles to cope when his routine is changed.",
-        "needsChallengeIdentified": "Identified while creating education support plan.",
-        "needsChallengeDate": "4 Sep 2025",
-        "needsChallengeAuthor": "J. Smith"
-      },
-      {
-        "needsChallengeCategory": "Literacy skills",
-        "needsChallengeDescription": "Struggles to fill out forms and apps - often needs help",
-        "needsChallengeDate": "12 Sep 2025",
-        "needsChallengeAuthor": "G. Robinson"
-      },
-      {
-        "needsChallengeCategory": "Literacy skills",
-        "needsChallengeDescription": "Chris struggles to read, particularly long bits of writing - he loses track of where he is. Chris finds long words difficult to read and spell.",
-        "needsChallengeIdentified": "Identified while creating education support plan.",
-        "needsChallengeDate": "07 Oct 2025",
-        "needsChallengeAuthor": "F. Knight"
-      }
-    ],
-    "needsStrengths": [
-      {
-        "needsStrengthCategory": "Attention, organising and time management",
-        "needsStrengthDescription": "Follows and maintains routines well. Uses exercise to cope and builds that into his routine (though can over exercise)",
-        "needsStrengthIdentified": "While creating the education support plan",
-        "needsStrengthDate": "4 Sep 2025",
-        "needsStrengthAuthor": "J. Smith"
-      },
-
-      {
-        "needsStrengthCategory": "Emotions and feelings",
-        "needsStrengthDescription": "Good sense of humour - will laugh at himself. Knows exercise helps him manage his emotions and makes lots of time for it. Close with children and sister.",
-        "needsStrengthIdentified": "While creating the education support plan",
-        "needsStrengthDate": "4 Sep 2025",
-        "needsStrengthAuthor": "J. Smith"
-      },
-      {
-        "needsStrengthCategory": "Literacy skills",
-        "needsStrengthDescription": "Chris is enthusiastic about improving his reading and writing and works hard at it.",
-        "needsStrengthIdentified": "Direct observation in class",
-        "needsStrengthDate": "07 Oct 2025",
-        "needsStrengthAuthor": "F. Knight"
-      }
-    ],
+    "needsSupport": [],
+    "needsChallenges": [],
+    "needsStrengths": [],
     "needsALNscreener": [],
-    "conditions": [
-      {
-        "conditionName": "Visual impairment",
-        "conditionDetail": "Red green colour blindness (Deuteranomaly). Diagnosed Aug 2025",
-        "conditionType": "Confirmed diagnosis",
-        "conditionDate": "25 Sep 2024",
-        "conditionAuthor": "Michael Warner, Hull (HMP)"
-      },
-      {
-        "conditionName": "Attention deficit hyperactivity disorder (ADHD or ADD)",
-        "conditionDetail": "Struggles to filter out distractions and maintain focus on a single activity. Feels the need to move around, fidgeting, or having difficulty sitting still for extended periods",
-        "conditionType": "Self-declared",
-        "conditionDate": "25 Sep 2024",
-        "conditionAuthor": "Michael Warner, Hull (HMP)"
-      },
-      {
-        "conditionName": "Autism spectrum disorder",
-        "conditionDetail": "Difficulties with social skills, communication, and repetitive behaviours",
-        "conditionType": "Self-declared",
-        "conditionDate": "25 Sep 2024",
-        "conditionAuthor": "Michael Warner, Hull (HMP)"
-      }
-    ],
-    "educationPlan": [
-      {
-        "planType": "plan",
-        "personWhoMet": "Yes",
-        "otherPeople": "Yes",
-        "otherPeopleDetails": [
-          { "otherPersonName": "Jenny Lawrence", "otherPersonJob": "Functional skills tutor" }
-        ],
-        "prisonerView": "Chris needs people to be patient and give him time to explain things, instead of rushing him. He wants people to remind him of what he needs to do and make sure it is clear. He'd like help with reading and writing.",
-        "teachingAdjust": "Yes",
-        "teachingAdjustDetails": "Blue paper or blue overlay. Enlarge everything. Pictures as well as written instructions. Discuss routine ahead of the lessons. Break sessions up into small chunks and give breaks. Talk things through and make sure he understands instructions. Reduced timetable",
-        "examsAssessments": "Yes",
-        "examsAssessmentsDetails": "Probably, might need a scribe or extra time.",
-        "ehcp": "Do not know",
-        "lnspSupport": "No",
-        "reviewDate": "12/11/2025",
-        "dateCreated": "14 Sep 2025",
-        "author": "F. Knight"
-      }
-    ]
+    "conditions": [],
+    "educationPlan": []
   },
   {
     "prisonerNumber": "A8545DY",
@@ -181,8 +38,8 @@
     "legalStatus": "SENTENCED",
     "recall": false,
     "indeterminateSentence": false,
-    "planStatus": "Due",
-    "nextActionDue": "07/11/2025",
+    "planStatus": "Overdue",
+    "nextActionDue": "12/02/2026",
     "needsSupport": [
       {
         "needsSupportCategory": "Attention, organising and time management",
@@ -197,24 +54,6 @@
         "needsChallengeDescription": "Finds it hard to manage their time. Worries they will be late and becomes anxious. When they are late can get angry if it's made an issue.",
         "needsChallengeDate": "12 Apr 2025",
         "needsChallengeAuthor": "J. Smith"
-      },
-      {
-        "needsChallengeCategory": "Attention, organising and time management",
-        "needsChallengeDescription": "Needs help focussing to plan and finish  an activity. Can get distracted and try to task switch and not finish.",
-        "needsChallengeDate": "27 Mar 2025",
-        "needsChallengeAuthor": "J. Smith"
-      },
-      {
-        "needsChallengeCategory": "Attention, organising and time management",
-        "needsChallengeDescription": "Finds it hard to follow lengthy instructions. Gets frustrated if they do not understand what they need to do. Doesn't feel confident to speak up.",
-        "needsChallengeDate": "27 Mar 2025",
-        "needsChallengeAuthor": "J. Smith"
-      },
-      {
-        "needsChallengeCategory": "Literacy skills",
-        "needsChallengeDescription": "Finds it hard to write quickly, has poor grip. Can get frustrated if needs to note things down quickly.",
-        "needsChallengeDate": "27 Mar 2025",
-        "needsChallengeAuthor": "J. Smith"
       }
     ],
     "needsStrengths": [
@@ -225,32 +64,7 @@
         "needsStrengthAuthor": "J. Smith"
       }
     ],
-    "needsALNscreener": [
-      {
-        "needsALNscreenerCategory": "Attention, organising and time management",
-        "needsALNscreenerDescription": "Challenges: None recorded",
-        "needsALNscreenerDate": "28 Sep 2025",
-        "needsALNscreenerAuthor": "M. Warner"
-      },
-      {
-        "needsALNscreenerCategory": "Attention, organising and time management",
-        "needsALNscreenerDescription": "Strengths: None recorded",
-        "needsALNscreenerDate": "28 Sep 2025",
-        "needsALNscreenerAuthor": "M. Warner"
-      },
-      {
-        "needsALNscreenerCategory": "Literacy skills",
-        "needsALNscreenerDescription": "Challenges: Writing - Alphabet ordering",
-        "needsALNscreenerDate": "28 Sep 2025",
-        "needsALNscreenerAuthor": "M. Warner"
-      },
-      {
-        "needsALNscreenerCategory": "Literacy skills",
-        "needsALNscreenerDescription": "Strengths: Reading - Language decoding",
-        "needsALNscreenerDate": "28 Sep 2025",
-        "needsALNscreenerAuthor": "M. Warner"
-      }
-    ]
+    "needsALNscreener": []
   },
   {
     "prisonerNumber": "A8560DY",
@@ -269,7 +83,7 @@
     "needsSupport": [
       {
         "needsSupportCategory": "Attention, organising and time management",
-        "needsSupportDescription": "Print out their timetable in large font each week. They are allowed a wrist watch and alarm clock. Prompt them for their next activity if possible. Break tasks downs and give enough time to do them. Give them time to understand instructions - break these down into no more than 3 steps at time. Limit distractions.",
+        "needsSupportDescription": "Print out their timetable in large font each week. Prompt them for their next activity if possible.",
         "needsSupportDate": "4 Jan 2025",
         "needsSupportAuthor": "J. Smith"
       }
@@ -277,7 +91,7 @@
     "needsChallenges": [
       {
         "needsChallengeCategory": "Attention, organising and time management",
-        "needsChallengeDescription": "Finds it hard to manage their time. Worries they will be late and becomes anxious. When they are late can get angry if it's made an issue.",
+        "needsChallengeDescription": "Finds it hard to manage their time.",
         "needsChallengeDate": "12 Apr 2025",
         "needsChallengeAuthor": "J. Smith"
       }
@@ -285,26 +99,6 @@
     "educationPlan": [
       {
         "planType": "plan",
-        "personWhoMet": "No",
-        "personWhoMetName": "Peter Parker",
-        "personWhoMetJobRole": "Photographer",
-        "otherPeople": "Yes",
-        "otherPeopleDetails": [
-          { "otherPersonName": "J Jonah Jameson", "otherPersonJob": "Editor" },
-          { "otherPersonName": "Gwen Stacy", "otherPersonJob": "Reporter" }
-        ],
-        "prisonerView": "Help communicating effectively with colleagues and tutors",
-        "teachingAdjust": "Yes",
-        "teachingAdjustDetails": "Breaking down tasks, revisiting key concepts or giving additional processing time.",
-        "knowledgeSkills": "Yes",
-        "knowledgeSkillsDetails": "British Sign Language",
-        "examsAssessments": "Yes",
-        "examsAssessmentsDetails": "An assessment for access arrangements needs to happen.",
-        "ehcp": "No",
-        "lnspSupport": "Yes",
-        "lnspSupportDetails": "One to one help for specific issues",
-        "lnspSupportHours": "8",
-        "otherDetails": "Has a keen interest in secret identities",
         "reviewDate": "17/11/2025",
         "dateCreated": "03 Jul 2025",
         "author": "Aunt May"
@@ -324,7 +118,7 @@
     "recall": false,
     "indeterminateSentence": false,
     "planStatus": "Overdue",
-    "nextActionDue": "01/11/2025",
+    "nextActionDue": "15/02/2026",
     "needsSupport": [
       {
         "needsSupportCategory": "Emotions and feelings",
