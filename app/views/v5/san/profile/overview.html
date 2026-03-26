@@ -150,6 +150,7 @@
               <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Signs they are struggling</h3>
               {% if hasSigns %}<div class="govuk-body" style="white-space: pre-line;">{{ data['signs'] }}</div>{% else %}<p class="govuk-hint govuk-!-font-size-16">Not recorded</p>{% endif %}
             </div>
+            
           </div>
         </section>
 
@@ -240,6 +241,13 @@
                     {% set strCats = (strCats.push(item.needsStrengthCategory), strCats) %}
                   {% endif %}
                 {% endfor %}
+              </ul>
+              <p class="govuk-body"><a href="/{{ v }}/san/{{ ref }}/profile/challenges" class="govuk-link">View all challenges and support</a></p>
+            {% else %}
+              <p class="govuk-body govuk-!-margin-top-2">No challenges and support recorded</p>
+            {% endif %}
+          </div>
+        </div>
 
                 {% for cat in strCats %}
                   <div class="govuk-!-margin-bottom-4">
@@ -262,6 +270,12 @@
                   </div>
                   {% if not loop.last %}<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-bottom-4">{% endif %}
                 {% endfor %}
+              </ul>
+            {% else %}
+              <p class="govuk-body govuk-!-margin-top-2">No strengths recorded</p>
+            {% endif %}
+          </div>
+        </div>
 
             {% else %}
                 <p class="govuk-body govuk-!-margin-top-2">No strengths recorded</p>
