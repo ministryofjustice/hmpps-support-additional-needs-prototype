@@ -178,6 +178,66 @@
             </a>
           </p>
 
+        {% if prisoner.needsChallenges and prisoner.needsChallenges.length %}
+          {% for c in prisoner.needsChallenges %}
+            {% if c.needsChallengeArchiveReason and not (c.needsChallengeCategory in cats) %}
+              {% set cats = (cats.push(c.needsChallengeCategory), cats) %}
+            {% endif %}
+          {% endfor %}
+          {% if cats.length %}
+            {% for cat in cats %}
+              {% set items = [] %}
+              {% for c in prisoner.needsChallenges %}
+                {% if c.needsChallengeCategory == cat and c.needsChallengeArchiveReason %}
+                  {% set eff = c.needsChallengeArchiveISO or c.needsChallengeUpdatedISO or c.needsChallengeDateISO %}
+                  {% set items = (items.push({ item:c, effectiveISO: eff }), items) %}
+                {% endif %}
+              {% endfor %}
+              {% set items = items | sort(false, false, 'effectiveISO') | reverse %}
+              {% if items.length %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">{{ cat }}</h2>
+                  </header>
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                      {% for row in items %}
+                        {% set c = row.item %}
+                        {% set countArchive = countArchive + 1 %}
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            {{ c.needsChallengeDescription | safe }}
+                            <p class="govuk-heading-0 govuk-!-margin-top-2 govuk-!-margin-bottom-1">
+                              <strong>Reason for moving to History</strong>
+                            </p>
+                            <p class="govuk-body govuk-!-margin-bottom-3">
+                              {{ c.needsChallengeArchiveReason | safe }}
+                            </p>
+                            <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                              Moved to History {{ c.needsChallengeDate }} by {{ c.needsChallengeAuthor }}
+                            </p>
+                          </dt>
+                          <dd class="govuk-summary-list__value"></dd>
+                        </div>
+                      {% endfor %}
+                    </dl>
+                  </div>
+                </section>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <div class="app-summary-card__body">
+                <p class="govuk-body govuk-!-margin-top-3">This prisoner has no challenges moved to History.</p>
+              </div>
+            </section>
+          {% endif %}
+        {% else %}
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <div class="app-summary-card__body">
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no challenges moved to History.</p>
+            </div>
+          </section>
         {% endif %}
       {% endset %}
 
