@@ -22,332 +22,189 @@
 {% for prisoner in data[v+'prisoners'] %}
   {% if prisoner.prisonerNumber == ref %}
 
+  {# 1. Calculate dynamic counts for the summary boxes #}
+  {% set challengeCount = prisoner.needsChallenges.length or 0 %}
+  {% set strengthCount = prisoner.needsStrengths.length or 0 %}
+  {% set conditionCount = prisoner.conditions.length or 0 %}
+
   <div class="govuk-width-container">
+    
+    {# ROW 1: Heading #}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}’s support for additional needs</h1>
       </div>
+    </div>
 
+    {# ROW 2: Mini Profile #}
+    <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        {% if data['prevurl'] == "check-answers" %}
-          {{ mojAlert({
-            variant: "success",
-            title: "Education support plan created",
-            dismissible: false
-          }) }}
-        {% endif %}
-
         {% include "includes/"+v+"/san-miniprofile.html" %}
       </div>
     </div>
 
+    {# ROW 3: Sub-navigation #}
     <div class="govuk-grid-row">
-      {% include "includes/"+v+"/san-subnav.html" %}
+      <div class="govuk-grid-column-full">
+        {% include "includes/"+v+"/san-subnav.html" %}
+      </div>
     </div>
 
+    {# ROW 4: Main Layout #}
     <div class="govuk-grid-row">
 
-      {# ================= LEFT COLUMN ================= #}
+      {# ================= MAIN LEFT COLUMN ================= #}
       <div class="govuk-grid-column-two-thirds">
 
-        {% set cats = [] %}
-
-        {# Challenges + Strengths side by side #}
-        <div class="govuk-grid-row app-equal-cards">
-          <div class="govuk-grid-column-one-half app-card-col">
-            <section class="app-summary-card app-summary-card--fill govuk-!-margin-bottom-6">
-              <header class="app-summary-card__header">
-                <h2 class="app-summary-card__title">Challenges</h2>
-                <div class="app-summary-card__actions">
-                  <a class="govuk-link govuk-link--no-visited-state" href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/challenges">View challenges</a>
+        {# 1. ADDITIONAL NEEDS AND SUPPORT SUMMARY #}
+        <section class="govuk-!-margin-bottom-4">
+          <div style="background: #F4F8FB; padding: 32px; border-radius: 4px;">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-6">Additional needs and support</h2>
+            
+            <div style="display: flex; gap: 25px; align-items: center; flex-wrap: nowrap;">
+                {# Dynamic Challenge Count #}
+                <div style="display: flex; align-items: center; flex: 0 0 auto;">
+                    <span style="font-size: 40px; font-weight: 700; margin-right: 8px; line-height: 1; display: inline-block;">{{ challengeCount }}</span>
+                    <strong class="govuk-tag govuk-tag--blue" style="display: inline-block !important; width: auto !important; min-width: 0 !important; max-width: none !important; white-space: nowrap !important; text-transform: none !important; letter-spacing: 0 !important; padding: 4px 10px !important;">
+                        Challenges identified
+                    </strong>
                 </div>
-              </header>
-              <div class="app-summary-card__body">
 
-                {% set areChallenges = 0 %}
-                {% for categories in data[v+'categories'] %}
-                  {% for needs in prisoner.needsChallenges %}
-                    {% if needs.needsChallengeCategory == categories.categoryName %}
-                      {% if not categories.categoryName in cats %}
-                        {% set cats = (cats.push(categories.categoryName), cats) %}
-                      {% endif %}
-                    {% endif %}
-                  {% endfor %}
-                {% endfor %}
-
-                {% for cat in cats %}
-                  {% for needs in prisoner.needsChallenges %}
-                    {% if needs.needsChallengeCategory == cat %}
-                      {% set areChallenges = areChallenges + 1 %}
-                      <p class="govuk-body">{{ cat }}</p>
-                    {% endif %}
-                  {% endfor %}
-                {% endfor %}
-
-                {% if areChallenges > 0 %}
-                 
-                {% else %}
-                  <p class="govuk-body">No challenges recorded</p>
-                {% endif %}
-              </div>
-            </section>
-          </div>
-
-          <div class="govuk-grid-column-one-half app-card-col">
-            <section class="app-summary-card app-summary-card--fill govuk-!-margin-bottom-6">
-              <header class="app-summary-card__header">
-                <h2 class="app-summary-card__title">Strengths</h2>
-                <div class="app-summary-card__actions">
-                  <a class="govuk-link govuk-link--no-visited-state" href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/strengths">View strengths</a>
+                {# Dynamic Strength Count #}
+                <div style="display: flex; align-items: center; flex: 0 0 auto;">
+                    <span style="font-size: 40px; font-weight: 700; margin-right: 8px; line-height: 1; display: inline-block;">{{ strengthCount }}</span>
+                    <strong class="govuk-tag govuk-tag--green" style="display: inline-block !important; width: auto !important; min-width: 0 !important; max-width: none !important; white-space: nowrap !important; text-transform: none !important; letter-spacing: 0 !important; padding: 4px 10px !important;">
+                        Strengths identified
+                    </strong>
                 </div>
-              </header>
-              <div class="app-summary-card__body">
 
-                {% set areStrengths = 0 %}
-                {% for categories in data[v+'categories'] %}
-                  {% for needs in prisoner.needsStrengths %}
-                    {% if needs.needsStrengthCategory == categories.categoryName %}
-                      {% if not categories.categoryName in cats %}
-                        {% set cats = (cats.push(categories.categoryName), cats) %}
-                      {% endif %}
-                    {% endif %}
-                  {% endfor %}
-                {% endfor %}
-
-                {% for cat in cats %}
-                  {% for needs in prisoner.needsStrengths %}
-                    {% if needs.needsStrengthCategory == cat %}
-                      {% set areStrengths = areStrengths + 1 %}
-                      <p class="govuk-body">{{ cat }}</p>
-                    {% endif %}
-                  {% endfor %}
-                {% endfor %}
-
-                {% if areStrengths > 0 %}
-                {% else %}
-                  <p class="govuk-body">No strengths recorded</p>
-                {% endif %}
-              </div>
-            </section>
-          </div>
-
-        </div>
-        {# Support strategies (grouped by category, divider between items) #}
-        <section class="app-summary-card govuk-!-margin-bottom-6">
-          <header class="app-summary-card__header">
-            <h2 class="app-summary-card__title">Support strategies</h2>
-            <div class="app-summary-card__actions">
-              <a class="govuk-link govuk-link--no-visited-state"
-                 href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/support-strategies">
-                View support strategies
-              </a>
+                {# Dynamic Condition Count #}
+                <div style="display: flex; align-items: center; flex: 0 0 auto;">
+                    <span style="font-size: 40px; font-weight: 700; margin-right: 8px; line-height: 1; display: inline-block;">{{ conditionCount }}</span>
+                    <strong class="govuk-tag govuk-tag--grey" style="display: inline-block !important; width: auto !important; min-width: 0 !important; max-width: none !important; white-space: nowrap !important; text-transform: none !important; letter-spacing: 0 !important; padding: 4px 10px !important;">
+                        Conditions recorded
+                    </strong>
+                </div>
             </div>
-          </header>
-        
-          <div class="app-summary-card__body">
-            {% if prisoner.needsSupport and prisoner.needsSupport.length %}
-
-            {# collect categories that have NON-archived items #}
-            {% set supCats = [] %}
-            {% for n in prisoner.needsSupport %}
-              {% if not n.needsSupportArchiveReason and not (n.needsSupportCategory in supCats) %}
-                {% set supCats = (supCats.push(n.needsSupportCategory), supCats) %}
-              {% endif %}
-            {% endfor %}
-          
-            {% if supCats.length %}
-              {% for cat in supCats %}
-          
-                {# gather items for this category #}
-                {% set items = [] %}
-                {% for n in prisoner.needsSupport %}
-                  {% if n.needsSupportCategory == cat and not n.needsSupportArchiveReason %}
-                    {% set items = (items.push(n), items) %}
-                  {% endif %}
-                {% endfor %}
-          
-                <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
-          
-                  {# Category heading row – no underline #}
-                  <div class="govuk-summary-list__row san-heading-row">
-                    <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                      <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">{{ cat }}</p>
-                    </dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                  </div>
-          
-                  {# Item rows – use native summary-list borders between items #}
-                  {% for needs in items %}
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                        {{ needs.needsSupportDescription | safe }}
-                      </dt>
-                      <dd class="govuk-summary-list__value"></dd>
-                    </div>
-                  {% endfor %}
-                  {# draw a divider only if this is NOT the last category #}
-                  {% if not loop.last %}
-                    <div class="govuk-summary-list__row san-endcap-row" aria-hidden="true">
-                      <dt class="govuk-summary-list__key"></dt>
-                      <dd class="govuk-summary-list__value"></dd>
-                    </div>
-                  {% endif %}
-                </dl>
-          
-              {% endfor %}
-            {% else %}
-              <p class="govuk-body govuk-!-margin-top-3">No support strategies recorded</p>
-            {% endif %}
-          
-          {% else %}
-            <p class="govuk-body govuk-!-margin-top-3">No support strategies recorded</p>
-          {% endif %}
-          
           </div>
         </section>
-        
-        
 
-        {# Conditions full width #}
-        <section class="app-summary-card govuk-!-margin-bottom-6">
-          <header class="app-summary-card__header">
-            <h2 class="app-summary-card__title">Conditions</h2>
-            <div class="app-summary-card__actions">
-              <a class="govuk-link govuk-link--no-visited-state"
-              href="/v5/san/G2911GD/profile/conditions">
-                View conditions
+        {# 2. TRIGGERS AND SIGNS #}
+        <section class="govuk-!-margin-bottom-8">
+          <div style="background: #F4F8FB; padding: 15px 25px 25px 25px; border-radius: 4px; min-height: 200px;">
+            
+            {% set hasTriggers = data['triggers'] %}
+            {% set hasSigns = data['signs'] %}
+
+            <div style="display: flex; justify-content: space-between; align-items: baseline;" class="govuk-!-margin-bottom-1">
+              <h3 class="govuk-heading-s govuk-!-margin-top-0 govuk-!-margin-bottom-0">Triggers</h3>
+              
+              {# The 'Edit' link takes the user back to the same form #}
+              <a class="govuk-link" href="/{{ v }}/san/{{ ref }}/profile/add-triggers-signs" style="font-weight: normal; font-size: 16px;">
+                {{ 'Edit' if (hasTriggers or hasSigns) else 'Add' }}
               </a>
             </div>
-          </header>
-        
-          <div class="app-summary-card__body">
-            {% if prisoner.conditions and prisoner.conditions.length %}
-        
-              {# Split confirmed vs self-declared #}
-              {% set confirmed = [] %}
-              {% set selfdeclared = [] %}
-        
-              {% for c in prisoner.conditions %}
-                {% if c.conditionType and (c.conditionType | lower) == "confirmed diagnosis" %}
-                  {% set confirmed = (confirmed.push(c), confirmed) %}
-                {% elif c.conditionType and (c.conditionType | lower) == "self-declared" %}
-                  {% set selfdeclared = (selfdeclared.push(c), selfdeclared) %}
-                {% endif %}
-              {% endfor %}
-              {# Confirmed diagnoses section #}
-              {# Confirmed diagnoses section #}
-              {% if confirmed.length %}
-                <h3 class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">Confirmed diagnoses</h3>
-              
-                <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
-                  {% for c in confirmed %}
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">{{ c.conditionName }}</p>
-                        {% if c.conditionDetail %}
-                          <p class="govuk-body govuk-!-margin-bottom-0">{{ c.conditionDetail }}</p>
-                        {% endif %}
-                      </dt>
-                      <dd class="govuk-summary-list__value"></dd>
-                    </div>
-                  {% endfor %}
-                </dl>
+
+            <div class="govuk-!-margin-bottom-6">
+              {% if hasTriggers %}
+                <div class="govuk-body" style="white-space: pre-line; margin-top: 5px; margin-bottom: 0;">{{ data['triggers'] }}</div>
+              {% else %}
+                <p class="govuk-hint govuk-!-font-size-16" style="margin-top: 5px; margin-bottom: 0;">Not recorded</p>
               {% endif %}
-              
-              {# 🔹 Divider between confirmed and self-declared sections only #}
-              {% if confirmed.length and selfdeclared.length %}
-                <div style="border-top:1px solid #b1b4b6; margin:16px 0;"></div>
+            </div>
+
+            <div class="govuk-!-margin-top-2">
+              <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Signs they are struggling</h3>
+              {% if hasSigns %}
+                <div class="govuk-body" style="white-space: pre-line; margin-bottom: 0;">{{ data['signs'] }}</div>
+              {% else %}
+                <p class="govuk-hint govuk-!-font-size-16" style="margin-bottom: 0;">Not recorded</p>
               {% endif %}
-              
-              {# Self-declared conditions section #}
-              {% if selfdeclared.length %}
-                <h3 class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-1">Self-declared conditions</h3>
-              
-                <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
-                  {% for c in selfdeclared %}
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-                        <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">{{ c.conditionName }}</p>
-                        {% if c.conditionDetail %}
-                          <p class="govuk-body govuk-!-margin-bottom-0">{{ c.conditionDetail }}</p>
-                        {% endif %}
-                      </dt>
-                      <dd class="govuk-summary-list__value"></dd>
-                    </div>
-                  {% endfor %}
-                </dl>
-              {% endif %}
-              
-              {% if not confirmed.length and not selfdeclared.length %}
-                <p class="govuk-body govuk-!-margin-top-2">No conditions recorded</p>
-              {% endif %}
-        
-            {% else %}
-              <p class="govuk-body">No conditions recorded</p>
-            {% endif %}
+            </div>
+            
           </div>
         </section>
-        
-        
 
-
-        {# Screening and assessment #}
-<section class="app-summary-card govuk-!-margin-bottom-6">
-  <header class="app-summary-card__header">
-    <h2 class="app-summary-card__title">Screening and assessment</h2>
-    <div class="app-summary-card__actions">
-      <a class="govuk-link govuk-link--no-visited-state"
-         href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/screener/results">
-        Record screener results
-      </a>
-    </div>
-  </header>
-
-  <div class="app-summary-card__body">
-    <p class="govuk-body govuk-!-margin-bottom-4">
-      This information is from the education team entered in Curious
-    </p>
-
-    {% if prisoner.screener %}
-      {% set scr = prisoner.screener %}
-      <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-
-        {# Site line shown as a bold label spanning the row #}
-        <div class="govuk-summary-list__row san-screener-site">
-          <dt class="govuk-summary-list__key govuk-!-font-weight-bold">
-            {{ scr.site or '-' }}
-          </dt>
-          <dd class="govuk-summary-list__value"></dd>
+        {# 3. CHALLENGES AND SUPPORT CARD #}
+        <div class="govuk-summary-card govuk-!-margin-bottom-6">
+          <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">Challenges and support</h2>
+            <div class="govuk-summary-card__actions">
+              <a class="govuk-link" href="/{{ v }}/san/{{ ref }}/challenges/add/category">Add challenges and support</a>
+            </div>
+          </div>
+          <div class="govuk-summary-card__content">
+            {% if challengeCount > 0 %}
+              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-2">
+                {# Display categories of identified challenges #}
+                {% set displayedCats = [] %}
+                {% for item in prisoner.needsChallenges %}
+                  {% if item.needsChallengeCategory not in displayedCats %}
+                    <li>{{ item.needsChallengeCategory }}</li>
+                    {% set displayedCats = (displayedCats.push(item.needsChallengeCategory), displayedCats) %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+              <p class="govuk-body"><a href="/{{ v }}/san/{{ ref }}/profile/challenges" class="govuk-link">View all challenges and support</a></p>
+            {% else %}
+              <p class="govuk-body govuk-!-margin-top-2">No challenges and support recorded</p>
+            {% endif %}
+          </div>
         </div>
 
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Assessment date</dt>
-          <dd class="govuk-summary-list__value">
-            {{ (scr.assessmentDate and (scr.assessmentDate | govukDate)) or '-' }}
-          </dd>
+        {# 4. STRENGTHS #}
+        <div class="govuk-summary-card govuk-!-margin-bottom-6">
+          <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">Strengths</h2>
+            <div class="govuk-summary-card__actions">
+              <a class="govuk-link" href="#">Add strengths</a>
+            </div>
+          </div>
+          <div class="govuk-summary-card__content">
+            {% if strengthCount > 0 %}
+              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-2">
+                {% for item in prisoner.needsStrengths %}
+                  <li>{{ item.needsStrengthCategory }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="govuk-body govuk-!-margin-top-2">No strengths recorded</p>
+            {% endif %}
+          </div>
         </div>
 
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Assessment outcome</dt>
-          <dd class="govuk-summary-list__value">{{ scr.outcome or '-' }}</dd>
+        {# 5. CONDITIONS #}
+        <div class="govuk-summary-card govuk-!-margin-bottom-6">
+          <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">Conditions</h2>
+            <div class="govuk-summary-card__actions">
+              <a class="govuk-link" href="/{{ v }}/san/{{ ref }}/conditions/add">Add conditions</a>
+            </div>
+          </div>
+          <div class="govuk-summary-card__content">
+            {% if conditionCount > 0 %}
+              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-2">
+                {% for item in prisoner.conditions %}
+                  <li><strong>{{ item.conditionName }}</strong> ({{ item.conditionType }})</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="govuk-body govuk-!-margin-top-2">No conditions recorded</p>
+            {% endif %}
+          </div>
         </div>
 
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Referred to</dt>
-          <dd class="govuk-summary-list__value">{{ scr.referredTo or '-' }}</dd>
-        </div>
-      </dl>
-    {% else %}
-      <p class="govuk-body">No screening or assessment recorded.</p>
-    {% endif %}
-  </div>
-</section>
-
+        {# 6. SCREENING #}
+        {{ govukDetails({
+          summaryText: "Screening and assessment history",
+          classes: "govuk-!-margin-top-8",
+          html: '<p class="govuk-body">No additional learning needs screener recorded in Curious </p>'
+        }) }}
 
       </div>
       
-
-      <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
+      {# ================= SIDEBAR ================= #}
+      <div class="govuk-grid-column-one-third">
         {% include "includes/"+v+"/san-actions-add.html" %}
       </div>
 

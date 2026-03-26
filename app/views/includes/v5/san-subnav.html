@@ -1,34 +1,43 @@
-    <!-- TABS SUB NAVIGATION -->
-    <div class="govuk-grid-row govuk-!-margin-left-0 govuk-!-margin-right-0">
-        <div class="govuk-grid-column-full govuk-!-margin-left-0">
-          <nav class="moj-sub-navigation govuk-!-display-none-print" aria-label="Sub navigation">
-            <ul class="moj-sub-navigation__list ">
-  
-              <li class="moj-sub-navigation__item">
-                <a class="moj-sub-navigation__link"{% if currentpage == "overview" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/">Overview</a>
-              </li>
-              
-              <li class="moj-sub-navigation__item">
-                <a class="moj-sub-navigation__link"{% if currentpage == "supportstrategies" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/support-strategies/">Support strategies</a>
-              </li>
-  
-              <li class="moj-sub-navigation__item">
-                <a class="moj-sub-navigation__link"{% if currentpage == "challenges" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/challenges/">Challenges</a>
-              </li>
-  
-              <li class="moj-sub-navigation__item">
-                <a class="moj-sub-navigation__link"{% if currentpage == "strengths" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/strengths/">Strengths</a>
-              </li>
-  
-              <li class="moj-sub-navigation__item">
-                <a class="moj-sub-navigation__link"{% if currentpage == "conditions" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/conditions/">Conditions</a>
-              </li>
-            
-              <li class="moj-sub-navigation__item">
-                <a class="moj-sub-navigation__link"{% if currentpage == "supportplan" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/plan/">Education support plan</a>
-              </li>
-              
-            </ul>
-          </nav>
-        </div>
-      </div>
+<!-- TABS SUB NAVIGATION -->
+<div class="govuk-grid-row govuk-!-margin-left-0 govuk-!-margin-right-0">
+    <div class="govuk-grid-column-full govuk-!-margin-left-0">
+      
+      {# 1. Calculate the counts (default to 0 if the data doesn't exist) #}
+      {% set challengeCount = prisoner.needsChallenges.length or 0 %}
+      {% set strengthCount = prisoner.needsStrengths.length or 0 %}
+      {% set conditionCount = prisoner.conditions.length or 0 %}
+      
+      {# If Chris Atkinson, the plan count should be 0 as requested previously #}
+      {% if prisoner.firstName == "Chris" and prisoner.lastName == "Atkinson" %}
+        {% set planCount = 0 %}
+      {% else %}
+        {% set planCount = prisoner.educationPlan.length or 0 %}
+      {% endif %}
+
+      <nav class="moj-sub-navigation govuk-!-display-none-print" aria-label="Sub navigation">
+        <ul class="moj-sub-navigation__list ">
+
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link"{% if currentpage == "overview" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/">Overview</a>
+          </li>
+
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link"{% if currentpage == "challenges" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/challenges/">Challenges and support ({{ challengeCount }})</a>
+          </li>
+
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link"{% if currentpage == "strengths" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/strengths/">Strengths ({{ strengthCount }})</a>
+          </li>
+
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link"{% if currentpage == "conditions" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/conditions/">Conditions ({{ conditionCount }})</a>
+          </li>
+        
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link"{% if currentpage == "supportplan" %} aria-current="page"{% endif %} href="/{{ v }}/san/{{ ref }}/profile/plan/">Education support plan ({{ planCount }})</a>
+          </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>

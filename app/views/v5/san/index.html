@@ -56,6 +56,9 @@
       </thead>
       <tbody class="govuk-table__body">
         {% for prisoner in data[v+'prisoners'] %}
+        {# Identify Chris Atkinson #}
+        {% set isChris = (prisoner.firstName == "Chris" and prisoner.lastName == "Atkinson") %}
+        
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">
             <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/profile/">{{ prisoner.lastName }}, {{ prisoner.firstName }}</a><br>
@@ -63,69 +66,84 @@
           </td>
           <td class="govuk-table__cell">{{ prisoner.cellLocation }}</td>
           <td class="govuk-table__cell">{{ prisoner.releaseDate }}</td>
+          
           <td class="govuk-table__cell">
-            {% if prisoner.needsSupport or prisoner.needsChallenges %}
-              Yes
-            {% else %}
+            {# Additional needs: No for Chris #}
+            {% if isChris %}
               No
-            {% endif %}
-          </td>
-          <td class="govuk-table__cell">
-            {% if prisoner.needsSupport or prisoner.needsChallenges %}
-              Yes
-            {% else %}
-              No
-            {% endif %}
-          </td>
-          <td class="govuk-table__cell">
-            {# Determine if there is an active plan (planType == "plan") #}
-            {% set hasActivePlan = false %}
-            {% if prisoner.educationPlan and prisoner.educationPlan.length %}
-              {% for plan in prisoner.educationPlan %}
-                {% if plan.planType and plan.planType | lower == "plan" %}
-                  {% set hasActivePlan = true %}
-                {% endif %}
-              {% endfor %}
-            {% endif %}
-          
-            {# Decide status text: prefer top-level planStatus, else infer #}
-            {% set status = prisoner.planStatus or "" %}
-          
-            {% if hasActivePlan %}
-              {{ govukTag({ classes: "govuk-tag--green", text: "Active plan" }) }}
-          
-            {% elif status == "Overdue" or (not hasActivePlan and prisoner.nextActionDue and (prisoner.nextActionDue | isPastDate)) %}
-              {{ govukTag({ classes: "govuk-tag--red", text: "Plan overdue" }) }}
-          
-            {% elif status == "Review booked" %}
-              {{ govukTag({ classes: "govuk-tag--yellow", text: "Review due" }) }}
-          
-            {% elif status == "Not required" %}
-              {{ govukTag({ classes: "govuk-tag--grey", text: "Not required" }) }}
-          
             {% elif prisoner.needsSupport or prisoner.needsChallenges %}
-              {{ govukTag({ classes: "govuk-tag--yellow", text: "Plan due" }) }}
-          
+              Yes
             {% else %}
-              N/A
+              No
             {% endif %}
           </td>
-          <td class="govuk-table__cell">
-            {% set displayedDate = "" %}
-            {% if prisoner.educationPlan and prisoner.educationPlan.length %}
-              {% for plan in prisoner.educationPlan %}
-                {% if plan.reviewDate %}
-                  {% set displayedDate = plan.reviewDate %}
-                {% endif %}
-              {% endfor %}
-            {% elif prisoner.nextActionDue %}
-              {% set displayedDate = prisoner.nextActionDue %}
-            {% endif %}
           
-            {% if displayedDate %}
-            {{ displayedDate | govukDate }}
+          <td class="govuk-table__cell">
+            {# In education: Yes for Chris #}
+            {% if isChris %}
+              Yes
+            {% elif prisoner.needsSupport or prisoner.needsChallenges %}
+              Yes
             {% else %}
+              No
+            {% endif %}
+          </td>
+          
+          <td class="govuk-table__cell">
+            {# Education support plan #}
+            {% if isChris %}
+              {# Changed from grey tag to plain text No #}
+              No
+            {% else %}
+              {# Determine if there is an active plan (planType == "plan") #}
+              {% set hasActivePlan = false %}
+              {% if prisoner.educationPlan and prisoner.educationPlan.length %}
+                {% for plan in prisoner.educationPlan %}
+                  {% if plan.planType and plan.planType | lower == "plan" %}
+                    {% set hasActivePlan = true %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            
+              {% set status = prisoner.planStatus or "" %}
+            
+              {% if hasActivePlan %}
+                {{ govukTag({ classes: "govuk-tag--green", text: "Active plan" }) }}
+              {% elif status == "Overdue" or (not hasActivePlan and prisoner.nextActionDue and (prisoner.nextActionDue | isPastDate)) %}
+                {{ govukTag({ classes: "govuk-tag--red", text: "Plan overdue" }) }}
+              {% elif status == "Review booked" %}
+                {{ govukTag({ classes: "govuk-tag--yellow", text: "Review due" }) }}
+              {% elif status == "Not required" %}
+                {# Changed from grey tag to plain text No #}
+                No
+              {% elif prisoner.needsSupport or prisoner.needsChallenges %}
+                {{ govukTag({ classes: "govuk-tag--yellow", text: "Plan due" }) }}
+              {% else %}
+                N/A
+              {% endif %}
+            {% endif %}
+          </td>
+          
+          <td class="govuk-table__cell">
+            {% if isChris %}
               N/A
+            {% else %}
+              {% set displayedDate = "" %}
+              {% if prisoner.educationPlan and prisoner.educationPlan.length %}
+                {% for plan in prisoner.educationPlan %}
+                  {% if plan.reviewDate %}
+                    {% set displayedDate = plan.reviewDate %}
+                  {% endif %}
+                {% endfor %}
+              {% elif prisoner.nextActionDue %}
+                {% set displayedDate = prisoner.nextActionDue %}
+              {% endif %}
+            
+              {% if displayedDate %}
+                {{ displayedDate | govukDate }}
+              {% else %}
+                N/A
+              {% endif %}
             {% endif %}
           </td>
           

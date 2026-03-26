@@ -4,48 +4,51 @@
   <hr class="app-actions-panel__divider">
 
   {# ---------- Education support plan ---------- #}
-  <section class="app-actions-panel__section">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Education support plan</h3>
+  {# Hide this section if the prisoner is Chris Atkinson #}
+  {% if not (prisoner.firstName == "Chris" and prisoner.lastName == "Atkinson") %}
+    <section class="app-actions-panel__section">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Education support plan</h3>
 
-    {% set status = (prisoner.planStatus or "") | trim %}
-    {% set MAP = {
-      "Active plan":   { text: "Active plan",   class: "govuk-tag--green" },
-      "Plan overdue":  { text: "Plan overdue",  class: "govuk-tag--red" },
-      "Review overdue":{ text: "Review overdue",class: "govuk-tag--light-red" },
-      "Review due":    { text: "Review due",    class: "govuk-tag--yellow" },
-      "Plan due":      { text: "Plan due",      class: "govuk-tag--yellow" },
-      "Needs plan":    { text: "Needs plan",    class: "govuk-tag--light-green" },
-      "Inactive plan": { text: "Inactive plan", class: "govuk-tag--grey" },
-      "Plan declined": { text: "Plan declined", class: "govuk-tag--grey" }
-    } %}
+      {% set status = (prisoner.planStatus or "") | trim %}
+      {% set MAP = {
+        "Active plan":   { text: "Active plan",   class: "govuk-tag--green" },
+        "Plan overdue":  { text: "Plan overdue",  class: "govuk-tag--red" },
+        "Review overdue":{ text: "Review overdue",class: "govuk-tag--light-red" },
+        "Review due":    { text: "Review due",    class: "govuk-tag--yellow" },
+        "Plan due":      { text: "Plan due",      class: "govuk-tag--yellow" },
+        "Needs plan":    { text: "Needs plan",    class: "govuk-tag--light-green" },
+        "Inactive plan": { text: "Inactive plan", class: "govuk-tag--grey" },
+        "Plan declined": { text: "Plan declined", class: "govuk-tag--grey" }
+      } %}
 
-    {% if status and MAP[status] %}
-      {{ govukTag({ classes: MAP[status].class, text: MAP[status].text }) }}
-    {% endif %}
+      {% if status and MAP[status] %}
+        {{ govukTag({ classes: MAP[status].class, text: MAP[status].text }) }}
+      {% endif %}
 
-    {% set review = "" %}
-    {% if prisoner.educationPlan and prisoner.educationPlan.length %}
-      {% for p in prisoner.educationPlan %}
-        {% if p.reviewDate %}{% set review = p.reviewDate %}{% endif %}
-      {% endfor %}
-    {% elif prisoner.nextActionDue %}
-      {% set review = prisoner.nextActionDue %}
-    {% endif %}
+      {% set review = "" %}
+      {% if prisoner.educationPlan and prisoner.educationPlan.length %}
+        {% for p in prisoner.educationPlan %}
+          {% if p.reviewDate %}{% set review = p.reviewDate %}{% endif %}
+        {% endfor %}
+      {% elif prisoner.nextActionDue %}
+        {% set review = prisoner.nextActionDue %}
+      {% endif %}
 
-    {% if review %}
-      <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2">
-        Review due {{ review | govukDate }}
-      </p>
-    {% endif %}
-    <div class="app-actions-panel__row">
-      <img src="/public/images/icon-review.png" alt="" class="app-actions-panel__icon">
+      {% if review %}
+        <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2">
+          Review due {{ review | govukDate }}
+        </p>
+      {% endif %}
+      <div class="app-actions-panel__row">
+        <img src="/public/images/icon-review.png" alt="" class="app-actions-panel__icon">
 
-      <a href="/{{ v }}/san/{{ ref }}/plan/review/person-reviewing"
-         class="govuk-link govuk-link--no-visited-state">
-        Review education support plan
-      </a>
-    </div>
-  </section>
+        <a href="/{{ v }}/san/{{ ref }}/plan/review/person-reviewing"
+           class="govuk-link govuk-link--no-visited-state">
+          Review education support plan
+        </a>
+      </div>
+    </section>
+  {% endif %}
 
   {# ---------- Screening and assessment ---------- #}
   <section class="app-actions-panel__section">
@@ -66,11 +69,9 @@
     <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Additional needs</h3>
     <ul class="govuk-list govuk-!-margin-bottom-0">
       <li><a class="govuk-link govuk-link--no-visited-state"
-             href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category">Add challenges</a></li>
+             href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category">Add challenges and support</a></li>
       <li><a class="govuk-link govuk-link--no-visited-state"
              href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/strengths/add/category">Add strengths</a></li>
-      <li><a class="govuk-link govuk-link--no-visited-state"
-             href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category">Add support strategies</a></li>
       <li><a class="govuk-link govuk-link--no-visited-state"
              href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/conditions/add">Add conditions</a></li>
     </ul>
