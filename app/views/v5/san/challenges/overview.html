@@ -27,31 +27,30 @@
     {# 1. Identify if this is Chris for UR filtering #}
     {% set isChris = (prisoner.firstName == "Chris" and prisoner.lastName == "Atkinson") %}
 
-    {# 2. Logic to filter and count items #}
+    {# 2. Filter logic for Current items #}
     {% set currentItems = [] %}
     {% if prisoner.needsChallenges %}
       {% for c in prisoner.needsChallenges %}
+        {% set absoluteIndex = loop.index %}
         {% if not c.needsChallengeArchiveReason %}
-           {# Filter for Chris Atkinson UR state #}
-           {% if not isChris or (isChris and data.challengeAdded) %}
-            {% set currentItems = (currentItems.push(c), currentItems) %}
+           {# Show data if it exists or if added/updated/screener flags are true #}
+           {% if not isChris or data.challengeAdded or data.challengeUpdated or data.screenerRecorded or prisoner.needsChallenges.length > 0 %}
+            {% set currentItems = (currentItems.push({ data: c, index: absoluteIndex }), currentItems) %}
           {% endif %}
         {% endif %}
       {% endfor %}
     {% endif %}
     {% set countCurrent = currentItems.length %}
 
-    {% set historyItems = [] %}
+    {# Filter logic for History items #}
+    {% set countHistory = 0 %}
     {% if prisoner.needsChallenges %}
       {% for c in prisoner.needsChallenges %}
         {% if c.needsChallengeArchiveReason %}
-          {% if not isChris or (isChris and data.challengeAdded) %}
-            {% set historyItems = (historyItems.push(c), historyItems) %}
-          {% endif %}
+            {% set countHistory = countHistory + 1 %}
         {% endif %}
       {% endfor %}
     {% endif %}
-    {% set countHistory = historyItems.length %}
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
@@ -62,7 +61,11 @@
     <div class="govuk-grid-column-full">
       {% include "includes/" + v + "/san-miniprofile.html" %}
 
-      {# Success banner #}
+      {# Success banners #}
+      {% if data.screenerRecorded %}
+        {{ mojBanner({ type: "success", text: "Additional learning needs screener information submitted" }) }}
+      {% endif %}
+
       {% if data.challengeAdded %}
         {{ mojBanner({ type: "success", text: "Challenge and support added" }) }}
       {% elseif data.challengeUpdated %}
@@ -78,6 +81,8 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
+      <h2 class="govuk-heading-m">Challenges</h2>
+
       {# ===================== CURRENT TAB PANEL ===================== #}
       {% set currentHtml %}
         {% if countCurrent == 0 %}
@@ -85,7 +90,7 @@
           <div>
             <p class="govuk-body">{{ prisoner.firstName }} {{ prisoner.lastName }} has no current challenges and support</p>
             <p class="govuk-body govuk-!-margin-bottom-0">
-              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold">
+              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-link govuk-link--no-visited-state">
                 Add challenges and support
               </a>
             </p>
@@ -95,13 +100,31 @@
           {# Get unique categories to group items #}
           {% set categories = [] %}
           {% for item in currentItems %}
-            {% if item.needsChallengeCategory not in categories %}
-              {% set categories = (categories.push(item.needsChallengeCategory), categories) %}
+            {% if item.data.needsChallengeCategory not in categories %}
+              {% set categories = (categories.push(item.data.needsChallengeCategory), categories) %}
             {% endif %}
           {% endfor %}
 
           {# Loop through each category group #}
           {% for cat in categories %}
+            
+            {# --- SORTING LOGIC: Manual first, Screener second --- #}
+            {% set sortedCatItems = [] %}
+            
+            {# First, grab all manual entries for this category #}
+            {% for i in currentItems %}
+              {% if i.data.needsChallengeCategory == cat and i.data.needsChallengeAuthor != "Screener Results" %}
+                {% set sortedCatItems = (sortedCatItems.push(i), sortedCatItems) %}
+              {% endif %}
+            {% endfor %}
+
+            {# Second, grab all screener entries for this category #}
+            {% for i in currentItems %}
+              {% if i.data.needsChallengeCategory == cat and i.data.needsChallengeAuthor == "Screener Results" %}
+                {% set sortedCatItems = (sortedCatItems.push(i), sortedCatItems) %}
+              {% endif %}
+            {% endfor %}
+
             <div class="govuk-!-margin-bottom-6" style="border: 1px solid #b1b4b6; border-radius: 4px; overflow: hidden;">
               
               {# Card Header #}
@@ -111,70 +134,74 @@
 
               {# Card Body #}
               <div style="padding: 20px;">
-                {% for item in currentItems %}
-                  {% if item.needsChallengeCategory == cat %}
+                {% for item in sortedCatItems %}
                     
-                    {# 1. Challenge text #}
-                    <p class="govuk-body">{{ item.needsChallengeDescription }}</p>
+                    {# 1. Check if this item is a Screener Result #}
+                    {% if item.data.needsChallengeAuthor == "Screener Results" %}
+                        
+                        {# SCREENER FORMAT (Details component) #}
+                        <div class="govuk-!-margin-bottom-4">
+                          {{ govukDetails({
+                            summaryText: item.data.needsChallengeDescription,
+                            html: '
+                              <h4 class="govuk-heading-s govuk-!-margin-bottom-1">Support needed</h4>
+                              <p class="govuk-body">' + item.data.needsSupportDescription + '</p>
+                            ',
+                            classes: "govuk-!-margin-bottom-2"
+                          }) }}
+                          <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0">
+                            From Additional learning needs screener completed on {{ item.data.needsChallengeDate }}, Wakefield (HMP)
+                          </p>
+                        </div>
 
-                    {# 2. Support Needed Section #}
-                    <h4 class="govuk-heading-s govuk-!-margin-bottom-1">Support needed</h4>
-                    <p class="govuk-body">
-                      {# This assumes your route saves 'needsSupportDescription' into the challenge object #}
-                      {% if item.needsSupportDescription %}
-                        {{ item.needsSupportDescription }}
-                      {% else %}
-                        This challenge does not yet have any support recorded
-                      {% endif %}
-                    </p>
+                    {% else %}
+                        
+                        {# MANUAL FORMAT (Standard layout) #}
+                        <div class="govuk-!-margin-bottom-4">
+                          <p class="govuk-body">{{ item.data.needsChallengeDescription }}</p>
 
-                    {# 3. Identified Details #}
-                    {{ govukDetails({
-                      summaryText: "How was this identified",
-                      html: item.needsChallengeIdentified or "No specific method recorded",
-                      classes: "govuk-!-margin-bottom-4"
-                    }) }}
+                          <h4 class="govuk-heading-s govuk-!-margin-bottom-1">Support needed</h4>
+                          <p class="govuk-body">
+                            {% if item.data.needsSupportDescription %}
+                              {{ item.data.needsSupportDescription }}
+                            {% else %}
+                              This challenge does not yet have any support recorded
+                            {% endif %}
+                          </p>
 
-                    {# 4. Metadata Line with Edit/History links #}
-                    <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #f3f2f1;" class="govuk-!-padding-bottom-4 govuk-!-margin-bottom-4">
-                      <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0">
-                        Last updated {{ item.needsChallengeDate or 'Today' }} by {{ item.needsChallengeAuthor or 'J. Smith' }}, Wakefield (HMP)
-                      </p>
-                      <p class="govuk-body-s govuk-!-margin-bottom-0">
-                        <a href="#" class="govuk-link govuk-link--no-visited-state">Edit</a>
-                        <span style="color: #b1b4b6; margin: 0 10px;">|</span>
-                        <a href="#" class="govuk-link govuk-link--no-visited-state">Move to history</a>
-                      </p>
-                    </div>
+                          {{ govukDetails({
+                            summaryText: "How was this identified",
+                            html: item.data.needsChallengeIdentified or "No specific method recorded",
+                            classes: "govuk-!-margin-bottom-4"
+                          }) }}
 
-                    {# 5. ALN Screener Integration #}
-                    {% set alnFound = false %}
-                    {% for screener in prisoner.needsALNscreener %}
-                      {% if screener.needsALNscreenerCategory == cat %}
-                        {% if not alnFound %}
-                          <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Additional learning needs screener</h4>
-                          {% set alnFound = true %}
-                        {% endif %}
-                        {{ govukDetails({
-                          summaryText: screener.needsALNscreenerType or "Assessment details",
-                          html: "Completed on " + (screener.needsALNscreenerDate or '23 Dec 2025') + ", Wakefield (HMP)"
-                        }) }}
-                      {% endif %}
-                    {% endfor %}
+                          <div style="display: flex; justify-content: space-between; align-items: baseline;" class="govuk-!-margin-bottom-0">
+                            <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-bottom-0">
+                              Last updated {{ item.data.needsChallengeUpdated or item.data.needsChallengeDate or 'Today' }} by {{ item.data.needsChallengeAuthor or 'J. Smith' }}, Wakefield (HMP)
+                            </p>
+                            <p class="govuk-body-s govuk-!-margin-bottom-0" style="white-space: nowrap; flex-shrink: 0;">
+                              <a href="/{{ v }}/san/{{ ref }}/challenges/edit/{{ item.data.needsChallengeCategory }}/{{ item.index }}" class="govuk-link govuk-link--no-visited-state">Edit</a>
+                              <span style="color: #b1b4b6; margin: 0 10px;" aria-hidden="true">|</span>
+                              <a href="/{{ v }}/san/{{ ref }}/challenges/archive/{{ item.data.needsChallengeCategory }}/{{ item.index }}" class="govuk-link govuk-link--no-visited-state">Move to history</a>
+                            </p>
+                          </div>
+                        </div>
 
-                    {# Visual separator if there are multiple items in one category card #}
-                    {% if not loop.last %}<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">{% endif %}
+                    {% endif %}
 
-                  {% endif %}
+                    {# Visual separator: Only appears BETWEEN items in the same card #}
+                    {% if not loop.last %}
+                      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-6 govuk-!-margin-bottom-6">
+                    {% endif %}
+
                 {% endfor %}
               </div>
             </div>
           {% endfor %}
 
-          {# Global Add button at bottom #}
           <p class="govuk-body govuk-!-margin-top-6">
             <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/challenges/add/category" class="govuk-link govuk-link--no-visited-state">
-              Add a challenge and support
+              Add challenge and support
             </a>
           </p>
 

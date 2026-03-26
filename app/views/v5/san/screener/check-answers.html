@@ -1,0 +1,152 @@
+{% extends "/layouts/v5.html" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+      text: "Back",
+      href: "javascript:history.go(-1);"
+    }) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+
+{% for prisoner in data[v+'prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
+
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <form action="/{{ v }}/san/{{ ref }}/screener/check-answers" method="post">
+
+          <span class="govuk-caption-l">Record additional learning needs screener</span>
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
+            Check {{ prisoner.firstName }} {{ prisoner.lastName }}'s additional learning needs screener information
+          </h1>
+
+          {# --- Logic to build the Challenges list --- #}
+          {% set challengeHtml %}
+            {% set cats = [
+              { label: 'Literacy skills', key: 'screener-literacy' },
+              { label: 'Numeracy skills', key: 'screener-numeracy' },
+              { label: 'Attention, organising and time management', key: 'screener-attention' },
+              { label: 'Memory', key: 'screener-memory' },
+              { label: 'Language and communication skills', key: 'screener-language' },
+              { label: 'Emotions and feelings', key: 'screener-emotions' },
+              { label: 'Physical skills and coordination', key: 'screener-physical' },
+              { label: 'Sensory', key: 'screener-sensory' }
+            ] %}
+            
+            {% set hasAnyChallenge = false %}
+            {% for cat in cats %}
+              {% if data[cat.key] and data[cat.key].length > 0 %}
+                {% set hasAnyChallenge = true %}
+                <div class="govuk-!-margin-bottom-4">
+                  <h3 class="govuk-heading-s govuk-!-margin-bottom-1">{{ cat.label }}</h3>
+                  <ul class="govuk-list">
+                    {% for item in data[cat.key] %}
+                      {% if item != "_unchecked" %}<li>{{ item }}</li>{% endif %}
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% if not hasAnyChallenge %}<p class="govuk-body">No challenges identified</p>{% endif %}
+          {% endset %}
+
+          {# --- Logic to build the Strengths list --- #}
+          {% set strengthHtml %}
+            {% set catsS = [
+              { label: 'Literacy skills', key: 'screener-strength-literacy' },
+              { label: 'Numeracy skills', key: 'screener-strength-numeracy' },
+              { label: 'Attention, organising and time management', key: 'screener-strength-attention' },
+              { label: 'Memory', key: 'screener-strength-memory' },
+              { label: 'Language and communication skills', key: 'screener-strength-language' },
+              { label: 'Emotions and feelings', key: 'screener-strength-emotions' },
+              { label: 'Physical skills and coordination', key: 'screener-strength-physical' },
+              { label: 'Sensory', key: 'screener-strength-sensory' }
+            ] %}
+            
+            {% set hasAnyStrength = false %}
+            {% for cat in catsS %}
+              {% if data[cat.key] and data[cat.key].length > 0 %}
+                {% set hasAnyStrength = true %}
+                <div class="govuk-!-margin-bottom-4">
+                  <h3 class="govuk-heading-s govuk-!-margin-bottom-1">{{ cat.label }}</h3>
+                  <ul class="govuk-list">
+                    {% for item in data[cat.key] %}
+                      {% if item != "_unchecked" %}<li>{{ item }}</li>{% endif %}
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% if not hasAnyStrength %}<p class="govuk-body">No strengths identified</p>{% endif %}
+          {% endset %}
+
+          {# --- SUMMARY LIST --- #}
+          {{ govukSummaryList({
+            classes: "govuk-!-margin-bottom-9",
+            rows: [
+              {
+                key: { text: "Date of screener" },
+                value: { text: data['screener-date'] or "26 March 2026" },
+                actions: {
+                  items: [{ href: "date", text: "Change", visuallyHiddenText: "date" }]
+                }
+              },
+              {
+                key: { text: "Challenges identified" },
+                value: { html: challengeHtml },
+                actions: {
+                  items: [{ href: "select-challenges", text: "Change", visuallyHiddenText: "challenges" }]
+                }
+              },
+              {
+                key: { text: "Strengths identified" },
+                value: { html: strengthHtml },
+                actions: {
+                  items: [{ href: "select-strengths", text: "Change", visuallyHiddenText: "strengths" }]
+                }
+              }
+            ]
+          }) }}
+
+          <h2 class="govuk-heading-m">Is the recorded screener information correct?</h2>
+
+          {{ govukWarningText({
+            text: "You cannot edit screener results after they have been recorded",
+            iconFallbackText: "Warning"
+          }) }}
+
+          {{ govukCheckboxes({
+            name: "confirm-screener",
+            items: [
+              {
+                value: "confirm",
+                text: "Yes, the recorded screener information is correct"
+              }
+            ]
+          }) }}
+
+          {{ govukButton({
+            text: "Submit screener information"
+          }) }}
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+{% endfor %}
+
+{% endblock %}

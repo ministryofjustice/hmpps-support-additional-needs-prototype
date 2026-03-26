@@ -1,0 +1,51 @@
+{% extends "/layouts/v5.html" %}
+
+{# Import the MOJ Date Picker and other components #}
+{% from "moj/components/date-picker/macro.njk" import mojDatePicker %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+      text: "Back",
+      href: "javascript:history.go(-1);"
+    }) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="/{{ v }}/san/{{ ref }}/screener/date" method="post">
+
+        <span class="govuk-caption-l">Record additional learning needs screener</span>
+        
+        {{ mojDatePicker({
+          id: "screener-date",
+          name: "screener-date",
+          label: {
+            text: "What date was the screener completed?",
+            classes: "govuk-label--l",
+            isPageHeading: true
+          },
+          hint: {
+            text: "For example, 26/03/2026"
+          },
+          classes: "govuk-input--width-10",
+          value: data['screener-date']
+        }) }}
+
+        {{ govukButton({
+          text: "Continue",
+          classes: "govuk-!-margin-top-6"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
