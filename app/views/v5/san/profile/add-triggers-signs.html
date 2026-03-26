@@ -21,13 +21,13 @@
       
       <form action="/{{ v }}/san/{{ ref }}/profile/save-triggers-signs" method="post">
 
-        {# 1. TRIGGERS SECTION WITH WORD COUNT #}
+        {# 1. TRIGGERS SECTION WITH CHARACTER COUNT #}
         {{ govukCharacterCount({
           name: "triggers",
           id: "triggers",
-          maxwords: 500,
+          maxlength: 500,
           label: {
-            text: "Add triggers",
+            text: ("Edit triggers" if data['triggers'] else "Add triggers"),
             classes: "govuk-label--l govuk-!-font-weight-bold",
             isPageHeading: false
           },
@@ -38,14 +38,14 @@
           value: data['triggers']
         }) }}
 
-        {# 2. SIGNS SECTION WITH WORD COUNT #}
+        {# 2. SIGNS SECTION WITH CHARACTER COUNT #}
         <div class="govuk-!-margin-top-8">
           {{ govukCharacterCount({
             name: "signs",
             id: "signs",
-            maxwords: 500,
+            maxlength: 500,
             label: {
-              text: "Add signs they are struggling",
+              text: ("Edit signs they are struggling" if data['signs'] else "Add signs they are struggling"),
               classes: "govuk-label--l govuk-!-font-weight-bold",
               isPageHeading: false
             },
