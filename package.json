@@ -9,10 +9,10 @@
     "npm": "^11"
   },
   "dependencies": {
-    "@govuk-prototype-kit/common-templates": "2.0.1",
-    "@ministryofjustice/frontend": "^5.1.3",
-    "govuk-frontend": "^5.10.1",
-    "govuk-prototype-kit": "13.16.2",
+    "@govuk-prototype-kit/common-templates": "3.0.0",
+    "@ministryofjustice/frontend": "^9.0.0",
+    "govuk-frontend": "^6.1.0",
+    "govuk-prototype-kit": "13.19.1",
     "moment": "^2.30.1"
   }
 }
