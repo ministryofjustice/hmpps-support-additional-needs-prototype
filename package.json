@@ -4,6 +4,10 @@
     "serve": "govuk-prototype-kit serve",
     "start": "govuk-prototype-kit start"
   },
+  "engines": {
+    "node": "^24",
+    "npm": "^11"
+  },
   "dependencies": {
     "@govuk-prototype-kit/common-templates": "2.0.1",
     "@ministryofjustice/frontend": "^5.1.3",
