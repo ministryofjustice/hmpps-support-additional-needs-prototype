@@ -1,17 +1,8 @@
-FROM node:20.19-bullseye-slim
+FROM ghcr.io/ministryofjustice/hmpps-node:24-alpine AS base
 
 ENV NODE_ENV=production
 
-RUN addgroup --gid 2000 --system appgroup && \
-        adduser --uid 2000 --system appuser --gid 2000
-
 WORKDIR /app
-
-RUN apt-get update && \
-        apt-get upgrade -y && \
-        apt-get autoremove -y && \
-        rm -rf /var/lib/apt/lists/*
-
 
 COPY . .
 
