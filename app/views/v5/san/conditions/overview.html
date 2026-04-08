@@ -133,11 +133,9 @@
         {% endif %}
 
         {% if not confirmed.length and not selfdeclared.length %}
-          <section class="app-summary-card govuk-!-margin-bottom-6">
-            <div class="app-summary-card__body">
-              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no conditions recorded.</p>
-            </div>
-          </section>
+          <div>
+            <p class="govuk-body">{{ prisoner.firstName }} {{ prisoner.lastName }} has no current conditions</p>
+          </div>
         {% endif %}
 
         <p class="govuk-body govuk-!-margin-top-6">
@@ -145,8 +143,6 @@
           class="govuk-link govuk-link--no-visited-state">
           Add a condition
        </a>
-       
-       
         </p>
       {% endset %}
 
@@ -173,11 +169,9 @@
             </section>
           {% endfor %}
         {% else %}
-          <section class="app-summary-card govuk-!-margin-bottom-6">
-            <div class="app-summary-card__body">
-              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no conditions moved to History.</p>
-            </div>
-          </section>
+          <div>
+            <p class="govuk-body">{{ prisoner.firstName }} {{ prisoner.lastName }} has no previous conditions</p>
+          </div>
         {% endif %}
       {% endset %}
 

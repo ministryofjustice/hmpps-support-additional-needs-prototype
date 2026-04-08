@@ -1,0 +1,220 @@
+{% extends "/layouts/v5.html" %}
+
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+      text: "Back",
+      href: "javascript:history.go(-1);"
+    }) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+
+{% for prisoner in data[v+'prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
+
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+
+        <form action="/{{ v }}/san/{{ ref }}/screener/select-challenges" method="post">
+
+          <span class="govuk-caption-l">Record additional learning needs screener</span>
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
+            Select the challenges identified by the screener for {{ prisoner.firstName }} {{ prisoner.lastName }}
+          </h1>
+
+          <style>
+            /* Custom style to handle the 2-column layout from your screenshots */
+            .app-checkboxes-grid .govuk-checkboxes {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              column-gap: 30px;
+            }
+            @media (max-width: 640px) {
+              .app-checkboxes-grid .govuk-checkboxes {
+                grid-template-columns: 1fr;
+              }
+            }
+          </style>
+
+          <div class="app-checkboxes-grid">
+
+            {# --- Literacy Skills --- #}
+            {{ govukCheckboxes({
+              name: "screener-literacy",
+              fieldset: { legend: { text: "Literacy skills", classes: "govuk-fieldset__legend--m" } },
+              items: [
+                { value: "Reading", text: "Reading" },
+                { value: "Spelling", text: "Spelling" },
+                { value: "Writing", text: "Writing" },
+                { value: "Alphabet ordering", text: "Alphabet ordering" },
+                { value: "Reading comprehension", text: "Reading comprehension" },
+                { value: "Reading (visual discrimination)", text: "Reading (visual discrimination)" },
+                { value: "Tracking", text: "Tracking" },
+                { value: "Language decoding", text: "Language decoding" }
+              ]
+            }) }}
+
+            <hr class="govuk-section-break govuk-section-break--s">
+
+            {# --- Numeracy Skills --- #}
+            {{ govukCheckboxes({
+              name: "screener-numeracy",
+              fieldset: { legend: { text: "Numeracy skills", classes: "govuk-fieldset__legend--m" } },
+              items: [
+                { value: "Speed of calculation", text: "Speed of calculation" },
+                { value: "Arithmetic", text: "Arithmetic" },
+                { value: "Estimation", text: "Estimation" },
+                { value: "Maths literacy", text: "Maths literacy" },
+                { value: "Maths confidence", text: "Maths confidence" },
+                { value: "Fractions and percentages", text: "Fractions and percentages" },
+                { value: "Word-based problems", text: "Word-based problems" },
+                { value: "Money management", text: "Money management" },
+                { value: "Number recall", text: "Number recall" },
+                { value: "Number sequencing", text: "Number sequencing" }
+              ]
+            }) }}
+
+            <hr class="govuk-section-break govuk-section-break--s">
+
+            {# --- Attention, organising and time management --- #}
+            {{ govukCheckboxes({
+              name: "screener-attention",
+              fieldset: { legend: { text: "Attention, organising and time management", classes: "govuk-fieldset__legend--m" } },
+              items: [
+                { value: "Finishing tasks", text: "Finishing tasks" },
+                { value: "Tidiness", text: "Tidiness" },
+                { value: "Focusing", text: "Focusing" },
+                { value: "Time allocation/prioritisation", text: "Time allocation/prioritisation" },
+                { value: "Problem solving", text: "Problem solving" },
+                { value: "Task switching", text: "Task switching" },
+                { value: "Attention to detail", text: "Attention to detail" },
+                { value: "Forward planning", text: "Forward planning" },
+                { value: "Task initiation", text: "Task initiation" },
+                { value: "Self organised (routine)", text: "Self organised (routine)" }
+              ]
+            }) }}
+
+            <hr class="govuk-section-break govuk-section-break--s">
+
+            {# --- Memory --- #}
+            {{ govukCheckboxes({
+              name: "screener-memory",
+              fieldset: { legend: { text: "Memory", classes: "govuk-fieldset__legend--m" } },
+              items: [
+                { value: "Short term memory", text: "Short term memory" },
+                { value: "Long term memory", text: "Long term memory" }
+              ]
+            }) }}
+
+            <hr class="govuk-section-break govuk-section-break--s">
+
+            {# --- Language and communication skills --- #}
+            {{ govukCheckboxes({
+              name: "screener-language",
+              fieldset: { legend: { text: "Language and communication skills", classes: "govuk-fieldset__legend--m" } },
+              items: [
+                { value: "Turn-taking", text: "Turn-taking" },
+                { value: "Language fluency", text: "Language fluency" },
+                { value: "Extroversion/introversion", text: "Extroversion/introversion" },
+                { value: "Communication", text: "Communication" },
+                { value: "Social adaptability", text: "Social adaptability" },
+                { value: "Non-verbal communication", text: "Non-verbal communication" },
+                { value: "Speaking", text: "Speaking" },
+                { value: "Social nuances", text: "Social nuances" },
+                { value: "Active listening", text: "Active listening" },
+                { value: "Word finding", text: "Word finding" },
+                { value: "People person", text: "People person" },
+                { value: "Listening", text: "Listening" }
+              ]
+            }) }}
+
+            <hr class="govuk-section-break govuk-section-break--s">
+
+            {# --- Emotions and feelings --- #}
+            {{ govukCheckboxes({
+              name: "screener-emotions",
+              fieldset: { legend: { text: "Emotions and feelings", classes: "govuk-fieldset__legend--m" } },
+              items: [
+                { value: "Restfulness", text: "Restfulness" },
+                { value: "Empathy", text: "Empathy" },
+                { value: "Reading emotions", text: "Reading emotions" },
+                { value: "Impulse control", text: "Impulse control" },
+                { value: "Calm", text: "Calm" },
+                { value: "Confidence", text: "Confidence" },
+                { value: "Managing change (adaptability)", text: "Managing change (adaptability)" },
+                { value: "Emotional control", text: "Emotional control" },
+                { value: "Creativity", text: "Creativity" }
+              ]
+            }) }}
+
+            <hr class="govuk-section-break govuk-section-break--s">
+
+            {# --- Physical skills and coordination --- #}
+            {{ govukCheckboxes({
+              name: "screener-physical",
+              fieldset: { legend: { text: "Physical skills and coordination", classes: "govuk-fieldset__legend--m" } },
+              items: [
+                { value: "Handwriting", text: "Handwriting" },
+                { value: "Balance", text: "Balance" },
+                { value: "Fine motor skills", text: "Fine motor skills" },
+                { value: "Learning new skills", text: "Learning new skills" },
+                { value: "Sporting ball skills", text: "Sporting ball skills" },
+                { value: "Dual tasking", text: "Dual tasking" },
+                { value: "Folding, packing, and sorting", text: "Folding, packing, and sorting" },
+                { value: "Stamina", text: "Stamina" },
+                { value: "Grasp", text: "Grasp" },
+                { value: "Spatial awareness", text: "Spatial awareness" },
+                { value: "Visual-spatial skills", text: "Visual-spatial skills" }
+              ]
+            }) }}
+
+            <hr class="govuk-section-break govuk-section-break--s">
+
+            {# --- Sensory --- #}
+            {{ govukCheckboxes({
+              name: "screener-sensory",
+              fieldset: { legend: { text: "Sensory", classes: "govuk-fieldset__legend--m" } },
+              items: [
+                { value: "Visual skills", text: "Visual skills" },
+                { value: "Auditory discrimination", text: "Auditory discrimination" },
+                { value: "Sensory processing", text: "Sensory processing" }
+              ]
+            }) }}
+
+          </div>
+
+          {# --- Exclusive Footer --- #}
+          {{ govukCheckboxes({
+            name: "screener-none",
+            items: [
+              { divider: "Or" },
+              {
+                value: "No challenges identified",
+                text: "No challenges identified",
+                behaviour: "exclusive"
+              }
+            ]
+          }) }}
+
+          {{ govukButton({
+            text: "Continue",
+            classes: "govuk-!-margin-top-8"
+          }) }}
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+{% endfor %}
+
+{% endblock %}

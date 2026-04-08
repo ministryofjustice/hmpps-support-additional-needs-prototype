@@ -1,10 +1,16 @@
 {% extends "/layouts/v5.html" %}
 
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
 {% block beforeContent %}
-  <div class="govuk-width-container ">
-    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
-      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
-    </nav>
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+      text: "Back",
+      href: "javascript:history.go(-1);"
+    }) }}
   </div>
 {% endblock %}
 
@@ -16,71 +22,110 @@
       {% if prisoner.prisonerNumber == ref %}
   
     <div class="govuk-grid-column-two-thirds">
-      <form method="post">
-        <span class="govuk-caption-l">Edit challenge</span>
-        <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l">
-            Edit description of {{ prisoner.firstName }} {{ prisoner.lastName }}'s challenge
-          </label>
-        </h1>
-
-        <h2 class="govuk-heading-m">
-          Category of challenge
-        </h2>
-        <p class="govuk-body">{{ thiscat }}</p>
-
-        <h2 class="govuk-heading-m">
-          Description of challenge
-        </h2>
-        <p class="govuk-body govuk-hint">
-          Describe the nature of the challenge or difficulty experienced by this individual.
-        </p>
-        
-        {% set countChal = 0 %}
-        {% for needs in prisoner.needsChallenges %}
-          {% set countChal = countChal + 1 %}
-          {% if thiscount == countChal %}
-            {{ govukTextarea({
-              id: "san-" + v + "-" + ref + "-challenge-desc",
-              name: "san-" + v + "-" + ref + "-challenge-desc",
-              value: needs.needsChallengeDescription | safe
-            }) }}
-          {% endif %}
-        {% endfor %}
-
-        <h2 class="govuk-heading-m govuk-!-margin-top-7">
-          How was this challenge identified?
-        </h2>
-        <p class="govuk-body govuk-hint">
-          Explain how this challenge was identified — for example, through screening, education review, or staff observation.
-        </p>
-
-        {% set countChal = 0 %}
-        {% for needs in prisoner.needsChallenges %}
-          {% set countChal = countChal + 1 %}
-          {% if thiscount == countChal %}
-            {{ govukTextarea({
-              id: "san-" + v + "-" + ref + "-challenge-ident",
-              name: "san-" + v + "-" + ref + "-challenge-ident",
-              value: needs.needsChallengeIdentified | safe
-            }) }}
-          {% endif %}
-        {% endfor %}
-
-        {{ govukButton({
-          text: "Update challenge"
-        }) }}
       
-      </form>
+      {# Loop to find the specific challenge item by index #}
+      {% set countChal = 0 %}
+      {% for item in prisoner.needsChallenges %}
+        {% set countChal = countChal + 1 %}
+        {% if thiscount == countChal %}
+
+        {# --- RESTORED DYNAMIC HINT LOGIC --- #}
+        {% set hintMap = {
+          "Attention, organising and time management": "planning, task management, tidiness and focus",
+          "Emotions and feelings": "confidence, empathy, managing emotions and impulses",
+          "Language and communication skills": "taking turns, listening and language fluency",
+          "Literacy skills": "reading, writing and spelling",
+          "Memory": "remembering and recalling information",
+          "Numeracy skills": "maths and managing money",
+          "Physical skills and coordination": "learning new skills, co-ordination, stamina and fine motor skills",
+          "Processing speed": "taking time to understand and follow instructions",
+          "Sensory": "reacting to some environments or situations eg noise or being touched",
+          "General need": "what they find difficult"
+        } %}
+        {% set exampleText = hintMap[item.needsChallengeCategory] or "what they find difficult" %}
+        {# ---------------------------------- #}
+
+        <form method="post">
+          <span class="govuk-caption-l">Edit challenge and support</span>
+          <h1 class="govuk-heading-l">
+            Edit {{ item.needsChallengeCategory | lower }} challenge for {{ prisoner.firstName }} {{ prisoner.lastName }}
+          </h1>
+
+          {# 1. Describe the challenge (WITH DYNAMIC HINT) #}
+          {{ govukCharacterCount({
+            name: "edit-challenge-description",
+            id: "edit-challenge-description",
+            maxlength: 500,
+            label: {
+              text: "Describe the challenge",
+              classes: "govuk-label--m",
+              isPageHeading: false
+            },
+            hint: {
+              text: "Details of what they find difficult, for example " + exampleText
+            },
+            value: item.needsChallengeDescription
+          }) }}
+
+          {# 2. Describe the support #}
+          {{ govukCharacterCount({
+            name: "edit-support-description",
+            id: "edit-support-description",
+            maxlength: 500,
+            label: {
+              text: "Describe the support needed (optional)",
+              classes: "govuk-label--m",
+              isPageHeading: false
+            },
+            hint: {
+              text: "Add concise support strategies to help with the challenge"
+            },
+            value: item.needsSupportDescription
+          }) }}
+
+          {# 3. How was it identified #}
+          {% set idents = item.needsChallengeIdentified or "" %}
+          {{ govukCheckboxes({
+            name: "edit-challenge-identified",
+            fieldset: {
+              legend: {
+                text: "How was this challenge identified?",
+                isPageHeading: false,
+                classes: "govuk-fieldset__legend--m"
+              }
+            },
+            hint: {
+              text: "Select all that apply"
+            },
+            items: [
+              { value: "Direct observation in education, skills and work", text: "Direct observation in education, skills and work", checked: idents.includes("Direct observation in education") },
+              { value: "Direct observation in the wider prison", text: "Direct observation in the wider prison", checked: idents.includes("Direct observation in the wider prison") },
+              { value: "Through conversations with the individual", text: "Through conversations with the individual", checked: idents.includes("conversations with the individual") },
+              { value: "Based on information shared by colleagues or other professionals", text: "Based on information shared by colleagues or other professionals", checked: idents.includes("information shared by colleagues") },
+              { value: "Through formal processes (eg. referrals, assessments)", text: "Through formal processes (eg. referrals, assessments)", checked: idents.includes("formal processes") },
+              { value: "Self-disclosure by the individual", text: "Self-disclosure by the individual", checked: idents.includes("Self-disclosure") },
+              { value: "Through other screening tools used within the prison", text: "Through other screening tools used within the prison", checked: idents.includes("screening tools") },
+              { value: "Other", text: "Other", checked: idents.includes("Other") }
+            ]
+          }) }}
+
+          {{ govukButton({
+            text: "Update challenge"
+          }) }}
+        
+        </form>
+
+        {% endif %}
+      {% endfor %}
     </div>
 
     <div class="govuk-grid-column-one-third">
       {% include "includes/" + v + "/san-aside-challenges.html" %}
     </div>
 
+    {% endif %}
+  {% endfor %}
+
   </div>
 </div>
-
-      {% endif %}
-    {% endfor %}
 {% endblock %}
