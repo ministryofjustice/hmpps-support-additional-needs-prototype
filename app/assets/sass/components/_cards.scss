@@ -138,7 +138,7 @@
 
 //from manage supervisions
 .app-card {
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
   display: block;
   padding: govuk-spacing(2);
   text-decoration: none;
@@ -156,8 +156,8 @@
 }
 
 .app-card--grey {
-  color: govuk-shade(govuk-colour("black", $legacy: "grey-1"), 30);
-  background: govuk-tint(govuk-colour("dark-grey", $legacy: "grey-1"), 90);
+  color: govuk-shade(govuk-colour("black"), 30);
+  background: govuk-tint(govuk-colour("black", $variant: "tint-25"), 90);
 }
 
 
