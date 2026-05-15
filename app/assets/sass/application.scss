@@ -130,7 +130,7 @@ $govuk-assets-path: '/govuk/assets/';
 }
 
 .filter-box {
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
   padding: 30px 10px 30px 10px;
 }
 

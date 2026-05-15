@@ -46,7 +46,7 @@ $_image-width: 80px;
   display: inline-block;
   margin-bottom: govuk-spacing(2);
 
-  @include mq ($from: desktop) {
+  @include govuk-media-query ($from: desktop) {
     float: right;
     margin-bottom: 0;
     margin-left: govuk-spacing(3);
@@ -56,7 +56,7 @@ $_image-width: 80px;
 
 .app-card__caption {
   @include govuk-font($size: 16);
-  color: govuk-colour("dark-grey");
+  color: govuk-colour("black", $variant: "tint-25");
 }
 
 .app-card__title {
@@ -75,8 +75,8 @@ $_image-width: 80px;
   }
 
   .app-card--placeholder & {
-    background: govuk-colour("light-grey");
-    border-left: 5px solid govuk-colour("dark-grey");
+    background: govuk-colour("black", $variant: "tint-95");
+    border-left: 5px solid govuk-colour("black", $variant: "tint-25");
     padding-bottom: govuk-spacing(3);
     padding-left: govuk-spacing(3);
     padding-top: govuk-spacing(3);
@@ -89,7 +89,7 @@ $_image-width: 80px;
   width: 100%;
   margin: govuk-spacing(2) 0 0;
 
-  @include mq ($from: desktop) {
+  @include govuk-media-query ($from: desktop) {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: govuk-spacing(3);
@@ -100,7 +100,7 @@ $_image-width: 80px;
   & + & {
     margin-top: govuk-spacing(2);
 
-    @include mq ($from: desktop) {
+    @include govuk-media-query ($from: desktop) {
       margin-top: 0;
     }
   }

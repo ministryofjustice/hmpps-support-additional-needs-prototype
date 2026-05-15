@@ -3,7 +3,7 @@
 }
 
 .inactive-alert {
-    color:  govuk-colour("dark-grey")
+    color:  govuk-colour("black", $variant: "tint-25");
 }
 
 .fixed-table {
@@ -11,7 +11,7 @@
 }
 
 .form-background {
-    background-color: govuk-colour("light-grey");
+    background-color: govuk-colour("black", $variant: "tint-95");
 }
 .clip-overflow {
     text-overflow: ellipsis;
