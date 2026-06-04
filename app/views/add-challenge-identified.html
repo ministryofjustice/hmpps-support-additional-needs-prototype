@@ -17,9 +17,8 @@
     Select all that apply
   </p>
 
-  <form action="/add-challenge-identified" method="post">
-
-    {% set selected = data['identified-by'] or [] %}
+  <!-- ✅ ✅ ✅ FIXED FINAL ROUTE -->
+  <form action="/save-challenge" method="post">
 
     <fieldset class="govuk-fieldset govuk-form-group">
       <div class="govuk-checkboxes govuk-checkboxes--small">
@@ -29,8 +28,7 @@
                  id="observed-education"
                  name="identified-by"
                  type="checkbox"
-                 value="Observed in education, skills and work"
-                 {% if "Observed in education, skills and work" in selected %}checked{% endif %}>
+                 value="Observed in education, skills and work">
           <label class="govuk-label govuk-checkboxes__label" for="observed-education">
             Observed in education, skills and work
           </label>
@@ -41,8 +39,7 @@
                  id="observed-prison"
                  name="identified-by"
                  type="checkbox"
-                 value="Observed in the wider prison"
-                 {% if "Observed in the wider prison" in selected %}checked{% endif %}>
+                 value="Observed in the wider prison">
           <label class="govuk-label govuk-checkboxes__label" for="observed-prison">
             Observed in the wider prison
           </label>
@@ -53,8 +50,7 @@
                  id="self-disclosure"
                  name="identified-by"
                  type="checkbox"
-                 value="Self-disclosure by the individual"
-                 {% if "Self-disclosure by the individual" in selected %}checked{% endif %}>
+                 value="Self-disclosure by the individual">
           <label class="govuk-label govuk-checkboxes__label" for="self-disclosure">
             Self-disclosure by the individual
           </label>
@@ -65,8 +61,7 @@
                  id="formal-processes"
                  name="identified-by"
                  type="checkbox"
-                 value="Formal assessment or referral"
-                 {% if "Formal assessment or referral" in selected %}checked{% endif %}>
+                 value="Formal assessment or referral">
           <label class="govuk-label govuk-checkboxes__label" for="formal-processes">
             Formal assessment or referral
           </label>
@@ -79,8 +74,7 @@
                  type="checkbox"
                  value="Other"
                  aria-controls="other-details-conditional"
-                 aria-expanded="false"
-                 {% if "Other" in selected %}checked{% endif %}>
+                 aria-expanded="false">
           <label class="govuk-label govuk-checkboxes__label" for="identified-other">
             Other
           </label>
@@ -89,8 +83,7 @@
       </div>
     </fieldset>
 
-    <!-- ✅ ✅ ✅ PRESERVE OTHER TEXT -->
-    <div id="other-details-conditional" class="govuk-checkboxes__conditional govuk-!-margin-bottom-5" hidden>
+    <div id="other-details-conditional" class="govuk-checkboxes__conditional govuk-!-margin-bottom-5">
       <div class="govuk-form-group">
         <label class="govuk-label" for="other-details">
           Add details
@@ -98,8 +91,7 @@
         <input class="govuk-input govuk-input--width-20"
                id="other-details"
                name="other-details"
-               type="text"
-               value="{{ data['other-details'] }}">
+               type="text">
       </div>
     </div>
 
@@ -112,13 +104,15 @@
       const checkbox = document.getElementById('identified-other')
       const conditional = document.getElementById('other-details-conditional')
 
-      function toggle() {
-        conditional.hidden = !checkbox.checked
-        checkbox.setAttribute('aria-expanded', checkbox.checked)
-      }
+      if (checkbox && conditional) {
+        function toggle() {
+          conditional.style.display = checkbox.checked ? 'block' : 'none'
+          checkbox.setAttribute('aria-expanded', checkbox.checked)
+        }
 
-      checkbox.addEventListener('change', toggle)
-      toggle()
+        checkbox.addEventListener('change', toggle)
+        toggle()
+      }
     })
   </script>
 

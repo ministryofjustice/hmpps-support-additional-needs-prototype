@@ -1,0 +1,260 @@
+{% extends "/layouts/v5.html" %}
+{%- from "moj/components/banner/macro.njk" import mojBanner -%}
+{% set currentpage = "supportstrategies" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container">
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/{{ v }}/">Digital Prison Services</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/{{ v }}/san/">Support for additional needs</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+{% endblock %}
+
+{% block content %}
+{% for prisoner in data[v+'prisoners'] %}
+{% if prisoner.prisonerNumber == ref %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">{{ prisoner.firstName }} {{ prisoner.lastName }}'s support for additional needs</h1>
+    </div>
+
+    <div class="govuk-grid-column-full">
+      {% if data['prevurl'] == "check-answers" %}
+        {{ mojAlert({
+          variant: "success",
+          title: "Education support plan created",
+          dismissible: false
+        }) }}
+      {% endif %}
+    
+      {% include "includes/" + v + "/san-miniprofile.html" %}
+      {% if data.supportUpdated %}
+      {{ mojBanner({ type: "success", text: "Support strategy updated" }) }}
+    {% elseif data.supportArchived %}
+      {{ mojBanner({ type: "success", text: "Support strategy moved to History" }) }}
+    {% endif %}
+    {% if data.supportUpdated or data.supportArchived %}
+<script>
+  // Clear the banner flag from sessionStorage once viewed
+  fetch(window.location.pathname + '?clearBanner=true', { method: 'POST' });
+</script>
+{% endif %}
+    </div>
+  </div>
+  {% if data.supportUpdated or data.supportArchived %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const banner = document.querySelector(".moj-banner");
+      const tabs = document.querySelectorAll(".govuk-tabs__tab");
+      tabs.forEach(tab => {
+        tab.addEventListener("click", function() {
+          if (banner) banner.remove();
+        });
+      });
+    });
+  </script>
+{% endif %}
+
+
+
+  <div class="govuk-grid-row">
+    {% include "includes/"+v+"/san-subnav.html" %}
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">Support strategies</h2>
+
+      {# ===================== CURRENT TAB ===================== #}
+      {% set currentHtml %}
+        {% set cats = [] %}
+        {% set countCurrent = 0 %}
+
+        {% if prisoner.needsSupport and prisoner.needsSupport.length %}
+          {# collect categories that have NON-archived items #}
+          {% for n in prisoner.needsSupport %}
+            {% if not n.needsSupportArchiveReason and not (n.needsSupportCategory in cats) %}
+              {% set cats = (cats.push(n.needsSupportCategory), cats) %}
+            {% endif %}
+          {% endfor %}
+
+          {% if cats.length %}
+            {% for cat in cats %}
+              {# build array with sortable effectiveISO, the item, and ABSOLUTE index #}
+              {% set items = [] %}
+              {% for n in prisoner.needsSupport %}
+                {% if n.needsSupportCategory == cat and not n.needsSupportArchiveReason %}
+                  {% set eff = n.needsSupportUpdatedISO or n.needsSupportDateISO %}
+                  {% set items = (items.push({ item:n, effectiveISO: eff, absIndex: loop.index }), items) %}
+                {% endif %}
+              {% endfor %}
+
+              {# newest first #}
+              {% set items = items | sort(false, false, 'effectiveISO') | reverse %}
+
+              {% if items.length %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">{{ cat }}</h2>
+                  </header>
+
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                      {% for row in items %}
+                        {% set n = row.item %}
+                        {% set label = "Last updated" %}
+{% set displayDate = n.needsSupportUpdated or n.needsSupportDate %}
+                        {% set displayDate = n.needsSupportUpdated or n.needsSupportDate %}
+                        {% set countCurrent = countCurrent + 1 %}
+
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            {{ n.needsSupportDescription | safe }}
+                            <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                              {{ label }} {{ displayDate }} by {{ n.needsSupportAuthor }}
+                            </p>
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            <span class="san-inline-actions">
+                              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/edit/{{ n.needsSupportCategory }}/{{ row.absIndex }}"
+                                 class="govuk-link govuk-link--no-visited-state">Edit</a>
+                              <span aria-hidden="true"> | </span>
+                              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/archive/{{ n.needsSupportCategory }}/{{ row.absIndex }}"
+                                 class="govuk-link govuk-link--no-visited-state">Move to History</a>
+                            </span>
+                          </dd>
+                        </div>
+                      {% endfor %}
+                    </dl>
+                  </div>
+                </section>
+          
+              {% endif %}
+            {% endfor %}
+            <p class="govuk-body govuk-!-margin-top-6">
+              <a href="/{{ v }}/san/{{ prisoner.prisonerNumber }}/support/add/category"
+                 class="govuk-link govuk-link--no-visited-state">
+                Add a support strategy
+              </a>
+            </p>
+          {% else %}
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <div class="app-summary-card__body">
+                <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies recorded.</p>
+              </div>
+            </section>
+          {% endif %}
+        {% else %}
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <div class="app-summary-card__body">
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies recorded.</p>
+            </div>
+          </section>
+        {% endif %}
+      {% endset -%}
+
+
+      {# ===================== HISTORY TAB ===================== #}
+      {% set historyHtml %}
+        {% set cats = [] %}
+        {% set countArchive = 0 %}
+
+        {% if prisoner.needsSupport and prisoner.needsSupport.length %}
+          {# collect categories that HAVE archived items #}
+          {% for n in prisoner.needsSupport %}
+            {% if n.needsSupportArchiveReason and not (n.needsSupportCategory in cats) %}
+              {% set cats = (cats.push(n.needsSupportCategory), cats) %}
+            {% endif %}
+          {% endfor %}
+
+          {% if cats.length %}
+            {% for cat in cats %}
+              {# sort archived newest first using archiveISO/updatedISO/createdISO #}
+              {% set items = [] %}
+              {% for n in prisoner.needsSupport %}
+                {% if n.needsSupportCategory == cat and n.needsSupportArchiveReason %}
+                  {% set eff = n.needsSupportArchiveISO or n.needsSupportUpdatedISO or n.needsSupportDateISO %}
+                  {% set items = (items.push({ item:n, effectiveISO: eff }), items) %}
+                {% endif %}
+              {% endfor %}
+              {% set items = items | sort(false, false, 'effectiveISO') | reverse %}
+
+              {% if items.length %}
+                <section class="app-summary-card govuk-!-margin-bottom-6">
+                  <header class="app-summary-card__header">
+                    <h2 class="app-summary-card__title">{{ cat }}</h2>
+                  </header>
+
+                  <div class="app-summary-card__body">
+                    <dl class="govuk-summary-list san-needs-list govuk-!-margin-bottom-0">
+                      {% for row in items %}
+                        {% set n = row.item %}
+                        {% set countArchive = countArchive + 1 %}
+
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                            {{ n.needsSupportDescription | safe }}
+
+                            <p class="govuk-heading-0 govuk-!-margin-top-2 govuk-!-margin-bottom-1">
+                              <strong>Reason for moving to History</strong>
+                            </p>
+                            <p class="govuk-body govuk-!-margin-bottom-3">
+                              {{ n.needsSupportArchiveReason | safe }}
+                            </p>
+
+                            <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                              Moved to History {{ n.needsSupportDate }} by {{ n.needsSupportAuthor }}
+                            </p>
+                          </dt>
+                          <dd class="govuk-summary-list__value"></dd>
+                        </div>
+                      {% endfor %}
+                    </dl>
+                  </div>
+                </section>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <div class="app-summary-card__body">
+                <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies moved to History.</p>
+              </div>
+            </section>
+          {% endif %}
+        {% else %}
+          <section class="app-summary-card govuk-!-margin-bottom-6">
+            <div class="app-summary-card__body">
+              <p class="govuk-body govuk-!-margin-top-3">This prisoner has no support strategies moved to History.</p>
+            </div>
+          </section>
+        {% endif %}
+      {% endset -%}
+
+      {{ govukTabs({
+        items: [
+          { label: "Current ("+countCurrent+")", id: "current", panel: { html: currentHtml } },
+          { label: "History ("+countArchive+")", id: "history", panel: { html: historyHtml } }
+        ]
+      }) }}
+
+    </div>
+
+    <div class="govuk-grid-column-one-third govuk-!-padding-left-5 govuk-!-margin-top-0">
+      {% include "includes/"+v+"/san-actions-add.html" %}
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% endfor %}
+{% endblock %}

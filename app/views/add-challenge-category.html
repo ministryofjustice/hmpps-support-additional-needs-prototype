@@ -5,7 +5,7 @@
 {% block content %}
 <div class="govuk-width-container">
 
-  <a class="govuk-back-link" href="/add-challenge-category">Back</a>
+  <a class="govuk-back-link" href="/add-challenge-describe">Back</a>
 
   <p class="govuk-caption-xl">Add a challenge and support</p>
 
@@ -13,149 +13,146 @@
     Add {{ data['challengeCategory'] | default('Nothing selected') }} challenge and support for Chris Atkinson
   </h1>
 
-  <!-- ✅ ✅ ✅ FIXED: method must be POST -->
   <form method="post" action="/add-challenge-identified">
 
-    <!-- ✅ DESCRIPTION -->
+    <!-- DESCRIPTION -->
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--m" for="challenge-description">
         Describe the challenge
       </label>
-
       <div class="govuk-hint">
         You can include triggers, signs they are struggling and when this happens
       </div>
 
-      <!-- ✅ ✅ ✅ ADDED VALUE PERSISTENCE -->
       <textarea class="govuk-textarea"
         id="challenge-description"
         name="challenge-description"
-        rows="6">{{ data['challenge-description'] }}</textarea>
-
-      <div class="govuk-hint">
-        You have 750 characters remaining
-      </div>
+        rows="6"></textarea>
     </div>
 
-    <!-- ✅ SUPPORT -->
+    <!-- SUPPORT -->
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--m" for="support-needed">
         Describe the support needed (optional)
       </label>
-
       <div class="govuk-hint">
         Add concise support strategies to help with the challenge
       </div>
 
-      <!-- ✅ ✅ ✅ ADDED VALUE PERSISTENCE -->
       <textarea class="govuk-textarea"
         id="support-needed"
         name="support-needed"
-        rows="6">{{ data['support-needed'] }}</textarea>
-
-      <div class="govuk-hint">
-        You have 750 characters remaining
-      </div>
+        rows="6"></textarea>
     </div>
 
-    <!-- ✅ PRIORITY -->
+    <!-- ✅ ✅ ✅ PRIORITY CHECKBOX (FONT FIXED) -->
     <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
+      <fieldset class="govuk-fieldset" aria-describedby="priority-hint">
 
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           Is this a priority need for Chris Atkinson?
         </legend>
 
-        <div class="govuk-hint">
-          Only select this for challenges with the most significant impact on daily life.
-          It will show these on the Overview page and add a ‘High priority’ tag.
+        <div id="priority-hint" class="govuk-hint">
+          Only select this for challenges with the most significant impact on daily life. We will show these on the Overview page and add a ‘High priority’ tag.
         </div>
 
-        <div class="govuk-checkboxes govuk-checkboxes--small">
+        <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+
           <div class="govuk-checkboxes__item">
 
-            <!-- ✅ ✅ ✅ PRESERVE CHECKED STATE -->
             <input class="govuk-checkboxes__input"
                    id="priority-need"
                    name="priority-need"
                    type="checkbox"
-                   {% if data['priority-need'] %}checked{% endif %}>
+                   value="yes">
 
-            <label class="govuk-label govuk-checkboxes__label" for="priority-need">
-              Yes - this is a priority need
+            <!-- ✅ ✅ ✅ CRITICAL FIX: govuk-body ADDED -->
+            <label class="govuk-checkboxes__label govuk-body" for="priority-need">
+              Yes – this is a priority need
             </label>
+
           </div>
+
         </div>
 
       </fieldset>
     </div>
 
-    <!-- ✅ CONDITIONAL AREAS -->
+    {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
+    <!-- ✅ COGNITION -->
     {% if data['challengeCategory'] == "Cognition and learning" %}
 
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
+    {{ govukCheckboxes({
+      name: "affected-areas",
+      fieldset: {
+        legend: {
+          text: "What areas of cognition and learning does it affect? (optional)",
+          classes: "govuk-fieldset__legend--m"
+        }
+      },
+      hint: {
+        text: "Select all that apply"
+      },
+      items: [
+        {
+          value: "Literacy skills",
+          text: "Literacy skills",
+          hint: { text: "things like reading, writing and spelling" }
+        },
+        {
+          value: "Numeracy skills",
+          text: "Numeracy skills",
+          hint: { text: "things like maths and managing money" }
+        },
+        {
+          value: "Attention, organising and time management",
+          text: "Attention, organising and time management",
+          hint: { text: "things like planning, task management, tidiness and focus" }
+        },
+        {
+          value: "Processing speed",
+          text: "Processing speed",
+          hint: { text: "things like taking time to understand and follow instructions" }
+        },
+        {
+          value: "Memory",
+          text: "Memory",
+          hint: { text: "things like remembering and recalling information" }
+        }
+      ]
+    }) }}
 
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            What areas of cognition and learning does it affect? (optional)
-          </legend>
+    {% endif %}
 
-          <div class="govuk-hint">Select all that apply</div>
+    <!-- ✅ SENSORY -->
+    {% if data['challengeCategory'] == "Sensory and physical" %}
 
-          <div class="govuk-checkboxes govuk-checkboxes--small">
-
-            {% set selectedAreas = data['affected-areas'] or [] %}
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Literacy skills"
-                {% if "Literacy skills" in selectedAreas %}checked{% endif %}>
-              <label class="govuk-label govuk-checkboxes__label">Literacy skills</label>
-              <div class="govuk-hint govuk-checkboxes__hint">things like reading, writing and spelling</div>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Numeracy skills"
-                {% if "Numeracy skills" in selectedAreas %}checked{% endif %}>
-              <label class="govuk-label govuk-checkboxes__label">Numeracy skills</label>
-              <div class="govuk-hint govuk-checkboxes__hint">things like maths and managing money</div>
-            </div>
-
-          </div>
-
-        </fieldset>
-      </div>
-
-    {% elif data['challengeCategory'] == "Sensory and physical" %}
-
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            What areas of sensory and physical does it affect? (optional)
-          </legend>
-
-          <div class="govuk-hint">Select all that apply</div>
-
-          <div class="govuk-checkboxes govuk-checkboxes--small">
-
-            {% set selectedAreas = data['affected-areas'] or [] %}
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input"
-                     name="affected-areas"
-                     type="checkbox"
-                     value="Physical skills and coordination"
-                     {% if "Physical skills and coordination" in selectedAreas %}checked{% endif %}>
-              <label class="govuk-label govuk-checkboxes__label">
-                Physical skills and coordination
-              </label>
-            </div>
-
-          </div>
-
-        </fieldset>
-      </div>
+    {{ govukCheckboxes({
+      name: "affected-areas",
+      fieldset: {
+        legend: {
+          text: "What areas of sensory and physical does it affect? (optional)",
+          classes: "govuk-fieldset__legend--m"
+        }
+      },
+      hint: {
+        text: "Select all that apply"
+      },
+      items: [
+        {
+          value: "Physical skills and coordination",
+          text: "Physical skills and coordination",
+          hint: { text: "things like learning new skills, co-ordination, stamina and fine motor skills" }
+        },
+        {
+          value: "Sensory",
+          text: "Sensory",
+          hint: { text: "things like reacting to some environments or situations eg noise or being touched" }
+        }
+      ]
+    }) }}
 
     {% endif %}
 

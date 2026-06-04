@@ -1,0 +1,183 @@
+[
+  {
+    "prisonerNumber": "G2911GD",
+    "firstName": "Chris",
+    "lastName": "Atkinson",
+    "dateOfBirth": "28 Jun 1995",
+    "enteredPrison": "7 Feb 2025",
+    "releaseDate": "7 Mar 2027",
+    "prisonId": "BXI",
+    "cellLocation": "A-2-014",
+    "legalStatus": "SENTENCED",
+    "recall": false,
+    "indeterminateSentence": false,
+    "planStatus": "Not required",
+    "InEducation": "Yes",
+    "screener": {
+      "site": "Wakefield (HMP)",
+      "assessmentDate": "2025-09-14",
+      "outcome": "Additional needs identified",
+      "referredTo": "Not recorded in Curious"
+    },    
+    "needsSupport": [],
+    "needsChallenges": [],
+    "needsStrengths": [],
+    "needsALNscreener": [],
+    "conditions": [],
+    "educationPlan": []
+  },
+  {
+    "prisonerNumber": "A8545DY",
+    "firstName": "Andrew",
+    "lastName": "Carter",
+    "dateOfBirth": "17 Aug 1976",
+    "enteredPrison": "28 May 2024",
+    "releaseDate": "1 Jul 2026",
+    "prisonId": "BXI",
+    "cellLocation": "A-1-039",
+    "legalStatus": "SENTENCED",
+    "recall": false,
+    "indeterminateSentence": false,
+    "planStatus": "Overdue",
+    "nextActionDue": "12/02/2026",
+    "needsSupport": [
+      {
+        "needsSupportCategory": "Attention, organising and time management",
+        "needsSupportDescription": "Print out their timetable in large font each week. They are allowed a wrist watch and alarm clock. Prompt them for their next activity if possible. Break tasks downs and give enough time to do them. Give them time to understand instructions - break these down into no more than 3 steps at time. Limit distractions.",
+        "needsSupportDate": "4 Jan 2025",
+        "needsSupportAuthor": "J. Smith"
+      }
+    ],
+    "needsChallenges": [
+      {
+        "needsChallengeCategory": "Attention, organising and time management",
+        "needsChallengeDescription": "Finds it hard to manage their time. Worries they will be late and becomes anxious. When they are late can get angry if it's made an issue.",
+        "needsChallengeDate": "12 Apr 2025",
+        "needsChallengeAuthor": "J. Smith"
+      }
+    ],
+    "needsStrengths": [
+      {
+        "needsStrengthCategory": "Attention, organising and time management",
+        "needsStrengthDescription": "Hard worker - strives for perfection.",
+        "needsStrengthDate": "4 Jan 2025",
+        "needsStrengthAuthor": "J. Smith"
+      }
+    ],
+    "needsALNscreener": []
+  },
+  {
+    "prisonerNumber": "A8560DY",
+    "firstName": "Nigel",
+    "lastName": "Walker",
+    "dateOfBirth": "1 Jan 2001",
+    "enteredPrison": "28 May 2024",
+    "releaseDate": "1 Jul 2026",
+    "prisonId": "BXI",
+    "cellLocation": "B-2-08",
+    "legalStatus": "SENTENCED",
+    "recall": false,
+    "indeterminateSentence": false,
+    "InEducation": "Yes",
+    "planStatus": "Active plan",
+    "needsSupport": [
+      {
+        "needsSupportCategory": "Attention, organising and time management",
+        "needsSupportDescription": "Print out their timetable in large font each week. Prompt them for their next activity if possible.",
+        "needsSupportDate": "4 Jan 2025",
+        "needsSupportAuthor": "J. Smith"
+      }
+    ],
+    "needsChallenges": [
+      {
+        "needsChallengeCategory": "Attention, organising and time management",
+        "needsChallengeDescription": "Finds it hard to manage their time.",
+        "needsChallengeDate": "12 Apr 2025",
+        "needsChallengeAuthor": "J. Smith"
+      }
+    ],
+    "educationPlan": [
+      {
+        "planType": "plan",
+        "reviewDate": "17/11/2025",
+        "dateCreated": "03 Jul 2025",
+        "author": "Aunt May"
+      }
+    ]
+  },
+  {
+    "prisonerNumber": "A9001DY",
+    "firstName": "Zachary",
+    "lastName": "Moore",
+    "dateOfBirth": "14 Feb 1990",
+    "enteredPrison": "22 May 2024",
+    "releaseDate": "3 Jun 2026",
+    "prisonId": "BXI",
+    "cellLocation": "C-3-021",
+    "legalStatus": "SENTENCED",
+    "recall": false,
+    "indeterminateSentence": false,
+    "planStatus": "Overdue",
+    "nextActionDue": "15/02/2026",
+    "needsSupport": [
+      {
+        "needsSupportCategory": "Emotions and feelings",
+        "needsSupportDescription": "Provide reassurance during routine changes.",
+        "needsSupportDate": "12 May 2025",
+        "needsSupportAuthor": "J. Smith"
+      }
+    ],
+    "needsChallenges": [
+      {
+        "needsChallengeCategory": "Attention, organising and time management",
+        "needsChallengeDescription": "Struggles to prioritise tasks without prompts.",
+        "needsChallengeDate": "12 May 2025",
+        "needsChallengeAuthor": "J. Smith"
+      }
+    ],
+    "needsStrengths": [],
+    "needsALNscreener": []
+  },
+  {
+    "prisonerNumber": "A9002DY",
+    "firstName": "Ben",
+    "lastName": "Taylor",
+    "dateOfBirth": "3 Mar 1988",
+    "enteredPrison": "12 Apr 2024",
+    "releaseDate": "15 May 2026",
+    "prisonId": "BXI",
+    "cellLocation": "B-1-017",
+    "legalStatus": "SENTENCED",
+    "recall": false,
+    "indeterminateSentence": false,
+    "planStatus": "Review due",
+    "nextActionDue": "20/10/2025",
+    "needsSupport": [
+      {
+        "needsSupportCategory": "Language and communication skills",
+        "needsSupportDescription": "Use simple language and confirm understanding.",
+        "needsSupportDate": "01 Oct 2025",
+        "needsSupportAuthor": "K. Harris"
+      }
+    ],
+    "needsChallenges": [],
+    "needsStrengths": [],
+    "needsALNscreener": []
+  },
+  {
+    "prisonerNumber": "A9003DY",
+    "firstName": "Omar",
+    "lastName": "Khan",
+    "dateOfBirth": "9 Sep 1995",
+    "enteredPrison": "1 Jan 2025",
+    "releaseDate": "3 Jan 2027",
+    "prisonId": "BXI",
+    "cellLocation": "A-0-005",
+    "legalStatus": "SENTENCED",
+    "recall": false,
+    "indeterminateSentence": false,
+    "planStatus": "Not required",
+    "needsStrengths": [],
+    "needsALNscreener": []
+  }
+]

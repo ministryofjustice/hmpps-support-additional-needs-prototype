@@ -1,4 +1,4 @@
-√{% extends "layouts/main.html" %}
+{% extends "layouts/main.html" %}
 
 {% set pageName="Home" %}
 
@@ -6,6 +6,7 @@
 <div class="govuk-width-container">
 
   {% set allChallenges = data.challenges or [] %}
+  {% set allStrengths = data.strengths or [] %}
   {% set priorityChallenges = [] %}
 
   {% for c in allChallenges %}
@@ -14,34 +15,39 @@
     {% endif %}
   {% endfor %}
 
-  <div class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <!-- ✅ Breadcrumbs now black -->
+  <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="#">Digital Prison Services</a>
+        <a class="govuk-breadcrumbs__link" style="color:#0b0c0c;">
+          Digital Prison Services
+        </a>
       </li>
       <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="#">Manage support for additional needs</a>
+        <a class="govuk-breadcrumbs__link" style="color:#0b0c0c;">
+          Manage support for additional needs
+        </a>
       </li>
     </ol>
   </div>
 
-  <h1 class="govuk-heading-l page-title">Chris Atkinson’s support for additional needs</h1>
+  <h1 class="govuk-heading-l">Chris Atkinson’s support for additional needs</h1>
 
   <div class="summary-panel govuk-grid-row">
-    <div class="govuk-grid-column-one-quarter summary-panel__item">
-      <a href="#" class="govuk-link govuk-!-font-weight-bold">Atkinson, Chris</a>
-      <p class="govuk-body-s govuk-!-margin-top-1">G2911GD</p>
+    <div class="govuk-grid-column-one-quarter">
+      <a class="govuk-link govuk-!-font-weight-bold">Atkinson, Chris</a>
+      <p class="govuk-body-s">G2911GD</p>
     </div>
-    <div class="govuk-grid-column-one-quarter summary-panel__item">
-      <span class="govuk-body-s summary-panel__label">Entered prison on</span>
+    <div class="govuk-grid-column-one-quarter">
+      <span class="govuk-body-s">Entered prison on</span>
       <p class="govuk-body-s">28 Jul 2023</p>
     </div>
-    <div class="govuk-grid-column-one-quarter summary-panel__item">
-      <span class="govuk-body-s summary-panel__label">Release date</span>
+    <div class="govuk-grid-column-one-quarter">
+      <span class="govuk-body-s">Release date</span>
       <p class="govuk-body-s">1 Jul 2027</p>
     </div>
-    <div class="govuk-grid-column-one-quarter summary-panel__item">
-      <span class="govuk-body-s summary-panel__label">DOB</span>
+    <div class="govuk-grid-column-one-quarter">
+      <span class="govuk-body-s">DOB</span>
       <p class="govuk-body-s">10 Jun 1969</p>
     </div>
   </div>
@@ -66,23 +72,19 @@
     </ul>
   </div>
 
-  <div class="govuk-grid-row main-page-grid">
+  <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-two-thirds">
 
-      <!-- ✅ ✅ ✅ CHALLENGES PANEL -->
+      <!-- ✅ UPDATED CHALLENGES PANEL -->
       <section class="panel-card">
         <div class="panel-card__header">
           <h2 class="govuk-heading-m">Challenges and support</h2>
 
           {% if allChallenges.length > 0 %}
-            <a href="/challenges-and-support-tab" class="govuk-link panel-card__action-link">
-              View challenges and support
-            </a>
+            <a href="/challenges-and-support-tab" class="govuk-link panel-card__action-link">View challenges and support</a>
           {% else %}
-            <a href="/add-challenge-describe" class="govuk-link panel-card__action-link">
-              Add challenge and support
-            </a>
+            <a href="/add-challenge-describe" class="govuk-link panel-card__action-link">Add challenge and support</a>
           {% endif %}
         </div>
 
@@ -100,19 +102,11 @@
             </div>
           </div>
 
-          <!-- ✅ ✅ ✅ EMPTY STATE -->
-          {% if allChallenges.length == 0 %}
-            <p class="govuk-body">
-              No challenges and support recorded yet.
-            </p>
-          {% endif %}
-
-          <!-- ✅ ✅ ✅ PRIORITY DISPLAY -->
           {% if priorityChallenges.length > 0 %}
 
             {% set categories = [] %}
             {% for c in priorityChallenges %}
-              {% if categories.indexOf(c.category) == -1 %}
+              {% if c.category and categories.indexOf(c.category) == -1 %}
                 {% set categories = categories.concat([c.category]) %}
               {% endif %}
             {% endfor %}
@@ -126,11 +120,11 @@
               {% for challenge in priorityChallenges %}
                 {% if challenge.category == category %}
 
-                  {% if challenge.areas %}
-                    <div style="margin-bottom:8px;">
+                  {% if challenge.areas and challenge.areas.length > 0 %}
+                    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
                       {% for area in challenge.areas %}
-                        {% if area != "on" and area != "_unchecked" %}
-                          <span class="govuk-body-s" style="display:inline-block; background:#d2e2f1; padding:5px 8px; margin-right:6px;">
+                        {% if area != "_unchecked" and area != "on" %}
+                          <span class="govuk-body-s" style="background:#d2e2f1; padding:6px 10px;">
                             {{ area }}
                           </span>
                         {% endif %}
@@ -138,8 +132,8 @@
                     </div>
                   {% endif %}
 
-                  <p class="govuk-body" style="word-break: break-word; overflow-wrap: break-word;">
-                    {{ challenge.description }}
+                  <p class="govuk-body">
+                    {{ challenge.description | default('') }}
                   </p>
 
                   {% if challenge.support %}
@@ -157,19 +151,15 @@
         </div>
       </section>
 
-      <!-- ✅ ✅ ✅ STRENGTHS PANEL (UNCHANGED BUT SAFE) -->
+      <!-- ✅ STRENGTHS PANEL -->
       <section class="panel-card">
         <div class="panel-card__header">
           <h2 class="govuk-heading-m">Strengths</h2>
 
-          {% if data.strengths and data.strengths.length > 0 %}
-            <a href="/strengths-tab" class="govuk-link panel-card__action-link">
-              View strengths
-            </a>
+          {% if allStrengths.length > 0 %}
+            <a href="/strengths-tab" class="govuk-link panel-card__action-link">View strengths</a>
           {% else %}
-            <a href="/add-strength-category" class="govuk-link panel-card__action-link">
-              Add strengths
-            </a>
+            <a href="/add-strength-category" class="govuk-link panel-card__action-link">Add strengths</a>
           {% endif %}
         </div>
 
@@ -177,35 +167,81 @@
 
           <div class="challenge-stats">
             <div class="challenge-stat">
-              <span class="challenge-stat__number">
-                {{ (data.strengths | length) if data.strengths else 0 }}
-              </span>
-              <strong class="govuk-tag govuk-tag--blue">
-                Strengths recorded
-              </strong>
+              <span class="challenge-stat__number">{{ allStrengths.length }}</span>
+              <strong class="govuk-tag govuk-tag--blue">Strengths recorded</strong>
             </div>
           </div>
 
-          {% if data.strengths and data.strengths.length == 0 %}
+          {% if allStrengths.length == 0 %}
+
             <p class="govuk-body">No strengths recorded yet.</p>
+
+          {% else %}
+
+            {% set categories = [] %}
+            {% for s in allStrengths %}
+              {% if s.category and categories.indexOf(s.category) == -1 %}
+                {% set categories = categories.concat([s.category]) %}
+              {% endif %}
+            {% endfor %}
+
+            {% for category in categories %}
+
+              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+              <p class="govuk-heading-s">{{ category }}</p>
+
+              {% for strength in allStrengths %}
+                {% if strength.category == category %}
+                  <p class="govuk-body">
+                    {{ strength.description | default('') }}
+                  </p>
+                {% endif %}
+              {% endfor %}
+
+            {% endfor %}
+
           {% endif %}
 
         </div>
       </section>
 
+      <!-- CONDITIONS PANEL -->
+      <section class="panel-card">
+        <div class="panel-card__header">
+          <h2 class="govuk-heading-m">Conditions</h2>
+          <a href="conditions-tab.html" class="govuk-link panel-card__action-link">View conditions</a>
+        </div>
+        <div class="panel-card__body">
+          <p>No conditions recorded yet.</p>
+        </div>
+      </section>
+
+      <!-- SCREENING PANEL -->
+      <section class="panel-card">
+        <div class="panel-card__header">
+          <h2 class="govuk-heading-m">Screening and assessment</h2>
+          <a href="#" class="govuk-link panel-card__action-link">Record screener results</a>
+        </div>
+        <div class="panel-card__body">
+          <p>No screening or assessment recorded yet.</p>
+        </div>
+      </section>
+
     </div>
 
+    <!-- RIGHT COLUMN -->
     <aside class="govuk-grid-column-one-third">
       <div class="actions-card">
         <div class="actions-card__header">Actions</div>
 
         <div class="actions-card__section">
-          <p class="govuk-body-s actions-card__section-title">Screening and assessment</p>
+          <p class="govuk-body-s">Screening and assessment</p>
           <a href="#" class="govuk-link">Record screener results</a>
         </div>
 
         <div class="actions-card__section">
-          <p class="govuk-body-s actions-card__section-title">Additional needs</p>
+          <p class="govuk-body-s">Additional needs</p>
           <a href="/add-strength-category" class="govuk-link">Add strengths</a>
           <a href="/add-challenge-describe" class="govuk-link">Add challenges and support</a>
           <a href="#" class="govuk-link">Add conditions</a>

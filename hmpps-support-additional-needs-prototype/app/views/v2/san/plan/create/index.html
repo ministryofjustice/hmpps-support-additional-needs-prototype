@@ -1,0 +1,79 @@
+{% extends "/layouts/v2.html" %}
+
+{% set currentpage = "overview" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+  
+    <!-- TITLE PAGE + print-->
+    <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-l">Create an education support plan</span>
+      
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+      
+
+      {% set detailsHtml %}
+        {{ govukInput({
+          id: "san-v2-create-personwhomet-name",
+          name: "san-v2-create-personwhomet-name",
+          type: "text",
+          spellcheck: false,
+          classes: "govuk-!-width-one-third",
+          label: {
+            text: "Full name of person"
+          }
+        }) }}
+        {{ govukInput({
+          id: "san-v2-create-personwhomet-jobrole",
+          name: "san-v2-create-personwhomet-jobrole",
+          type: "text",
+          spellcheck: false,
+          classes: "govuk-!-width-one-third",
+          label: {
+            text: "Job role of person"
+          }
+        }) }}
+      {% endset -%}
+
+      {{ govukRadios({
+        name: "san-v2-create-personwhomet",
+        fieldset: {
+          legend: {
+            text: "Are you the person who met with Chris Atkinson?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No",
+            conditional: {
+              html: detailsHtml
+            }
+          }
+        ]
+      }) }}
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

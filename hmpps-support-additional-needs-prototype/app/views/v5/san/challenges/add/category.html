@@ -1,0 +1,116 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+      text: "Back",
+      href: backLink 
+    }) }}
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+{% for prisoner in data[v+'prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
+
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+    
+      <div class="govuk-grid-column-three-quarters">
+        {# The action is handled by the POST route in routes.js #}
+        <form method="post">
+          <span class="govuk-caption-l">Add a challenge and support</span>
+
+          {% set radioName = "san-" + v + "-" + ref + "-challenge-category" %}
+
+          {{ govukRadios({
+            name: radioName,
+            fieldset: {
+              legend: {
+                text: "Select a category of challenge for " + prisoner.firstName + " " + prisoner.lastName,
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+              }
+            },
+            items: [
+              {
+                value: "Attention, organising and time management",
+                text: "Attention, organising and time management",
+                checked: checked(radioName, "Attention, organising and time management"),
+                hint: { text: "things like planning, task management, tidiness and focus" }
+              },
+              {
+                value: "Emotions and feelings",
+                text: "Emotions and feelings",
+                checked: checked(radioName, "Emotions and feelings"),
+                hint: { text: "things like confidence, empathy, managing emotions and impulses" }
+              },
+              {
+                value: "Language and communication skills",
+                text: "Language and communication skills",
+                checked: checked(radioName, "Language and communication skills"),
+                hint: { text: "things like taking turns, listening and language fluency" }
+              },
+              {
+                value: "Literacy skills",
+                text: "Literacy skills",
+                checked: checked(radioName, "Literacy skills"),
+                hint: { text: "things like reading, writing and spelling" }
+              },
+              {
+                value: "Memory",
+                text: "Memory",
+                checked: checked(radioName, "Memory"),
+                hint: { text: "things like remembering and recalling information" }
+              },
+              {
+                value: "Numeracy skills",
+                text: "Numeracy skills",
+                checked: checked(radioName, "Numeracy skills"),
+                hint: { text: "things like maths and managing money" }
+              },
+              {
+                value: "Physical skills and coordination",
+                text: "Physical skills and coordination",
+                checked: checked(radioName, "Physical skills and coordination"),
+                hint: { text: "things like learning new skills, co-ordination, stamina and fine motor skills" }
+              },
+              {
+                value: "Processing speed",
+                text: "Processing speed",
+                checked: checked(radioName, "Processing speed"),
+                hint: { text: "things like taking time to understand and follow instructions" }
+              },
+              {
+                value: "Sensory",
+                text: "Sensory",
+                checked: checked(radioName, "Sensory"),
+                hint: { text: "things like reacting to some environments or situations eg noise or being touched" }
+              },
+              {
+                divider: "Or"
+              },
+              {
+                value: "General need",
+                text: "General need",
+                checked: checked(radioName, "General need"),
+                hint: { text: "any challenge not covered by the categories" }
+              }
+            ]
+          }) }}
+
+          {{ govukButton({
+            text: "Continue"
+          }) }}
+        
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+{% endfor %}
+
+{% endblock %}

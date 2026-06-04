@@ -1,0 +1,83 @@
+{% for prisoner in data['prisoners'] %}
+        {% if prisoner.prisonerNumber == ref %}
+
+          {# set tracker for categories prisoner has content it #}
+          {% set cats = [] %}
+
+          {# Check if prisoner has any recorded needs #}
+          {%
+            if prisoner.needsChallenges
+          %}
+          {# TODO: May need to add conditions here when they are added #}
+
+            {# Loop through all categories of need #}
+            {% for categories in data['categories'] %}
+
+              {# Loop through all challenges of prisoner #}
+              {% for needs in prisoner.needsChallenges %}
+                {# Check if needsSupport has an item in this category #}
+                {% if needs.needsChallengeCategory == categories.categoryName %}
+                  {# Add this category to an array of categories associated with this prisoner #}
+                  {% if not categories.categoryName in cats %}
+                    {% set cats = (cats.push(categories.categoryName), cats) %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+
+            {% endfor %}
+
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <header class="app-summary-card__header">
+                <h2 class="app-summary-card__title">
+                  Challenges
+                </h2>
+              </header>
+              <div class="app-summary-card__body">
+
+                {% set countCats = 0 %}
+                  
+                {% for cat in cats %}
+                  {% set countCha = 0 %}
+                  {# Loop through all support needs of prisoner #}
+                  {% for needs in prisoner.needsChallenges %}
+                    {# Check if needsChallenges has an item in this category #}
+                    {% if needs.needsChallengeCategory == cat %}
+                      {% if countCats > 0 %}
+                      <hr class="govuk-section-break  govuk-section-break--m govuk-section-break--visible">
+                      {% endif %}
+                      {% if countCha == 0 %}
+                        <h3 class="govuk-heading-s">
+                          {{ cat }}
+                        </h3>
+                      {% endif %}
+                      {% set countCha = countCha + 1 %}
+                      
+                      <p class="govuk-body-s">{{ needs.needsChallengeDescription | safe }}</p>
+                    
+                    {% endif %}
+                  {% endfor %}
+                  {% set countCats = countCats + 1 %}
+              
+                {% endfor %}
+
+              </div>
+            </section>
+
+          {% else %}
+
+            <section class="app-summary-card govuk-!-margin-bottom-6">
+              <header class="app-summary-card__header">
+                <h2 class="app-summary-card__title">
+                  Challenges
+                </h2>
+              </header>
+              <div class="app-summary-card__body">
+                <p class="govuk-body-s">No challenges recorded</p>
+              </div>
+            </section>
+
+          {% endif %}
+
+        {% endif %}
+      {% endfor %}
+          

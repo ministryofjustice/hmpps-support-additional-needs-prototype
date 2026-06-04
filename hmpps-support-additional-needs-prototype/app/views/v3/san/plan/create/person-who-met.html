@@ -1,0 +1,87 @@
+{% extends "/layouts/v3.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post" action="">
+        <span class="govuk-caption-l">Create an education support plan</span>
+
+        {% set detailsHtml %}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-create-personwhomet-name",
+            name: "san-"+v+"-"+ref+"-create-personwhomet-name",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-one-half",
+            label: {
+              text: "Full name of person"
+            },
+            value: data["san-"+v+"-"+ref+"-create-personwhomet-name"]
+          }) }}
+          {{ govukInput({
+            id: "san-"+v+"-"+ref+"-create-personwhomet-jobrole",
+            name: "san-"+v+"-"+ref+"-create-personwhomet-jobrole",
+            type: "text",
+            spellcheck: false,
+            classes: "govuk-!-width-one-half",
+            label: {
+              text: "Job role of person"
+            },
+            value: data["san-"+v+"-"+ref+"-create-personwhomet-jobrole"]
+          }) }}
+        {% endset -%}
+
+        {{ govukRadios({
+          name: "san-"+v+"-"+ref+"-create-personwhomet",
+          fieldset: {
+            legend: {
+              text: "Are you the person who met with Chris Atkinson?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes",
+              checked: checked("san-"+v+"-"+ref+"-create-personwhomet","Yes")
+            },
+            {
+              value: "No",
+              text: "No",
+              checked: checked("san-"+v+"-"+ref+"-create-personwhomet","No"),
+              conditional: {
+                html: detailsHtml
+              }
+            }
+          ]
+        }) }}
+
+        {{data["san"+v+"-create-personwhomet"]}}
+        {{data["san"+v+"-create-personwhomet-name"]}}
+        {{data["san"+v+"-create-personwhomet-jobrole"]}}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

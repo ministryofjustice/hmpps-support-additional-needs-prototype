@@ -1,0 +1,168 @@
+{% extends "/layouts/v2.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post">
+        <span class="govuk-caption-l">Create an education support plan</span>
+        <h1 class="govuk-heading-l">Review Chris Atkinson’s education support plan</h1>
+
+        <dl class="govuk-summary-list">
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Did you meet with the prisoner?
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-personwhomet"] }}
+              {% if data["san-"+v+"-create-personwhomet"] == "No" %}<br>
+                Prisoner met with {{ data["san-"+v+"-create-personwhomet-name"] }} ({{ data["san-"+v+"-create-personwhomet-jobrole"] }})
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> did you meet with the prisoner</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Other people consulted or involved
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-otherpeopleconsulted"] }}
+              {% if data["san-"+v+"-create-otherpeopleconsulted"] == "Yes" %}<br>
+                {{ data["san-"+v+"-create-otherpeopleconsulted-details"] }}
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> other people consulted or involved</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Adjustments to teaching
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-teachingadjust"] }}
+              {% if data["san-"+v+"-create-teachingadjust"] == "Yes" %}<br>
+                {{ data["san-"+v+"-create-teachingadjust-details"] }}
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> adjustments to teaching</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Adjustments to environment or materials
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-environmentadjust"] }}
+              {% if data["san-"+v+"-create-environmentadjust"] == "Yes" %}<br>
+                {{ data["san-"+v+"-create-environmentadjust-details"] }}
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> adjustments to environment or materials</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Specific knowledge or training 
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-knowledgeskills"] }}
+              {% if data["san-"+v+"-create-knowledgeskills"] == "Yes" %}<br>
+                {{ data["san-"+v+"-create-knowledgeskills-details"] }}
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> specific knowledge or training </span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Exam access arrangements
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-examsassessments"] }}
+              {% if data["san-"+v+"-create-examsassessments"] == "Yes" %}<br>
+                {{ data["san-"+v+"-create-examsassessments-details"] }}
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> exam access arrangements </span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Has a current EHCP
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-ehcp"] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> current EHCP </span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              LNSP support in the classroom
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-lnspsupport"] }}
+              {% if data["san-"+v+"-create-lnspsupport"] == "Yes" %}<br>
+                {{ data["san-"+v+"-create-lnspsupport-details"] }}
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> LNSP support in the classroom</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Review date
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data["san-"+v+"-create-reviewdate"] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="javascript:preventDefault();">Change<span class="govuk-visually-hidden"> review date</span></a>
+            </dd>
+          </div>
+
+        </dl>
+
+        <input type="hidden" name="san-{{v}}-create-complete" value="true">
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+        
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

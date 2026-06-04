@@ -1,0 +1,427 @@
+[
+    {
+        "prisonerNumber": "G2911GD",
+        "firstName": "Chris",
+        "lastName": "  Atkinson",
+        "dateOfBirth": "28 Jun 1995",
+        "enteredPrison": "7 Feb 2025",
+        "releaseDate": "N/A",
+        "prisonId": "BXI",
+        "cellLocation": "A-2-014",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due",
+        "needsSupport": [
+            {
+                "needsSupportCategory": "Attention, organising and time management",
+                "needsSupportDescription": "Keep meetings short to prevent attention wandering<br>Check in regularly to bring him back to tasks<br>Encourage him not to over exercise<br>Ensure he's eating enough to match the high level of exercise",
+                "needsSupportDate": "4 Jan 2025",
+                "needsSupportAuthor": "J. Smith"
+            },
+            {
+                "needsSupportCategory": "Memory",
+                "needsSupportDescription": "Ask to repeat back instructions to check he understands<br>Keep instructions clear and simple<br>Break information down into small chunks<br>Remind him of appointments regularly<br>Remind him of previous conversations as he may not remember",
+                "needsSupportDate": "4 Jan 2025",
+                "needsSupportAuthor": "J. Smith"
+            },
+            {
+                "needsSupportCategory": "Language and communication skills",
+                "needsSupportDescription": "Have patience and give him time to say things.<br>Don't put words in his mouth or finish sentences for him.<br>Check on him regularly to see if he needs help<br>Remind him of boundaries if he does things he shouldn't, like touching staff member's arms, but don't get angry - it's an automatic behaviour",
+                "needsSupportDate": "4 Jan 2025",
+                "needsSupportAuthor": "J. Smith"
+            },
+            {
+                "needsSupportCategory": "Emotions and feelings",
+                "needsSupportDescription": "Have patience with him and give him time to get words out.<br>Remind him of boundaries",
+                "needsSupportDate": "4 Jan 2025",
+                "needsSupportAuthor": "J. Smith"
+            }
+        ],
+        "needsChallenges": [
+            {
+                "needsChallengeCategory": "Attention, organising and time management",
+                "needsChallengeDescription": "Finds it difficult to stay focussed and engaged.<br>Struggles with executive function - planning and organising things and managing time<br>Attention wanders if in a meeting or doing something for too long",
+                "needsChallengeDate": "4 Jan 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Memory",
+                "needsChallengeDescription": "Very forgetful - will not remember things unless reminded often<br>Loses things often<br>Struggles to remember instructions, especially long ones<br>Forgets appointments unless reminded frequently<br>Forgets conversations and other things that happened in the past",
+                "needsChallengeDate": "4 Jan 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Language and communication skills",
+                "needsChallengeDescription": "Struggles to ask for help when needed<br>Struggles to get words out and to put thoughts into words. Gets frustrated by this - may come across as rude.<br>Can get confused easily<br>Demonstrates some out of control behaviours like touching people or things, putting fingers in his mouth, tapping his arms and saying things out of context e.g “mars bar”. These are automatic behaviours, not deliberate.<br>Can appear aggressive when he feels passionately about something.",
+                "needsChallengeDate": "4 Jan 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Emotions and feelings",
+                "needsChallengeDescription": "Gets frustrated when struggling to get words out and may come across as rude.<br>Triggered when people think he is 'stupid'.<br>Can appear aggressive when he feels passionately about something.<br>Struggles to cope when his routine is changed.",
+                "needsChallengeDate": "4 Jan 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Literacy skills",
+                "needsChallengeDescription": "Struggles to fill out forms and apps - often needs help ",
+                "needsChallengeDate": "12 Mar 2025",
+                "needsChallengeAuthor": "G. Robinson"
+            }
+        ],
+        "needsStrengths": [
+            {
+                "needsStrengthCategory": "Attention, organising and time management",
+                "needsStrengthDescription": "Follows and maintains routines well<br>Uses exercise to cope and builds that into his routine (though can over exercise)",
+                "needsStrengthDate": "4 Jan 2025",
+                "needsStrengthAuthor": "J. Smith"
+            },
+            {
+                "needsStrengthCategory": "Memory",
+                "needsStrengthDescription": "Knows how to help himself with coping techniques eg tapping his arms helps him to remember words",
+                "needsStrengthDate": "4 Jan 2025",
+                "needsStrengthAuthor": "J. Smith"
+            },
+            {
+                "needsStrengthCategory": "Emotions and feelings",
+                "needsStrengthDescription": "Good sense of humour - will laugh at himself.<br>Knows exercise helps him manage his emotions and makes lots of time for it.<br>Close with children and sister.",
+                "needsStrengthDate": "4 Jan 2025",
+                "needsStrengthAuthor": "J. Smith"
+            }
+        ],
+        "needsALNscreener": [
+            {
+                "needsALNscreenerCategory": "Attention, organising and time management",
+                "needsALNscreenerDescription": "Challenges: Focusing - Finishing tasks - Time allocation/prioritisation - Self-organised (routine) - Task initiation - Forward planning  - Attention to detail - Task switching",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Attention, organising and time management",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Memory",
+                "needsALNscreenerDescription": "Challenges: Long-term memory - Short-term memory",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Memory",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Language and communication skills",
+                "needsALNscreenerDescription": "Challenges: Turn-taking - Communication - Word finding",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Language and communication skills",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Emotions and feelings",
+                "needsALNscreenerDescription": "Challenges: Impulse control - Emotional control - Managing change (adaptability) - Confidence - Calm",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Emotions and feelings",
+                "needsALNscreenerDescription": "Strengths: Empathy",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Literacy skills",
+                "needsALNscreenerDescription": "Challenges: Reading - Spelling - Writing - Reading comprehension - Tracking - Language decoding",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Literacy skills",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "28 Sep 2024",
+                "needsALNscreenerAuthor": "M. Warner"
+            }
+        ]
+    },
+    {
+        "prisonerNumber": "A8545DY",
+        "firstName": "Andrew",
+        "lastName": "Carter",
+        "dateOfBirth": "17 Aug 1976",
+        "enteredPrison": "28 May 2024",
+        "releaseDate": "1 Jul 2026",
+        "prisonId": "BXI",
+        "cellLocation": "A-1-039",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due",
+        "needsSupport": [
+            {
+                "needsSupportCategory": "Emotions and feelings",
+                "needsSupportDescription": "Use simple words<br>Take things at a slow pace<br>Give them time - they may take several attempts to get something right so be patient<br>Get them to repeat things back so you know they have understood<br>Break things down - give them smaller, achievable targets<br>Manage their expectations - if something gets cancelled, explain why as they will not understand and become frustrated ",
+                "needsSupportDate": "10 Feb 2025",
+                "needsSupportAuthor": "J. Smith"
+            },
+            {
+                "needsSupportCategory": "Literacy skills",
+                "needsSupportDescription": "Give them things in writing after meetings to take away - use simple language and large fonts<br>Is a visual learner - tell them how to do something first<br>Talk them through instructions rather than writing them down<br>Include a picture of a clock on appointment slips (where possible) as well as writing the time in",
+                "needsSupportDate": "10 Feb 2025",
+                "needsSupportAuthor": "J. Smith"
+            }
+        ],
+        "needsChallenges": [
+            {
+                "needsChallengeCategory": "Emotions and feelings",
+                "needsChallengeDescription": "Is emotional<br>Has low confidence<br>Overthinks things, focuses on the negative<br>Will go quiet if struggling<br>Can have angry outbursts if they aren’t helped, gets frustrated, can lead to crying<br>Is not concerned that outbursts are in front of others, can be disruptive<br>Hates not being busy",
+                "needsChallengeDate": "4 Jan 2025",
+                "needsChallengeAuthor": "J. Smith"
+            }
+        ],
+        "needsStrengths": [
+            {
+                "needsStrengthCategory": "Emotions and feelings",
+                "needsStrengthDescription": "Is chatty and likes speaking in front of others<br>Wants to improve communication with staff<br>Wants to get into work and get ROTL",
+                "needsStrengthDate": "4 Jan 2025",
+                "needsStrengthAuthor": "J. Smith"
+            }
+        ],
+        "needsALNscreener": [
+            {
+                "needsALNscreenerCategory": "Emotions and feelings",
+                "needsALNscreenerDescription": "Challenges: None recorded",
+                "needsALNscreenerDate": "18 Nov 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Emotions and feelings",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "18 Nov 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Literacy skills",
+                "needsALNscreenerDescription": "Challenges: Reading - Spelling - Writing - Alphabet ordering",
+                "needsALNscreenerDate": "18 Nov 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Literacy skills",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "18 Nov 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Numeracy skills",
+                "needsALNscreenerDescription": "Challenges: Maths literacy - Maths confidence - Speed of calculation - Number recall - Number sequencing",
+                "needsALNscreenerDate": "18 Nov 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Numeracy skills",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "18 Nov 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Physical skills and coordination",
+                "needsALNscreenerDescription": "Challenges: Handwriting - Balance - Fine motor skills - Learning new skills",
+                "needsALNscreenerDate": "18 Nov 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Physical skills and coordination",
+                "needsALNscreenerDescription": "Strengths: Stamina - Folding, packing, and sorting",
+                "needsALNscreenerDate": "18 Nov 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            }
+        ]
+    },
+    {
+        "prisonerNumber": "G2911GX",
+        "firstName": "Peter",
+        "lastName": "Dallinger",
+        "dateOfBirth": "10 Jun 1969",
+        "enteredPrison": "28 May 2024",
+        "releaseDate": "1 Jul 2026",
+        "prisonId": "BXI",
+        "cellLocation": "A-1-039",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due",
+        "needsSupport": [
+            {
+                "needsSupportCategory": "Attention, organising and time management",
+                "needsSupportDescription": "Print out their timetable in large font each week.<br>They are allowed a wrist watch and alarm clock.<br>Prompt them for their next activity if possible.<br>Break tasks downs and give enough time to do them.<br>Give them time to understand instructions - break these down into no more than 3 steps at time.<br>Limit distractions.",
+                "needsSupportDate": "4 Jan 2025",
+                "needsSupportAuthor": "J. Smith"
+            }
+        ],
+        "needsChallenges": [
+            {
+                "needsChallengeCategory": "Attention, organising and time management",
+                "needsChallengeDescription": "Finds it hard to manage their time.<br>Worries they will be late and becomes anxious.<br>When they are late can get angry if it's made an issue.",
+                "needsChallengeDate": "12 Apr 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Attention, organising and time management",
+                "needsChallengeDescription": "Needs help focussing to plan and finish  an activity.<br>Can get distracted and try to task switch and not finish.",
+                "needsChallengeDate": "27 Mar 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Attention, organising and time management",
+                "needsChallengeDescription": "Finds it hard to follow lengthy instructions.<br>Gets frustrated if they do not understand what they need to do.<br>Doesn't feel confident to speak up.",
+                "needsChallengeDate": "27 Mar 2025",
+                "needsChallengeAuthor": "J. Smith"
+            },
+            {
+                "needsChallengeCategory": "Literacy skills",
+                "needsChallengeDescription": "Finds it hard to write quickly, has poor grip.<br>Can get frustrated if needs to note things down quickly.",
+                "needsChallengeDate": "27 Mar 2025",
+                "needsChallengeAuthor": "J. Smith"
+            }
+        ],
+        "needsStrengths": [
+            {
+                "needsStrengthCategory": "Attention, organising and time management",
+                "needsStrengthDescription": "Hard worker - strives for perfection.",
+                "needsStrengthDate": "4 Jan 2025",
+                "needsStrengthAuthor": "J. Smith"
+            }
+        ],
+        "needsALNscreener": [
+            {
+                "needsALNscreenerCategory": "Attention, organising and time management",
+                "needsALNscreenerDescription": "Challenges: None recorded",
+                "needsALNscreenerDate": "28 Sep 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Attention, organising and time management",
+                "needsALNscreenerDescription": "Strengths: None recorded",
+                "needsALNscreenerDate": "28 Sep 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Literacy skills",
+                "needsALNscreenerDescription": "Challenges: Writing - Alphabet ordering",
+                "needsALNscreenerDate": "28 Sep 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            },
+            {
+                "needsALNscreenerCategory": "Literacy skills",
+                "needsALNscreenerDescription": "Strengths: Reading - Language decoding",
+                "needsALNscreenerDate": "28 Sep 2025",
+                "needsALNscreenerAuthor": "M. Warner"
+            }
+        ]
+    },
+    {
+        "prisonerNumber": "A8517DY",
+        "firstName": "Charlie",
+        "lastName": "  Green",
+        "dateOfBirth": "1 Jan 2001",
+        "enteredPrison": "28 May 2024",
+        "releaseDate": "1 Jul 2026",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false
+    },
+    {
+        "prisonerNumber": "A8659DY",
+        "firstName": "Anthony",
+        "lastName": " Hamilton",
+        "dateOfBirth": "1 Jan 2001",
+        "enteredPrison": "28 May 2024",
+        "releaseDate": "1 Jul 2026",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false
+    },
+    {
+        "prisonerNumber": "A8773DY",
+        "firstName": "Ryan",
+        "lastName": " Holmes",
+        "dateOfBirth": "22 Aug 1991",
+        "enteredPrison": "22 April 2022",
+        "releaseDate": "N/A",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due"
+    },
+    {
+        "prisonerNumber": "A8494DY",
+        "firstName": "Laurence",
+        "lastName": " Miller",
+        "dateOfBirth": "1 Jan 2005",
+        "enteredPrison": "28 May 2024",
+        "releaseDate": "1 Jul 2026",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due"
+    },
+    {
+        "prisonerNumber": "A9420DY",
+        "firstName": "Jamie",
+        "lastName": " Ross",
+        "dateOfBirth": "12 Apr 1998",
+        "enteredPrison": "20 Oct 2022",
+        "releaseDate": "N/A",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due"
+    },
+    {
+        "prisonerNumber": "A8689DY",
+        "firstName": "John",
+        "lastName": " Turner",
+        "dateOfBirth": "27 Sep 1983",
+        "enteredPrison": "9 May 2022",
+        "releaseDate": "N/A",
+        "prisonId": "BXI",
+        "cellLocation": "A-2-015",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false,
+        "planStatus": "Due"
+    },
+    {
+        "prisonerNumber": "A8560DY",
+        "firstName": "Nigel",
+        "lastName": "  Walker",
+        "dateOfBirth": "1 Jan 2001",
+        "enteredPrison": "28 May 2024",
+        "releaseDate": "1 Jul 2026",
+        "prisonId": "BXI",
+        "cellLocation": "RECP",
+        "legalStatus": "SENTENCED",
+        "recall": false,
+        "indeterminateSentence": false
+    }
+]
