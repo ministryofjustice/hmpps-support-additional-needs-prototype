@@ -1,3 +1,9 @@
 {
-  "serviceName": "Support for Additional Needs Prototypes"
+  "serviceName": "Support for additional needs prototype",
+  "useServiceNavigation": true,
+  "plugins": {
+    "govuk-frontend": {
+      "rebrand": true
+    }
+  }
 }

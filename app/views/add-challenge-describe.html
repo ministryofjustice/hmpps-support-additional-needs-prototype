@@ -1,0 +1,69 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}Add a challenge and support{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <a class="govuk-back-link" href="/">Back</a>
+
+  <form method="get" action="add-challenge-category.html">
+
+    {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+    {{ govukRadios({
+      hint: {
+        text: "Add a challenge and support"
+      },
+      items: [
+        {
+          value: "Cognition and learning",
+          text: "Cognition and learning",
+          hint: {
+            text: "things like remembering and recalling information, reading, writing, spelling and maths"
+          }
+        },
+        {
+          value: "Social, emotional and mental health",
+          text: "Social, emotional and mental health",
+          hint: {
+            text: "things like confidence, empathy, managing emotions and impulses"
+          }
+        },
+        {
+          value: "Communication and language",
+          text: "Communication and language",
+          hint: {
+            text: "things like taking turns, listening and language fluency"
+          }
+        },
+        {
+          value: "Sensory and physical",
+          text: "Sensory and physical",
+          hint: {
+            text: "things like co-ordination, stamina and fine motor skills, reacting to environments or situations eg noise or being touched"
+          }
+        }
+      ],
+      name: "challengeCategory",
+      fieldset: {
+        legend: {
+          text: "Select a category of challenge for Chris Atkinson",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      }
+    }) }}
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    <div class="govuk-!-margin-top-6">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}
