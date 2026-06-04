@@ -1,0 +1,70 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}Select category{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <!-- ✅ Back link should be a real link -->
+  <a class="govuk-back-link" href="add-strength-category.html">Back</a>
+
+  <form method="get" action="add-strength-describe.html">
+
+    <p class="govuk-caption-l">Add strength</p>
+    <h1 class="govuk-heading-l">Select category</h1>
+
+    {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+    {{ govukRadios({
+      name: "strengthCategory",
+      items: [
+        {
+          value: "cognition-learning",
+          text: "Cognition and learning",
+          hint: {
+            text: "things like remembering and recalling information, reading, writing, spelling and maths"
+          }
+        },
+        {
+          value: "semh",
+          text: "Social, emotional and mental health",
+          hint: {
+            text: "things like confidence, empathy, managing emotions and impulses"
+          }
+        },
+        {
+          value: "communication-language",
+          text: "Communication and language",
+          hint: {
+            text: "things like taking turns, listening and language fluency"
+          }
+        },
+        {
+          value: "sensory-physical",
+          text: "Sensory and physical",
+          hint: {
+            text: "things like co-ordination, stamina and fine motor skills, reacting to environments or situations such as noise or being touched"
+          }
+        },
+        {
+          value: "general",
+          text: "General",
+          hint: {
+            text: "any strength not covered by the categories"
+          }
+        }
+      ]
+    }) }}
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    <div class="govuk-!-margin-top-6">
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}Add a strength{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <a href="add-strength-category.html" class="govuk-back-link">Back</a>
+
+  {% set categories = {
+    "cognition-learning": "Cognition and learning",
+    "semh": "Social, emotional and mental health",
+    "communication-language": "Communication and language",
+    "sensory-physical": "Sensory and physical",
+    "general": "General"
+  } %}
+
+  <p class="govuk-caption-xl">Add strength</p>
+
+  <h1 class="govuk-heading-xl">
+    Add {{ categories[data['strengthCategory']] | default('strength') }} strength
+  </h1>
+
+  <!-- ✅ FIXED FORM -->
+  <form action="/add-strength" method="post">
+
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--m" for="strength_description">
+        Description of strength
+      </label>
+
+      <span class="govuk-hint">
+        Note the things they are good at and enjoy.
+      </span>
+
+      <div class="govuk-character-count" data-module="govuk-character-count">
+
+        <!-- ✅ FIXED NAME -->
+        <textarea
+          class="govuk-textarea"
+          id="strength_description"
+          name="strength_description"
+          rows="6"
+          maxlength="750"
+        ></textarea>
+
+        <div class="govuk-hint govuk-character-count__status">
+          You have 750 characters remaining
+        </div>
+
+      </div>
+    </div>
+
+    <fieldset class="govuk-fieldset govuk-form-group">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h2 class="govuk-heading-m" style="margin: 0;">
+          How was this strength identified?
+        </h2>
+      </legend>
+
+      <p class="govuk-hint">Select all that apply</p>
+
+      <div class="govuk-checkboxes govuk-checkboxes--small">
+
+        <!-- ✅ FIXED NAME -->
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input"
+                 id="observed-education"
+                 name="identified_by"
+                 type="checkbox"
+                 value="Observed in education, skills and work">
+          <label class="govuk-label govuk-checkboxes__label" for="observed-education">
+            Observed in education, skills and work
+          </label>
+        </div>
+
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input"
+                 id="observed-prison"
+                 name="identified_by"
+                 type="checkbox"
+                 value="Observed in the wider prison">
+          <label class="govuk-label govuk-checkboxes__label" for="observed-prison">
+            Observed in the wider prison
+          </label>
+        </div>
+
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input"
+                 id="self-disclosure"
+                 name="identified_by"
+                 type="checkbox"
+                 value="Self-disclosure by the individual">
+          <label class="govuk-label govuk-checkboxes__label" for="self-disclosure">
+            Self-disclosure by the individual
+          </label>
+        </div>
+
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input"
+                 id="formal-processes"
+                 name="identified_by"
+                 type="checkbox"
+                 value="Through formal processes such as referrals, assessments or screening tools">
+          <label class="govuk-label govuk-checkboxes__label" for="formal-processes">
+            Through formal processes such as referrals, assessments or screening tools
+          </label>
+        </div>
+
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input"
+                 id="identified-other"
+                 name="identified_by"
+                 type="checkbox"
+                 value="Other">
+          <label class="govuk-label govuk-checkboxes__label" for="identified-other">
+            Other
+          </label>
+        </div>
+
+        <div id="other-details-conditional" class="govuk-checkboxes__conditional">
+          <div class="govuk-form-group govuk-form-group--m">
+            <label class="govuk-label" for="other_details">Add details</label>
+
+            <!-- ✅ FIXED NAME -->
+            <input class="govuk-input govuk-input--width-20"
+                   id="other_details"
+                   name="other_details"
+                   type="text">
+          </div>
+        </div>
+
+      </div>
+    </fieldset>
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    <div class="govuk-!-margin-top-6">
+      {{ govukButton({
+        text: "Add strength"
+      }) }}
+    </div>
+
+  </form>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var otherCheckbox = document.getElementById('identified-other')
+    var conditional = document.getElementById('other-details-conditional')
+
+    function toggleOtherDetails () {
+      conditional.style.display = otherCheckbox.checked ? 'block' : 'none'
+    }
+
+    otherCheckbox.addEventListener('change', toggleOtherDetails)
+    toggleOtherDetails()
+  })
+</script>
+
+{% endblock %}
