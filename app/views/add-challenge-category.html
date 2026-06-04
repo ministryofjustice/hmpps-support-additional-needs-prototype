@@ -13,8 +13,8 @@
     Add {{ data['challengeCategory'] | default('Nothing selected') }} challenge and support for Chris Atkinson
   </h1>
 
-  <!-- ✅ FIXED: method changed to GET -->
-  <form action="/add-challenge-identified" method="get">
+  <!-- ✅ ✅ ✅ FIXED: method must be POST -->
+  <form method="post" action="/add-challenge-identified">
 
     <!-- ✅ DESCRIPTION -->
     <div class="govuk-form-group">
@@ -26,10 +26,11 @@
         You can include triggers, signs they are struggling and when this happens
       </div>
 
+      <!-- ✅ ✅ ✅ ADDED VALUE PERSISTENCE -->
       <textarea class="govuk-textarea"
         id="challenge-description"
         name="challenge-description"
-        rows="6"></textarea>
+        rows="6">{{ data['challenge-description'] }}</textarea>
 
       <div class="govuk-hint">
         You have 750 characters remaining
@@ -46,10 +47,11 @@
         Add concise support strategies to help with the challenge
       </div>
 
+      <!-- ✅ ✅ ✅ ADDED VALUE PERSISTENCE -->
       <textarea class="govuk-textarea"
         id="support-needed"
         name="support-needed"
-        rows="6"></textarea>
+        rows="6">{{ data['support-needed'] }}</textarea>
 
       <div class="govuk-hint">
         You have 750 characters remaining
@@ -71,10 +73,14 @@
 
         <div class="govuk-checkboxes govuk-checkboxes--small">
           <div class="govuk-checkboxes__item">
+
+            <!-- ✅ ✅ ✅ PRESERVE CHECKED STATE -->
             <input class="govuk-checkboxes__input"
                    id="priority-need"
                    name="priority-need"
-                   type="checkbox">
+                   type="checkbox"
+                   {% if data['priority-need'] %}checked{% endif %}>
+
             <label class="govuk-label govuk-checkboxes__label" for="priority-need">
               Yes - this is a priority need
             </label>
@@ -99,34 +105,20 @@
 
           <div class="govuk-checkboxes govuk-checkboxes--small">
 
+            {% set selectedAreas = data['affected-areas'] or [] %}
+
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Literacy skills">
+              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Literacy skills"
+                {% if "Literacy skills" in selectedAreas %}checked{% endif %}>
               <label class="govuk-label govuk-checkboxes__label">Literacy skills</label>
               <div class="govuk-hint govuk-checkboxes__hint">things like reading, writing and spelling</div>
             </div>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Numeracy skills">
+              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Numeracy skills"
+                {% if "Numeracy skills" in selectedAreas %}checked{% endif %}>
               <label class="govuk-label govuk-checkboxes__label">Numeracy skills</label>
               <div class="govuk-hint govuk-checkboxes__hint">things like maths and managing money</div>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Attention, organising and time management">
-              <label class="govuk-label govuk-checkboxes__label">Attention, organising and time management</label>
-              <div class="govuk-hint govuk-checkboxes__hint">things like planning, task management, tidiness and focus</div>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Processing speed">
-              <label class="govuk-label govuk-checkboxes__label">Processing speed</label>
-              <div class="govuk-hint govuk-checkboxes__hint">things like taking time to understand and follow instructions</div>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Memory">
-              <label class="govuk-label govuk-checkboxes__label">Memory</label>
-              <div class="govuk-hint govuk-checkboxes__hint">things like remembering and recalling information</div>
             </div>
 
           </div>
@@ -147,30 +139,17 @@
 
           <div class="govuk-checkboxes govuk-checkboxes--small">
 
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input"
-                     name="affected-areas"
-                     type="checkbox"
-                     value="Physical skills and coordination">
-              <label class="govuk-label govuk-checkboxes__label">
-                Physical skills and coordination
-              </label>
-              <div class="govuk-hint govuk-checkboxes__hint">
-                things like learning new skills, co-ordination, stamina and fine motor skills
-              </div>
-            </div>
+            {% set selectedAreas = data['affected-areas'] or [] %}
 
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input"
                      name="affected-areas"
                      type="checkbox"
-                     value="Sensory">
+                     value="Physical skills and coordination"
+                     {% if "Physical skills and coordination" in selectedAreas %}checked{% endif %}>
               <label class="govuk-label govuk-checkboxes__label">
-                Sensory
+                Physical skills and coordination
               </label>
-              <div class="govuk-hint govuk-checkboxes__hint">
-                things like reacting to environments or situations such as noise or being touched
-              </div>
             </div>
 
           </div>

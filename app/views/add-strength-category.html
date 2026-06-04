@@ -5,10 +5,11 @@
 {% block content %}
 <div class="govuk-width-container">
 
-  <!-- ✅ Back link should be a real link -->
-  <a class="govuk-back-link" href="add-strength-category.html">Back</a>
+  <!-- ✅ FIXED: back link goes to previous page (or wherever appropriate) -->
+  <a class="govuk-back-link" href="/">Back</a>
 
-  <form method="get" action="add-strength-describe.html">
+  <!-- ✅ ✅ ✅ FIXED: POST + correct route -->
+  <form method="post" action="/add-strength-describe">
 
     <p class="govuk-caption-l">Add strength</p>
     <h1 class="govuk-heading-l">Select category</h1>
@@ -17,6 +18,9 @@
 
     {{ govukRadios({
       name: "strengthCategory",
+
+      value: data['strengthCategory'],  // ✅ preserves selection
+
       items: [
         {
           value: "cognition-learning",

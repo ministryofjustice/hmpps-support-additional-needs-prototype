@@ -17,19 +17,20 @@
     Select all that apply
   </p>
 
-  <!-- ✅ ✅ ✅ FIXED ROUTE (CRITICAL CHANGE) -->
   <form action="/add-challenge-identified" method="post">
+
+    {% set selected = data['identified-by'] or [] %}
 
     <fieldset class="govuk-fieldset govuk-form-group">
       <div class="govuk-checkboxes govuk-checkboxes--small">
 
-        <!-- ✅ HUMAN-READABLE VALUES -->
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input"
                  id="observed-education"
                  name="identified-by"
                  type="checkbox"
-                 value="Observed in education, skills and work">
+                 value="Observed in education, skills and work"
+                 {% if "Observed in education, skills and work" in selected %}checked{% endif %}>
           <label class="govuk-label govuk-checkboxes__label" for="observed-education">
             Observed in education, skills and work
           </label>
@@ -40,7 +41,8 @@
                  id="observed-prison"
                  name="identified-by"
                  type="checkbox"
-                 value="Observed in the wider prison">
+                 value="Observed in the wider prison"
+                 {% if "Observed in the wider prison" in selected %}checked{% endif %}>
           <label class="govuk-label govuk-checkboxes__label" for="observed-prison">
             Observed in the wider prison
           </label>
@@ -51,7 +53,8 @@
                  id="self-disclosure"
                  name="identified-by"
                  type="checkbox"
-                 value="Self-disclosure by the individual">
+                 value="Self-disclosure by the individual"
+                 {% if "Self-disclosure by the individual" in selected %}checked{% endif %}>
           <label class="govuk-label govuk-checkboxes__label" for="self-disclosure">
             Self-disclosure by the individual
           </label>
@@ -62,13 +65,13 @@
                  id="formal-processes"
                  name="identified-by"
                  type="checkbox"
-                 value="Formal assessment or referral">
+                 value="Formal assessment or referral"
+                 {% if "Formal assessment or referral" in selected %}checked{% endif %}>
           <label class="govuk-label govuk-checkboxes__label" for="formal-processes">
             Formal assessment or referral
           </label>
         </div>
 
-        <!-- ✅ OTHER OPTION -->
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input"
                  id="identified-other"
@@ -76,7 +79,8 @@
                  type="checkbox"
                  value="Other"
                  aria-controls="other-details-conditional"
-                 aria-expanded="false">
+                 aria-expanded="false"
+                 {% if "Other" in selected %}checked{% endif %}>
           <label class="govuk-label govuk-checkboxes__label" for="identified-other">
             Other
           </label>
@@ -85,7 +89,7 @@
       </div>
     </fieldset>
 
-    <!-- ✅ CONDITIONAL INPUT -->
+    <!-- ✅ ✅ ✅ PRESERVE OTHER TEXT -->
     <div id="other-details-conditional" class="govuk-checkboxes__conditional govuk-!-margin-bottom-5" hidden>
       <div class="govuk-form-group">
         <label class="govuk-label" for="other-details">
@@ -94,7 +98,8 @@
         <input class="govuk-input govuk-input--width-20"
                id="other-details"
                name="other-details"
-               type="text">
+               type="text"
+               value="{{ data['other-details'] }}">
       </div>
     </div>
 
@@ -102,7 +107,6 @@
 
   </form>
 
-  <!-- ✅ SHOW/HIDE SCRIPT -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const checkbox = document.getElementById('identified-other')
