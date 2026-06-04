@@ -1,0 +1,34 @@
+      <!-- DPS MINI PROFILE -->
+      <div class="govuk-!-margin-bottom-6">
+        <div class="dps-mini-profile-header">
+            <!--  <img class="app-prisoner-photo" src="/public/images/desmond-photo.jpg" alt="Prisoner image"> -->
+            <dl>
+              <dt class="govuk-heading-s govuk-!-margin-bottom-0">
+                <a href="javascript:preventDefault();" class="govuk-link govuk-!-font-weight-bold">
+                  {{ prisoner.lastName }}, {{ prisoner.firstName }}
+                </a>
+              </dt>
+              <dd class="govuk-body">
+                  {{ prisoner.prisonerNumber}}
+              </dd>
+            </dl>
+            <dl>
+              <dt class="govuk-heading-s govuk-!-margin-bottom-0">Entered this prison on</dt>
+              <dd class="govuk-body">
+                {{ prisoner.enteredPrison }}
+              </dd>
+            </dl>
+            <dl>
+              <dt class="govuk-heading-s govuk-!-margin-bottom-0">Release date</dt>
+              <dd class="govuk-body">
+                {{ prisoner.releaseDate }}
+              </dd>
+            </dl>
+            <dl>
+              <dt class="govuk-heading-s govuk-!-margin-bottom-0">DOB</dt>
+              <dd class="govuk-body">
+                {{ prisoner.dateOfBirth }}
+              </dd>
+            </dl>
+        </div>
+      </div>

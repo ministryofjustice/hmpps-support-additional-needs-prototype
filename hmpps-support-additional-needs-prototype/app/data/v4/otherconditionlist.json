@@ -1,0 +1,27 @@
+[
+    {
+        "conditionName": "Disabilities or health conditions",
+        "conditionID": "otherdisabilities",
+        "conditionDetail": true
+    },
+    {
+        "conditionName": "Language, speech or communication disorders",
+        "conditionID": "otherlanguage",
+        "conditionDetail": true
+    },
+    {
+        "conditionName": "Learning difficulties",
+        "conditionID": "otherlearning",
+        "conditionDetail": true
+    },
+    {
+        "conditionName": "Long term medical conditions",
+        "conditionID": "otherlongterm",
+        "conditionDetail": true
+    },
+    {
+        "conditionName": "Neurological conditions",
+        "conditionID": "otherneurological",
+        "conditionDetail": true
+    }
+]

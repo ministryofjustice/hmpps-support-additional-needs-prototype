@@ -1,0 +1,84 @@
+{% extends "/layouts/v5.html" %}
+{% set pageTitle = "Confirm condition type" %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <a href="/{{ v }}/san/{{ ref }}/conditions/add" class="govuk-back-link govuk-!-margin-bottom-2">Back</a>
+
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-6">
+        Select if the condition is self-declared or a confirmed diagnosis
+      </h1>
+
+      {% if selectedConditions and selectedConditions.length %}
+        <div class="govuk-inset-text">
+          <p class="govuk-body govuk-!-margin-bottom-1">You selected:</p>
+          <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0">
+            {% for c in selectedConditions %}
+              <li>{{ c }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h2 class="govuk-fieldset__heading">
+                Select condition type
+              </h2>
+            </legend>
+
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input"
+                       id="self-declared"
+                       name="condition-type"
+                       type="radio"
+                       value="Self-declared">
+                <label class="govuk-label govuk-radios__label" for="self-declared">
+                  Self-declared
+                </label>
+              </div>
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input"
+                       id="confirmed-diagnosis"
+                       name="condition-type"
+                       type="radio"
+                       value="Confirmed diagnosis">
+                <label class="govuk-label govuk-radios__label" for="confirmed-diagnosis">
+                  Confirmed diagnosis
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="condition-detail">
+            Provide more detail
+          </label>
+          <span id="condition-detail-hint" class="govuk-hint">
+            Such as date, circumstances and evidence
+          </span>
+          <textarea class="govuk-textarea"
+                    id="condition-detail"
+                    name="condition-detail"
+                    rows="5">{{ data["condition-detail"] }}</textarea>
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button">
+          Save condition
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

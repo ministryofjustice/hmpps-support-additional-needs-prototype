@@ -1,0 +1,37 @@
+element.style {
+}
+
+.alerts-list-no-flex>li, .alerts-list>li, .govuk-list>li {
+    margin-bottom: 5px;
+}
+
+.alert-status--care-experienced {
+    color: #3f90ae;
+    border-color: #3f90ae;
+}
+
+.alert-status {
+    text-transform: uppercase;
+    min-height: 30px;
+}
+
+.non-association, .cat-a-status, .alert-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid;
+    padding: 5px 10px;
+    margin-left: 0;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    min-width: 100px;
+    user-select: none;
+}
+
+* {
+    box-sizing: border-box;
+}

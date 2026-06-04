@@ -1,0 +1,47 @@
+{% extends "/layouts/v3.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form method="post">
+        <span class="govuk-caption-l">Create an education support plan</span>
+        <h1 class="govuk-heading-l">Set a review date for Chris Atkinson’s education support plan</h1>
+
+        {%- from "moj/components/date-picker/macro.njk" import mojDatePicker -%}
+
+        {{ mojDatePicker({
+          id: "san-"+v+"-create-reviewdate",
+          name: "san-"+v+"-create-reviewdate",
+          label: {
+            text: "Review date"
+          },
+          hint: {
+            text: "Must be within 3 months of plan creation"
+          },
+          value: data["san-"+v+"-create-reviewdate"]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

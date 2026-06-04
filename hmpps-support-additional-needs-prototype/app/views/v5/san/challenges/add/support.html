@@ -1,0 +1,120 @@
+{% extends "/layouts/v5.html" %}
+
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+      text: "Back",
+      href: "/" + v + "/san/" + ref + "/challenges/add/category"
+    }) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+
+{% for prisoner in data[v+'prisoners'] %}
+  {% if prisoner.prisonerNumber == ref %}
+
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        
+        {# 1. Get the category from session data #}
+        {% set selectedCat = data['san-' + v + '-' + ref + '-challenge-category'] %}
+
+        {# 2. Create the mapping for the dynamic hint text #}
+        {% set hintMap = {
+          "Attention, organising and time management": "planning, task management, tidiness and focus",
+          "Emotions and feelings": "confidence, empathy, managing emotions and impulses",
+          "Language and communication skills": "taking turns, listening and language fluency",
+          "Literacy skills": "reading, writing and spelling",
+          "Memory": "remembering and recalling information",
+          "Numeracy skills": "maths and managing money",
+          "Physical skills and coordination": "learning new skills, co-ordination, stamina and fine motor skills",
+          "Processing speed": "taking time to understand and follow instructions",
+          "Sensory": "reacting to some environments or situations eg noise or being touched",
+          "General need": "what they find difficult"
+        } %}
+
+        {# 3. Determine the specific examples based on selection #}
+        {% set exampleText = hintMap[selectedCat] or "what they find difficult" %}
+
+        <form action="/{{ v }}/san/{{ ref }}/challenges/add/support" method="post">
+          
+          <span class="govuk-caption-l">Add a challenge and support</span>
+          <h1 class="govuk-heading-l">
+            Add {{ selectedCat | lower }} challenge for {{ prisoner.firstName }} {{ prisoner.lastName }}
+          </h1>
+
+          {# 1. Describe the challenge - Changed to maxlength for character count #}
+          {{ govukCharacterCount({
+            name: "san-" + v + "-" + ref + "-challenge-description",
+            id: "challenge-description",
+            maxlength: 500,
+            label: {
+              text: "Describe the challenge",
+              classes: "govuk-label--m",
+              isPageHeading: false
+            },
+            hint: {
+              text: "Details of what they find difficult, for example " + exampleText
+            }
+          }) }}
+
+          {# 2. Describe the support (Optional) - Changed to maxlength for character count #}
+          {{ govukCharacterCount({
+            name: "san-" + v + "-" + ref + "-support-description",
+            id: "support-description",
+            maxlength: 500,
+            label: {
+              text: "Describe the support needed (optional)",
+              classes: "govuk-label--m",
+              isPageHeading: false
+            },
+            hint: {
+              text: "Add concise support strategies to help with the challenge"
+            }
+          }) }}
+
+          {# 3. How was it identified #}
+          {{ govukCheckboxes({
+            name: "san-" + v + "-" + ref + "-challenge-identified",
+            fieldset: {
+              legend: {
+                text: "How was this challenge identified?",
+                isPageHeading: false,
+                classes: "govuk-fieldset__legend--m"
+              }
+            },
+            hint: {
+              text: "Select all that apply"
+            },
+            items: [
+              { value: "Direct observation in education, skills and work", text: "Direct observation in education, skills and work" },
+              { value: "Direct observation in the wider prison", text: "Direct observation in the wider prison" },
+              { value: "Through conversations with the individual", text: "Through conversations with the individual" },
+              { value: "Based on information shared by colleagues or other professionals", text: "Based on information shared by colleagues or other professionals" },
+              { value: "Through formal processes (eg. referrals, assessments)", text: "Through formal processes (eg. referrals, assessments)" },
+              { value: "Self-disclosure by the individual", text: "Self-disclosure by the individual" },
+              { value: "Through other screening tools used within the prison", text: "Through other screening tools used within the prison" },
+              { value: "Other", text: "Other" }
+            ]
+          }) }}
+
+          {{ govukButton({
+            text: "Save to profile"
+          }) }}
+        
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+{% endfor %}
+
+{% endblock %}

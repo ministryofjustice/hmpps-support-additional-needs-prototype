@@ -17,13 +17,12 @@
     Select all that apply
   </p>
 
-  <!-- ✅ ✅ ✅ FIXED ROUTE (CRITICAL CHANGE) -->
-  <form action="/add-challenge-identified" method="post">
+  <!-- ✅ ✅ ✅ FIXED FINAL ROUTE -->
+  <form action="/save-challenge" method="post">
 
     <fieldset class="govuk-fieldset govuk-form-group">
       <div class="govuk-checkboxes govuk-checkboxes--small">
 
-        <!-- ✅ HUMAN-READABLE VALUES -->
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input"
                  id="observed-education"
@@ -68,7 +67,6 @@
           </label>
         </div>
 
-        <!-- ✅ OTHER OPTION -->
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input"
                  id="identified-other"
@@ -85,8 +83,7 @@
       </div>
     </fieldset>
 
-    <!-- ✅ CONDITIONAL INPUT -->
-    <div id="other-details-conditional" class="govuk-checkboxes__conditional govuk-!-margin-bottom-5" hidden>
+    <div id="other-details-conditional" class="govuk-checkboxes__conditional govuk-!-margin-bottom-5">
       <div class="govuk-form-group">
         <label class="govuk-label" for="other-details">
           Add details
@@ -102,19 +99,20 @@
 
   </form>
 
-  <!-- ✅ SHOW/HIDE SCRIPT -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const checkbox = document.getElementById('identified-other')
       const conditional = document.getElementById('other-details-conditional')
 
-      function toggle() {
-        conditional.hidden = !checkbox.checked
-        checkbox.setAttribute('aria-expanded', checkbox.checked)
-      }
+      if (checkbox && conditional) {
+        function toggle() {
+          conditional.style.display = checkbox.checked ? 'block' : 'none'
+          checkbox.setAttribute('aria-expanded', checkbox.checked)
+        }
 
-      checkbox.addEventListener('change', toggle)
-      toggle()
+        checkbox.addEventListener('change', toggle)
+        toggle()
+      }
     })
   </script>
 

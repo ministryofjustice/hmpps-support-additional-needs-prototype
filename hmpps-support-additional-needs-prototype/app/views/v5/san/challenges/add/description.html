@@ -1,0 +1,56 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+  
+    <div class="govuk-grid-column-three-quarters">
+      <form method="post">
+        <span class="govuk-caption-l">Add challenge</span>
+        
+        {{ govukTextarea({
+          id: "san-"+v+"-"+ref+"-challenge-desc",
+          name: "san-"+v+"-"+ref+"-challenge-desc",
+          label: {
+            text: "Description of challenge for "+data["san-"+v+"-"+ref+"-challenge-category"] | lower,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          },
+          value: data["san-"+v+"-"+ref+"-challenge-desc"]
+        }) }}
+        
+        {{ govukTextarea({
+          id: "san-"+v+"-"+ref+"-challenge-identified",
+          name: "san-"+v+"-"+ref+"-challenge-identified",
+          label: {
+            text: "How was this challenge identified?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          },
+          hint: {
+            text: "You can include triggers, signs they are struggling and when this happens"
+          },
+          value: data["san-"+v+"-"+ref+"-challenge-identified"]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

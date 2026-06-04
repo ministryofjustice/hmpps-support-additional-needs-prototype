@@ -5,16 +5,28 @@
 {% block content %}
 <div class="govuk-width-container">
 
-  <a class="govuk-back-link" href="/">Back</a>
+  <!-- ✅ ✅ ✅ CORRECT DYNAMIC BACK LINK -->
+  <a class="govuk-back-link" href="javascript:history.back()">Back</a>
 
-  <form method="get" action="add-challenge-category.html">
+  <form method="post" action="/add-challenge-category">
 
     {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
     {{ govukRadios({
+      name: "challengeCategory",
+
       hint: {
         text: "Add a challenge and support"
       },
+
+      fieldset: {
+        legend: {
+          text: "Select a category of challenge for Chris Atkinson",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+
       items: [
         {
           value: "Cognition and learning",
@@ -44,15 +56,7 @@
             text: "things like co-ordination, stamina and fine motor skills, reacting to environments or situations eg noise or being touched"
           }
         }
-      ],
-      name: "challengeCategory",
-      fieldset: {
-        legend: {
-          text: "Select a category of challenge for Chris Atkinson",
-          isPageHeading: true,
-          classes: "govuk-fieldset__legend--l"
-        }
-      }
+      ]
     }) }}
 
     {% from "govuk/components/button/macro.njk" import govukButton %}

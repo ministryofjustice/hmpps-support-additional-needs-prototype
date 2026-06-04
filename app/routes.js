@@ -7,18 +7,30 @@ const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
 
+// ✅ SESSION SAFETY INITIALISATION
+router.use((req, res, next) => {
+  if (!req.session.data.challenges) {
+    req.session.data.challenges = []
+  }
+  if (!req.session.data.strengths) {
+    req.session.data.strengths = []
+  }
+  next()
+})
+
+
 // ---------- BASIC ROUTES ----------
 
 router.get('/overview', (req, res) => {
   res.render('overview')
 })
 
-router.get('/add-challenge-category', (req, res) => {
-  res.render('add-challenge-category')
-})
-
 router.get('/add-challenge-describe', (req, res) => {
   res.render('add-challenge-describe')
+})
+
+router.get('/add-challenge-category', (req, res) => {
+  res.render('add-challenge-category')
 })
 
 router.get('/add-challenge-identified', (req, res) => {
@@ -42,9 +54,20 @@ router.get('/strengths-tab', (req, res) => {
 })
 
 
-// ---------- ✅ SAVE CHALLENGE ----------
+// ---------- CHALLENGE FLOW ----------
+
+router.post('/add-challenge-category', (req, res) => {
+  res.redirect('/add-challenge-category')
+})
 
 router.post('/add-challenge-identified', (req, res) => {
+  res.redirect('/add-challenge-identified')
+})
+
+
+// ---------- ✅ SAVE CHALLENGE ----------
+
+router.post('/save-challenge', (req, res) => {
 
   const challenges = req.session.data.challenges || []
 
@@ -55,6 +78,11 @@ router.post('/add-challenge-identified', (req, res) => {
   } else if (!Array.isArray(identified)) {
     identified = [identified]
   }
+
+  // ✅ CLEAN BAD VALUES
+  identified = identified.filter(item =>
+    item !== '_unchecked' && item !== 'on'
+  )
 
   const otherDetails = req.body['other-details']
   if (identified.includes("Other") && otherDetails) {
@@ -80,14 +108,11 @@ router.post('/add-challenge-identified', (req, res) => {
     priority: isPriority,
     areas: areas,
     identifiedBy: identified,
-    date: new Date().toLocaleDateString('en-GB', {
+
+    formattedDate: new Date().toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
       year: 'numeric'
-    }),
-    time: new Date().toLocaleTimeString('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit'
     })
   }
 
@@ -96,11 +121,15 @@ router.post('/add-challenge-identified', (req, res) => {
 
   req.session.data.challenges = challenges
 
+  // ✅ OPTIONAL CLEANUP (prevents weird cloud reuse)
+  req.session.data['identified-by'] = ''
+  req.session.data['other-details'] = ''
+
   res.redirect('/challenges-and-support-tab')
 })
 
 
-// ---------- ✅ ✅ ✅ FIXED SAVE STRENGTH ----------
+// ---------- ✅ SAVE STRENGTH ----------
 
 router.post('/add-strength', (req, res) => {
 
@@ -114,11 +143,15 @@ router.post('/add-strength', (req, res) => {
     "general": "General"
   }
 
-  // ✅ FIXED FIELD NAMES
   let identified = req.body['identified_by']
 
   if (!identified) identified = []
   if (!Array.isArray(identified)) identified = [identified]
+
+  // ✅ CLEAN BAD VALUES
+  identified = identified.filter(item =>
+    item !== '_unchecked' && item !== 'on'
+  )
 
   const otherDetails = req.body['other_details']
 
@@ -129,17 +162,15 @@ router.post('/add-strength', (req, res) => {
   }
 
   const newStrength = {
-    category: categoryMap[req.session.data['strengthCategory']],
+    category: categoryMap[req.session.data['strengthCategory']] || 'General',
     description: req.body['strength_description'],
     identifiedBy: identified,
-    date: new Date().toLocaleDateString('en-GB', {
+
+    // ✅ FIXED (CRITICAL FOR CLOUD PARITY)
+    formattedDate: new Date().toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
       year: 'numeric'
-    }),
-    time: new Date().toLocaleTimeString('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit'
     })
   }
 
@@ -147,8 +178,12 @@ router.post('/add-strength', (req, res) => {
 
   req.session.data.strengths = strengths
 
+  // ✅ OPTIONAL CLEANUP
+  req.session.data['strength_description'] = ''
+  req.session.data['identified_by'] = ''
+  req.session.data['other_details'] = ''
+
   res.redirect('/strengths-tab')
 })
 
-
-// ✅ ✅ ✅ IMPORTANT: DO NOT ADD module.exports
+// ✅ DO NOT ADD module.exports

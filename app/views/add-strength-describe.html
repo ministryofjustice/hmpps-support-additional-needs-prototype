@@ -5,7 +5,8 @@
 {% block content %}
 <div class="govuk-width-container">
 
-  <a href="add-strength-category.html" class="govuk-back-link">Back</a>
+  <!-- Back link -->
+  <a href="javascript:history.back()" class="govuk-back-link">Back</a>
 
   {% set categories = {
     "cognition-learning": "Cognition and learning",
@@ -21,9 +22,9 @@
     Add {{ categories[data['strengthCategory']] | default('strength') }} strength
   </h1>
 
-  <!-- ✅ FIXED FORM -->
   <form action="/add-strength" method="post">
 
+    <!-- Description -->
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--m" for="strength_description">
         Description of strength
@@ -33,43 +34,35 @@
         Note the things they are good at and enjoy.
       </span>
 
-      <div class="govuk-character-count" data-module="govuk-character-count">
-
-        <!-- ✅ FIXED NAME -->
-        <textarea
-          class="govuk-textarea"
-          id="strength_description"
-          name="strength_description"
-          rows="6"
-          maxlength="750"
-        ></textarea>
-
-        <div class="govuk-hint govuk-character-count__status">
-          You have 750 characters remaining
-        </div>
-
-      </div>
+      <textarea
+        class="govuk-textarea"
+        id="strength_description"
+        name="strength_description"
+        rows="6"
+        maxlength="750"
+      ></textarea>
     </div>
 
+    <!-- ✅ UPDATED CHECKBOX GROUP -->
     <fieldset class="govuk-fieldset govuk-form-group">
+
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h2 class="govuk-heading-m" style="margin: 0;">
+        <h2 class="govuk-heading-m" style="margin:0;">
           How was this strength identified?
         </h2>
       </legend>
 
       <p class="govuk-hint">Select all that apply</p>
 
-      <div class="govuk-checkboxes govuk-checkboxes--small">
+      <div class="govuk-checkboxes govuk-!-margin-bottom-6" data-module="govuk-checkboxes">
 
-        <!-- ✅ FIXED NAME -->
         <div class="govuk-checkboxes__item">
           <input class="govuk-checkboxes__input"
                  id="observed-education"
                  name="identified_by"
                  type="checkbox"
                  value="Observed in education, skills and work">
-          <label class="govuk-label govuk-checkboxes__label" for="observed-education">
+          <label class="govuk-checkboxes__label govuk-body" for="observed-education">
             Observed in education, skills and work
           </label>
         </div>
@@ -80,7 +73,7 @@
                  name="identified_by"
                  type="checkbox"
                  value="Observed in the wider prison">
-          <label class="govuk-label govuk-checkboxes__label" for="observed-prison">
+          <label class="govuk-checkboxes__label govuk-body" for="observed-prison">
             Observed in the wider prison
           </label>
         </div>
@@ -91,7 +84,7 @@
                  name="identified_by"
                  type="checkbox"
                  value="Self-disclosure by the individual">
-          <label class="govuk-label govuk-checkboxes__label" for="self-disclosure">
+          <label class="govuk-checkboxes__label govuk-body" for="self-disclosure">
             Self-disclosure by the individual
           </label>
         </div>
@@ -102,61 +95,50 @@
                  name="identified_by"
                  type="checkbox"
                  value="Through formal processes such as referrals, assessments or screening tools">
-          <label class="govuk-label govuk-checkboxes__label" for="formal-processes">
+          <label class="govuk-checkboxes__label govuk-body" for="formal-processes">
             Through formal processes such as referrals, assessments or screening tools
           </label>
         </div>
 
+        <!-- ✅ ✅ ✅ NEW OTHER OPTION -->
         <div class="govuk-checkboxes__item">
-          <input class="govuk-checkboxes__input"
-                 id="identified-other"
-                 name="identified_by"
-                 type="checkbox"
-                 value="Other">
-          <label class="govuk-label govuk-checkboxes__label" for="identified-other">
+          <input
+            class="govuk-checkboxes__input"
+            id="identified-other"
+            name="identified_by"
+            type="checkbox"
+            value="Other"
+            data-aria-controls="conditional-identified-other"
+          >
+          <label class="govuk-checkboxes__label govuk-body" for="identified-other">
             Other
           </label>
         </div>
 
-        <div id="other-details-conditional" class="govuk-checkboxes__conditional">
-          <div class="govuk-form-group govuk-form-group--m">
-            <label class="govuk-label" for="other_details">Add details</label>
-
-            <!-- ✅ FIXED NAME -->
-            <input class="govuk-input govuk-input--width-20"
-                   id="other_details"
-                   name="other_details"
-                   type="text">
+        <div
+          class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+          id="conditional-identified-other"
+        >
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="other_details">
+              Add details
+            </label>
+            <input
+              class="govuk-input govuk-input--width-20"
+              id="other_details"
+              name="other_details"
+              type="text"
+            >
           </div>
         </div>
 
       </div>
+
     </fieldset>
 
-    {% from "govuk/components/button/macro.njk" import govukButton %}
-
-    <div class="govuk-!-margin-top-6">
-      {{ govukButton({
-        text: "Add strength"
-      }) }}
-    </div>
+    <button class="govuk-button">Add strength</button>
 
   </form>
 
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var otherCheckbox = document.getElementById('identified-other')
-    var conditional = document.getElementById('other-details-conditional')
-
-    function toggleOtherDetails () {
-      conditional.style.display = otherCheckbox.checked ? 'block' : 'none'
-    }
-
-    otherCheckbox.addEventListener('change', toggleOtherDetails)
-    toggleOtherDetails()
-  })
-</script>
-
 {% endblock %}

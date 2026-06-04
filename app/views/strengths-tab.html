@@ -5,6 +5,8 @@
 {% block content %}
 <div class="govuk-width-container">
 
+  {% set allStrengths = data.strengths or [] %}
+
   <div class="govuk-breadcrumbs" aria-label="Breadcrumb">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
@@ -20,37 +22,34 @@
     Chris Atkinson’s support for additional needs
   </h1>
 
-  <!-- SUMMARY PANEL -->
   <div class="summary-panel govuk-grid-row">
 
-    <div class="govuk-grid-column-one-quarter summary-panel__item">
+    <div class="govuk-grid-column-one-quarter">
       <a href="#" class="govuk-link govuk-!-font-weight-bold">Atkinson, Chris</a>
       <p class="govuk-body-s govuk-!-margin-top-1">G2911GD</p>
     </div>
 
-    <div class="govuk-grid-column-one-quarter summary-panel__item">
-      <span class="govuk-body-s summary-panel__label">Entered prison on</span>
+    <div class="govuk-grid-column-one-quarter">
+      <span class="govuk-body-s">Entered prison on</span>
       <p class="govuk-body-s">28 Jul 2023</p>
     </div>
 
-    <div class="govuk-grid-column-one-quarter summary-panel__item">
-      <span class="govuk-body-s summary-panel__label">Release date</span>
+    <div class="govuk-grid-column-one-quarter">
+      <span class="govuk-body-s">Release date</span>
       <p class="govuk-body-s">1 Jul 2027</p>
     </div>
 
-    <div class="govuk-grid-column-one-quarter summary-panel__item">
-      <span class="govuk-body-s summary-panel__label">DOB</span>
+    <div class="govuk-grid-column-one-quarter">
+      <span class="govuk-body-s">DOB</span>
       <p class="govuk-body-s">10 Jun 1969</p>
     </div>
 
   </div>
 
-  <!-- ✅ NAV TABS (UPDATED OVERVIEW LINK) -->
   <div class="govuk-tabs">
     <ul class="govuk-tabs__list">
 
       <li class="govuk-tabs__list-item">
-        <!-- ✅ FIX HERE -->
         <a class="govuk-tabs__tab" href="index.html">Overview</a>
       </li>
 
@@ -81,27 +80,26 @@
     </ul>
   </div>
 
-  <div class="govuk-grid-row main-page-grid">
+  <div class="govuk-grid-row">
 
-    <!-- LEFT -->
     <div class="govuk-grid-column-two-thirds">
 
       <div class="govuk-tabs" data-module="govuk-tabs">
 
         <ul class="govuk-tabs__list">
           <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-            <a class="govuk-tabs__tab" href="#">
-              Current ({{ (data.strengths | length) if data.strengths else 0 }})
+            <a class="govuk-tabs__tab">
+              Current ({{ allStrengths.length }})
             </a>
           </li>
           <li class="govuk-tabs__list-item">
-            <a class="govuk-tabs__tab" href="#">History (0)</a>
+            <a class="govuk-tabs__tab">History (0)</a>
           </li>
         </ul>
 
         <div class="govuk-tabs__panel">
 
-          {% if not data.strengths or data.strengths.length == 0 %}
+          {% if allStrengths.length == 0 %}
 
             <p class="govuk-body">
               Chris Atkinson has no current strengths recorded
@@ -114,8 +112,8 @@
           {% else %}
 
             {% set categories = [] %}
-            {% for s in data.strengths %}
-              {% if not (s.category in categories) %}
+            {% for s in allStrengths %}
+              {% if s.category and categories.indexOf(s.category) == -1 %}
                 {% set categories = categories.concat([s.category]) %}
               {% endif %}
             {% endfor %}
@@ -130,7 +128,7 @@
 
                 {% set first = true %}
 
-                {% for strength in data.strengths %}
+                {% for strength in allStrengths %}
                   {% if strength.category == category %}
 
                     {% if not first %}
@@ -140,37 +138,47 @@
 
                     <div style="padding:15px;">
 
-                      <p class="govuk-body" style="word-break: break-word; overflow-wrap: break-word;">
-                        {{ strength.description }}
+                      <p class="govuk-body">
+                        {{ strength.description | default('') }}
                       </p>
 
-                      <details class="govuk-details govuk-!-margin-bottom-2">
-                        <summary class="govuk-details__summary">
-                          <span class="govuk-details__summary-text">
-                            How was this identified
-                          </span>
-                        </summary>
+                      {% if strength.identifiedBy %}
+                        <details class="govuk-details govuk-!-margin-bottom-2">
+                          <summary class="govuk-details__summary">
+                            <span class="govuk-details__summary-text">
+                              How was this identified
+                            </span>
+                          </summary>
 
-                        <div class="govuk-details__text">
-                          {% if strength.identifiedBy and strength.identifiedBy.length %}
-                            {{ strength.identifiedBy | join(', ') }}
-                          {% else %}
-                            Not specified
-                          {% endif %}
-                        </div>
-                      </details>
+                          <div class="govuk-details__text">
+                            {% set cleanIdentified = [] %}
+                            {% for item in strength.identifiedBy %}
+                              {% if item != "_unchecked" and item != "on" %}
+                                {% set cleanIdentified = cleanIdentified.concat([item]) %}
+                              {% endif %}
+                            {% endfor %}
 
-                      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                            {% if cleanIdentified.length %}
+                              {{ cleanIdentified | join(', ') }}
+                            {% else %}
+                              Not specified
+                            {% endif %}
+                          </div>
+                        </details>
+                      {% endif %}
 
-                        <p class="govuk-body-s govuk-!-margin-bottom-0">
-                          Last updated {{ strength.date }} by J. Smith (HMP)
+                      <!-- ✅ MATCHES CHALLENGES TAB -->
+                      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;">
+
+                        <p class="govuk-body-s govuk-!-margin-0">
+                          Last updated {{ strength.formattedDate }} by J. Smith (HMP)
                         </p>
 
-                        <p class="govuk-body-s govuk-!-margin-bottom-0">
+                        <div class="govuk-body-s" style="white-space:nowrap;">
                           <a href="#" class="govuk-link">Edit</a>
-                          &nbsp;|&nbsp;
+                          <span class="govuk-!-margin-left-1 govuk-!-margin-right-1">|</span>
                           <a href="#" class="govuk-link">Move to history</a>
-                        </p>
+                        </div>
 
                       </div>
 
@@ -195,23 +203,18 @@
 
     </div>
 
-    <!-- RIGHT -->
     <div class="govuk-grid-column-one-third">
       <div class="actions-card">
 
         <div class="actions-card__header">Actions</div>
 
         <div class="actions-card__section">
-          <p class="govuk-body-s actions-card__section-title">
-            Screening and assessment
-          </p>
+          <p class="govuk-body-s">Screening and assessment</p>
           <a href="#" class="govuk-link">Record screener results</a>
         </div>
 
         <div class="actions-card__section">
-          <p class="govuk-body-s actions-card__section-title">
-            Additional needs
-          </p>
+          <p class="govuk-body-s">Additional needs</p>
           <a href="/add-strength-category" class="govuk-link">Add strengths</a>
           <a href="/add-challenge-describe" class="govuk-link">Add challenges and support</a>
           <a href="#" class="govuk-link">Add conditions</a>
@@ -224,3 +227,4 @@
 
 </div>
 {% endblock %}
+``

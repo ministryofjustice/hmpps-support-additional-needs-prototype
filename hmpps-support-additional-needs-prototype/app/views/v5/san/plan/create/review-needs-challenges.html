@@ -1,0 +1,118 @@
+{% extends "/layouts/v5.html" %}
+
+{% block beforeContent %}
+  <div class="govuk-width-container ">
+
+    <nav class="govuk-breadcrumbs govuk-!-display-none-print" aria-label="Breadcrumb">
+      <a href="javascript:history.go(-1);" class="govuk-back-link">Back</a>
+    </nav>
+
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  {% for prisoner in data[v+'prisoners'] %}
+    {% if prisoner.prisonerNumber == ref %}
+
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <span class="govuk-caption-l">Create an education support plan</span>
+            <h1 class="govuk-heading-l">Review {{ prisoner.firstName }} {{ prisoner.lastName }}'s challenges</h1>
+          </div>
+        </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+
+            <form method="post">
+
+
+              {# set tracker for categories prisoner has content it #}
+              {% set cats = [] %}
+
+              {# Check if prisoner has any recorded Challenges #}
+              {% if prisoner.needsChallenges %}
+
+                {# Loop through all categories of need #}
+                {% for categories in data[v+'categories'] %}
+
+                  {# Loop through all Challenges of prisoner #}
+                  {% for needs in prisoner.needsChallenges %}
+                    {# Check if needsSupport has an item in this category #}
+                    {% if needs.needsChallengeCategory == categories.categoryName %}
+
+                      {# Add this category to an array of categories associated with this prisoner #}
+                      {% if not categories.categoryName in cats %}
+                        {% set cats = (cats.push(categories.categoryName), cats) %}
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+
+                {% endfor %}
+
+                  <section class="app-summary-card govuk-!-margin-bottom-6">
+                    <header class="app-summary-card__header">
+                      <span class="app-summary-card__title">
+                        Challenges
+                      </span>
+                      <span class="app-summary-card__title-link">
+                        <a class="govuk-link" href="javascript:preventdefault();">Add challenge</a>
+                      </span>
+                    </header>
+                    <div class="app-summary-card__body">
+                      <dl class="govuk-summary-list san-needs-list">
+
+                        {% for cat in cats %}
+                              
+                          {% set count = 0 %}
+                          {# Loop through all support needs of prisoner #}
+                          {% for needs in prisoner.needsChallenges %}
+                            {# Check if needsChallenges has an item in this category #}
+                            {% if needs.needsChallengeCategory == cat %}
+
+                              <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+                                  <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-margin-top-4">{{ cat }}</p>
+                                  <p class="govuk-body govuk-!-margin-bottom-2">{{ needs.needsChallengeDescription | safe }}</p>
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                  <p class="govuk-body-s"><a class="govuk-link" href="javascript:preventdefault();">Edit</a></p>
+                                  <p class="govuk-body-s"><a class="govuk-link" href="javascript:preventdefault();">Archive</a></p>
+                                  <p class="govuk-body-s govuk-!-margin-bottom-2">Added {{ needs.needsChallengeDate }} by {{ needs.needsChallengeAuthor }}</p>
+                                </dd>
+                              </div>
+                              {% set count = count + 1 %}
+
+                            {% endif %}
+                          {% endfor %}
+                        {% endfor %}
+                      </dl>        
+
+                    </div>
+                  </section>
+
+                {% else %}
+                
+                  <section class="app-summary-card govuk-!-margin-bottom-6">
+                    <div class="app-summary-card__body">
+                      <p class="govuk-body govuk-!-margin-top-3">This prisoner has no Challenges recorded.</p>
+                    </div>
+                  </section>
+
+                {% endif %}
+
+              {{ govukButton({
+                text: "Continue"
+              }) }}
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}
