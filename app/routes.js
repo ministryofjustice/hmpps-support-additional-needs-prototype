@@ -7,6 +7,18 @@ const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
 
+// ✅ ✅ ✅ ADD THIS BLOCK (SESSION SAFETY INITIALISATION)
+router.use((req, res, next) => {
+  if (!req.session.data.challenges) {
+    req.session.data.challenges = []
+  }
+  if (!req.session.data.strengths) {
+    req.session.data.strengths = []
+  }
+  next()
+})
+
+
 // ---------- BASIC ROUTES ----------
 
 router.get('/overview', (req, res) => {
@@ -100,7 +112,7 @@ router.post('/add-challenge-identified', (req, res) => {
 })
 
 
-// ---------- ✅ ✅ ✅ FIXED SAVE STRENGTH ----------
+// ---------- ✅ ✅ ✅ SAVE STRENGTH ----------
 
 router.post('/add-strength', (req, res) => {
 
@@ -114,7 +126,6 @@ router.post('/add-strength', (req, res) => {
     "general": "General"
   }
 
-  // ✅ FIXED FIELD NAMES
   let identified = req.body['identified_by']
 
   if (!identified) identified = []

@@ -7,14 +7,28 @@
 
   <a class="govuk-back-link" href="/">Back</a>
 
-  <form method="get" action="add-challenge-category.html">
+  <!-- ✅ ✅ ✅ FIXED: POST + correct route -->
+  <form method="post" action="/add-challenge-describe">
 
     {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
     {{ govukRadios({
+      name: "challengeCategory",
+
+      value: data['challengeCategory'],  // ✅ remembers selection
+
       hint: {
         text: "Add a challenge and support"
       },
+
+      fieldset: {
+        legend: {
+          text: "Select a category of challenge for Chris Atkinson",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+
       items: [
         {
           value: "Cognition and learning",
@@ -44,15 +58,7 @@
             text: "things like co-ordination, stamina and fine motor skills, reacting to environments or situations eg noise or being touched"
           }
         }
-      ],
-      name: "challengeCategory",
-      fieldset: {
-        legend: {
-          text: "Select a category of challenge for Chris Atkinson",
-          isPageHeading: true,
-          classes: "govuk-fieldset__legend--l"
-        }
-      }
+      ]
     }) }}
 
     {% from "govuk/components/button/macro.njk" import govukButton %}
