@@ -1,0 +1,187 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}Add a challenge and support{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <a class="govuk-back-link" href="/add-challenge-category">Back</a>
+
+  <p class="govuk-caption-xl">Add a challenge and support</p>
+
+  <h1 class="govuk-heading-xl">
+    Add {{ data['challengeCategory'] | default('Nothing selected') }} challenge and support for Chris Atkinson
+  </h1>
+
+  <!-- ✅ FIXED: method changed to GET -->
+  <form action="/add-challenge-identified" method="get">
+
+    <!-- ✅ DESCRIPTION -->
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--m" for="challenge-description">
+        Describe the challenge
+      </label>
+
+      <div class="govuk-hint">
+        You can include triggers, signs they are struggling and when this happens
+      </div>
+
+      <textarea class="govuk-textarea"
+        id="challenge-description"
+        name="challenge-description"
+        rows="6"></textarea>
+
+      <div class="govuk-hint">
+        You have 750 characters remaining
+      </div>
+    </div>
+
+    <!-- ✅ SUPPORT -->
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--m" for="support-needed">
+        Describe the support needed (optional)
+      </label>
+
+      <div class="govuk-hint">
+        Add concise support strategies to help with the challenge
+      </div>
+
+      <textarea class="govuk-textarea"
+        id="support-needed"
+        name="support-needed"
+        rows="6"></textarea>
+
+      <div class="govuk-hint">
+        You have 750 characters remaining
+      </div>
+    </div>
+
+    <!-- ✅ PRIORITY -->
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          Is this a priority need for Chris Atkinson?
+        </legend>
+
+        <div class="govuk-hint">
+          Only select this for challenges with the most significant impact on daily life.
+          It will show these on the Overview page and add a ‘High priority’ tag.
+        </div>
+
+        <div class="govuk-checkboxes govuk-checkboxes--small">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input"
+                   id="priority-need"
+                   name="priority-need"
+                   type="checkbox">
+            <label class="govuk-label govuk-checkboxes__label" for="priority-need">
+              Yes - this is a priority need
+            </label>
+          </div>
+        </div>
+
+      </fieldset>
+    </div>
+
+    <!-- ✅ CONDITIONAL AREAS -->
+
+    {% if data['challengeCategory'] == "Cognition and learning" %}
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            What areas of cognition and learning does it affect? (optional)
+          </legend>
+
+          <div class="govuk-hint">Select all that apply</div>
+
+          <div class="govuk-checkboxes govuk-checkboxes--small">
+
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Literacy skills">
+              <label class="govuk-label govuk-checkboxes__label">Literacy skills</label>
+              <div class="govuk-hint govuk-checkboxes__hint">things like reading, writing and spelling</div>
+            </div>
+
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Numeracy skills">
+              <label class="govuk-label govuk-checkboxes__label">Numeracy skills</label>
+              <div class="govuk-hint govuk-checkboxes__hint">things like maths and managing money</div>
+            </div>
+
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Attention, organising and time management">
+              <label class="govuk-label govuk-checkboxes__label">Attention, organising and time management</label>
+              <div class="govuk-hint govuk-checkboxes__hint">things like planning, task management, tidiness and focus</div>
+            </div>
+
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Processing speed">
+              <label class="govuk-label govuk-checkboxes__label">Processing speed</label>
+              <div class="govuk-hint govuk-checkboxes__hint">things like taking time to understand and follow instructions</div>
+            </div>
+
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" name="affected-areas" type="checkbox" value="Memory">
+              <label class="govuk-label govuk-checkboxes__label">Memory</label>
+              <div class="govuk-hint govuk-checkboxes__hint">things like remembering and recalling information</div>
+            </div>
+
+          </div>
+
+        </fieldset>
+      </div>
+
+    {% elif data['challengeCategory'] == "Sensory and physical" %}
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            What areas of sensory and physical does it affect? (optional)
+          </legend>
+
+          <div class="govuk-hint">Select all that apply</div>
+
+          <div class="govuk-checkboxes govuk-checkboxes--small">
+
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input"
+                     name="affected-areas"
+                     type="checkbox"
+                     value="Physical skills and coordination">
+              <label class="govuk-label govuk-checkboxes__label">
+                Physical skills and coordination
+              </label>
+              <div class="govuk-hint govuk-checkboxes__hint">
+                things like learning new skills, co-ordination, stamina and fine motor skills
+              </div>
+            </div>
+
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input"
+                     name="affected-areas"
+                     type="checkbox"
+                     value="Sensory">
+              <label class="govuk-label govuk-checkboxes__label">
+                Sensory
+              </label>
+              <div class="govuk-hint govuk-checkboxes__hint">
+                things like reacting to environments or situations such as noise or being touched
+              </div>
+            </div>
+
+          </div>
+
+        </fieldset>
+      </div>
+
+    {% endif %}
+
+    <button class="govuk-button">Continue</button>
+
+  </form>
+</div>
+{% endblock %}

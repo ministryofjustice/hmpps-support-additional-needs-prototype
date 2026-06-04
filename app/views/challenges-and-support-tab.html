@@ -1,0 +1,250 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}Challenges and support{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-breadcrumbs" aria-label="Breadcrumb">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">Digital Prison Services</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">Manage support for additional needs</a>
+      </li>
+    </ol>
+  </div>
+
+  <h1 class="govuk-heading-l page-title">Chris Atkinson’s support for additional needs</h1>
+
+  <div class="summary-panel govuk-grid-row">
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <a href="#" class="govuk-link govuk-!-font-weight-bold">Atkinson, Chris</a>
+      <p class="govuk-body-s govuk-!-margin-top-1">G2911GD</p>
+    </div>
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">Entered prison on</span>
+      <p class="govuk-body-s">28 Jul 2023</p>
+    </div>
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">Release date</span>
+      <p class="govuk-body-s">1 Jul 2027</p>
+    </div>
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">DOB</span>
+      <p class="govuk-body-s">10 Jun 1969</p>
+    </div>
+  </div>
+
+  <div class="govuk-tabs">
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="index.html">Overview</a>
+      </li>
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <a class="govuk-tabs__tab" href="#">Challenges and support</a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="strengths-tab.html">Strengths</a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="conditions-tab.html">Conditions</a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="education-support-plan.html">Education support plan</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="govuk-grid-row main-page-grid">
+
+    <!-- MAIN COLUMN -->
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-tabs" data-module="govuk-tabs">
+
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <a class="govuk-tabs__tab" style="color:#0b0c0c;">
+              Current ({{ (data.challenges | length) if data.challenges else 0 }})
+            </a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" style="color:#0b0c0c;">
+              History (0)
+            </a>
+          </li>
+        </ul>
+
+        <!-- CURRENT -->
+        <div class="govuk-tabs__panel">
+
+          {% if not data.challenges or data.challenges.length == 0 %}
+
+            <p class="govuk-body">
+              Chris Atkinson has no current challenges and support
+            </p>
+
+            <a href="/add-challenge-describe" class="govuk-link">
+              Add a challenge and support
+            </a>
+
+          {% else %}
+
+            {% set categories = [] %}
+            {% for challenge in data.challenges %}
+              {% if categories.indexOf(challenge.category) == -1 %}
+                {% set categories = categories.concat([challenge.category]) %}
+              {% endif %}
+            {% endfor %}
+
+            {% for category in categories %}
+
+              <div style="border:1px solid #b1b4b6; margin-bottom:25px;">
+
+                <div style="background:#f3f2f1; padding:18px 25px;">
+                  <strong class="govuk-body govuk-!-font-weight-bold">
+                    {{ category }}
+                  </strong>
+                </div>
+
+                {% for challenge in data.challenges %}
+                {% if challenge.category == category %}
+
+                  <div style="padding:25px; border-top:1px solid #b1b4b6;">
+
+                    {% if challenge.priority == true %}
+                      <span class="govuk-body-s" style="
+                        display:inline-block;
+                        background:#ecd1cc;
+                        padding:6px 10px;
+                        margin-right:8px;
+                        margin-bottom:5px;
+                      ">
+                        High priority
+                      </span>
+                    {% endif %}
+
+                    {% if challenge.areas and challenge.areas.length > 0 %}
+                      <div style="margin-bottom:15px;">
+                        {% for area in challenge.areas %}
+                          {% if area != "_unchecked" and area != "on" %}
+                            <span class="govuk-body-s" style="
+                              display:inline-block;
+                              background:#d2e2f1;
+                              padding:6px 10px;
+                              margin-right:8px;
+                              margin-bottom:5px;
+                            ">
+                              {{ area }}
+                            </span>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+
+                    <p class="govuk-body" style="margin-bottom:15px;">
+                      {{ challenge.description }}
+                    </p>
+
+                    {% if challenge.support %}
+                      <p class="govuk-body govuk-!-font-weight-bold" style="margin-bottom:5px;">
+                        Support needed
+                      </p>
+                      <p class="govuk-body" style="margin-bottom:20px;">
+                        {{ challenge.support }}
+                      </p>
+                    {% endif %}
+
+                    <details class="govuk-details" style="margin-bottom:20px;">
+                      <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                          How was this identified
+                        </span>
+                      </summary>
+
+                      <div class="govuk-details__text">
+
+                        {% set cleanIdentified = [] %}
+
+                        {% for item in challenge.identifiedBy %}
+                          {% if "_unchecked" not in item %}
+                            {% set cleanIdentified = cleanIdentified.concat([item]) %}
+                          {% endif %}
+                        {% endfor %}
+
+                        {{ cleanIdentified | join(', ') }}
+
+                      </div>
+                    </details>
+
+                    <!-- ✅ ✅ ✅ UPDATED LINE -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                      <span class="govuk-body-s">
+                        Last updated {{ challenge.date }} at {{ challenge.time }} by J. Smith (HMP)
+                      </span>
+                      <span class="govuk-body-s">
+                        <a href="#">Edit</a> |
+                        <a href="#">Move to history</a>
+                      </span>
+                    </div>
+
+                  </div>
+
+                {% endif %}
+                {% endfor %}
+
+              </div>
+
+            {% endfor %}
+
+            <div class="govuk-!-margin-top-4">
+              <a href="/add-challenge-describe" class="govuk-link">
+                Add a challenge and support
+              </a>
+            </div>
+
+          {% endif %}
+
+        </div>
+
+        <!-- HISTORY -->
+        <div class="govuk-tabs__panel govuk-tabs__panel--hidden">
+          <p class="govuk-body">
+            No historic challenges and support
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <aside class="govuk-grid-column-one-third">
+      <div class="actions-card">
+        <div class="actions-card__header">Actions</div>
+
+        <div class="actions-card__section">
+          <p class="govuk-body-s actions-card__section-title">
+            Screening and assessment
+          </p>
+          <a href="#" class="govuk-link inline-icon-link">
+            Record screener results
+          </a>
+        </div>
+
+        <div class="actions-card__section">
+          <p class="govuk-body-s actions-card__section-title">
+            Additional needs
+          </p>
+          <a href="/add-strength-category" class="govuk-link">Add strengths</a>
+          <a href="/add-challenge-describe" class="govuk-link">Add challenges and support</a>
+          <a href="#" class="govuk-link">Add conditions</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,226 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}Strengths{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-breadcrumbs" aria-label="Breadcrumb">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">Digital Prison Services</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">Manage support for additional needs</a>
+      </li>
+    </ol>
+  </div>
+
+  <h1 class="govuk-heading-l page-title">
+    Chris Atkinson’s support for additional needs
+  </h1>
+
+  <!-- SUMMARY PANEL -->
+  <div class="summary-panel govuk-grid-row">
+
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <a href="#" class="govuk-link govuk-!-font-weight-bold">Atkinson, Chris</a>
+      <p class="govuk-body-s govuk-!-margin-top-1">G2911GD</p>
+    </div>
+
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">Entered prison on</span>
+      <p class="govuk-body-s">28 Jul 2023</p>
+    </div>
+
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">Release date</span>
+      <p class="govuk-body-s">1 Jul 2027</p>
+    </div>
+
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">DOB</span>
+      <p class="govuk-body-s">10 Jun 1969</p>
+    </div>
+
+  </div>
+
+  <!-- ✅ NAV TABS (UPDATED OVERVIEW LINK) -->
+  <div class="govuk-tabs">
+    <ul class="govuk-tabs__list">
+
+      <li class="govuk-tabs__list-item">
+        <!-- ✅ FIX HERE -->
+        <a class="govuk-tabs__tab" href="index.html">Overview</a>
+      </li>
+
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="challenges-and-support-tab.html">
+          Challenges and support
+        </a>
+      </li>
+
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <a class="govuk-tabs__tab" href="strengths-tab.html">
+          Strengths
+        </a>
+      </li>
+
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="conditions-tab.html">
+          Conditions
+        </a>
+      </li>
+
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="education-support-plan.html">
+          Education support plan
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+  <div class="govuk-grid-row main-page-grid">
+
+    <!-- LEFT -->
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-tabs" data-module="govuk-tabs">
+
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <a class="govuk-tabs__tab" href="#">
+              Current ({{ (data.strengths | length) if data.strengths else 0 }})
+            </a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab" href="#">History (0)</a>
+          </li>
+        </ul>
+
+        <div class="govuk-tabs__panel">
+
+          {% if not data.strengths or data.strengths.length == 0 %}
+
+            <p class="govuk-body">
+              Chris Atkinson has no current strengths recorded
+            </p>
+
+            <a href="/add-strength-category" class="govuk-link">
+              Add a strength
+            </a>
+
+          {% else %}
+
+            {% set categories = [] %}
+            {% for s in data.strengths %}
+              {% if not (s.category in categories) %}
+                {% set categories = categories.concat([s.category]) %}
+              {% endif %}
+            {% endfor %}
+
+            {% for category in categories %}
+
+              <div style="border:1px solid #b1b4b6; margin-bottom:20px;">
+
+                <div style="background:#f3f2f1; padding:15px;">
+                  <strong>{{ category }}</strong>
+                </div>
+
+                {% set first = true %}
+
+                {% for strength in data.strengths %}
+                  {% if strength.category == category %}
+
+                    {% if not first %}
+                      <div style="border-top:1px solid #b1b4b6;"></div>
+                    {% endif %}
+                    {% set first = false %}
+
+                    <div style="padding:15px;">
+
+                      <p class="govuk-body" style="word-break: break-word; overflow-wrap: break-word;">
+                        {{ strength.description }}
+                      </p>
+
+                      <details class="govuk-details govuk-!-margin-bottom-2">
+                        <summary class="govuk-details__summary">
+                          <span class="govuk-details__summary-text">
+                            How was this identified
+                          </span>
+                        </summary>
+
+                        <div class="govuk-details__text">
+                          {% if strength.identifiedBy and strength.identifiedBy.length %}
+                            {{ strength.identifiedBy | join(', ') }}
+                          {% else %}
+                            Not specified
+                          {% endif %}
+                        </div>
+                      </details>
+
+                      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+
+                        <p class="govuk-body-s govuk-!-margin-bottom-0">
+                          Last updated {{ strength.date }} by J. Smith (HMP)
+                        </p>
+
+                        <p class="govuk-body-s govuk-!-margin-bottom-0">
+                          <a href="#" class="govuk-link">Edit</a>
+                          &nbsp;|&nbsp;
+                          <a href="#" class="govuk-link">Move to history</a>
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                  {% endif %}
+                {% endfor %}
+
+              </div>
+
+            {% endfor %}
+
+            <a href="/add-strength-category" class="govuk-link">
+              Add a strength
+            </a>
+
+          {% endif %}
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="govuk-grid-column-one-third">
+      <div class="actions-card">
+
+        <div class="actions-card__header">Actions</div>
+
+        <div class="actions-card__section">
+          <p class="govuk-body-s actions-card__section-title">
+            Screening and assessment
+          </p>
+          <a href="#" class="govuk-link">Record screener results</a>
+        </div>
+
+        <div class="actions-card__section">
+          <p class="govuk-body-s actions-card__section-title">
+            Additional needs
+          </p>
+          <a href="/add-strength-category" class="govuk-link">Add strengths</a>
+          <a href="/add-challenge-describe" class="govuk-link">Add challenges and support</a>
+          <a href="#" class="govuk-link">Add conditions</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

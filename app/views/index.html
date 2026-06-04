@@ -1,204 +1,268 @@
-{% extends "layouts/home.html" %}
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
 
 {% block content %}
-    
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full-width">
-    
-        <div class="govuk-!-padding-bottom-6"></div>
-        <div class="govuk-grid-column-two-thirds">
-          
-          <h2 class="govuk-heading-m">Version 5
-            {{ govukTag({
-              classes: "govuk-tag--red govuk-!-static-margin-left-3",
-              text: "WIP"
-            }) }}
-            <!--
-            {{ govukTag({
-              classes: "govuk-tag--green govuk-!-static-margin-left-3",
-              text: "Ready for UR"
-            }) }}
-            -->
-          </h2>
-          <h3 class="govuk-heading-s">What we are testing</h3>
-             <ul class="govuk-list govuk-list--bullet">
-            <li>Add combined Challenges and support</li>
-            <li>A task based Overview</li>
-            <li>Adding triggers and signs they are struggling</li>
-          </ul>
-          
-          {{ govukButton({
-            href: "v5/",
-            text: "View prototype"
-          }) }}
-          
-          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
-          
-          <h2 class="govuk-heading-m">Version 4
-            <!--
-            {{ govukTag({
-              classes: "govuk-tag--red govuk-!-static-margin-left-3",
-              text: "WIP"
-            }) }}
-            -->
-            {{ govukTag({
-              classes: "govuk-tag--green govuk-!-static-margin-left-3",
-              text: "Ready for UR"
-            }) }}
-          </h2>
-          <h3 class="govuk-heading-s">Iterations from previous version</h3>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>Prisoner list updated with relevant data, and filters added to search (non-functioning)</li>
-            <li>Prisoner profile overview design updates</li>
-            <li>Ability to create an education support plan</li>
-            <li>Changes to reviewing existing needs in create education support plan journey</li>
-            <li>Ability to view an education support plan</li>
-            <li>Ability to review an education support plan</li>
-          </ul>
-          <h3 class="govuk-heading-s">Limitations</h3>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>Search and filters not functional</li>
-            <li>Add conditions journey is not up to date with designs in Figma (avoid for UR)</li>
-            <li>No functionality to edit or archive support strategies, challenges or strengths</li>
-          </ul>
+<div class="govuk-width-container">
 
-          <details class="govuk-details">
-            <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">
-                Related Jira tickets
-              </span>
-            </summary>
-            <div class="govuk-details__text">
-              <ul class="govuk-list govuk-list--bullet">
-                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1568" class="govuk-link" target="_blank">RR-1568 Record education support plan review</a></li>
-                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1580" class="govuk-link" target="_blank">RR-1580 Design: view plan</a></li>
-                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1585" class="govuk-link" target="_blank">RR-1585 Design: review existing needs as part of support plan creation</a></li>
-                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1587" class="govuk-link" target="_blank">RR-1587 Design: prisoner list / manage caseload</a></li>
-                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1614" class="govuk-link" target="_blank">RR-1614 Design: Stakeholder iterations to Create an education support plan</a></li>
-                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1615" class="govuk-link" target="_blank">RR-1615 Design: Stakeholder iterations to Review an education support plan</a></li>
-                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1616" class="govuk-link" target="_blank">RR-1616 Design: Stakeholder iterations to Refuse an education support plan</a></li>
-                <li><a href="https://dsdmoj.atlassian.net/browse/RR-1630" class="govuk-link" target="_blank">RR-1630 Design: content updates following stakeholder feedback</a></li>
-              </ul>  
+  {% set allChallenges = data.challenges or [] %}
+  {% set priorityChallenges = [] %}
+
+  {% for c in allChallenges %}
+    {% if c.priority %}
+      {% set priorityChallenges = priorityChallenges.concat([c]) %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="govuk-breadcrumbs" aria-label="Breadcrumb">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">Digital Prison Services</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">Manage support for additional needs</a>
+      </li>
+    </ol>
+  </div>
+
+  <h1 class="govuk-heading-l page-title">Chris Atkinson’s support for additional needs</h1>
+
+  <div class="summary-panel govuk-grid-row">
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <a href="#" class="govuk-link govuk-!-font-weight-bold">Atkinson, Chris</a>
+      <p class="govuk-body-s govuk-!-margin-top-1">G2911GD</p>
+    </div>
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">Entered prison on</span>
+      <p class="govuk-body-s">28 Jul 2023</p>
+    </div>
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">Release date</span>
+      <p class="govuk-body-s">1 Jul 2027</p>
+    </div>
+    <div class="govuk-grid-column-one-quarter summary-panel__item">
+      <span class="govuk-body-s summary-panel__label">DOB</span>
+      <p class="govuk-body-s">10 Jun 1969</p>
+    </div>
+  </div>
+
+  <div class="govuk-tabs">
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <a class="govuk-tabs__tab" href="index.html">Overview</a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="challenges-and-support-tab.html">Challenges and support</a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="strengths-tab.html">Strengths</a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="conditions-tab.html">Conditions</a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="education-support-plan.html">Education support plan</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="govuk-grid-row main-page-grid">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <!-- ✅ ✅ ✅ CHALLENGES PANEL (FIXED) -->
+      <section class="panel-card">
+        <div class="panel-card__header">
+          <h2 class="govuk-heading-m">Challenges and support</h2>
+
+          {% if priorityChallenges.length > 0 %}
+            <a href="/challenges-and-support-tab" class="govuk-link panel-card__action-link">
+              View challenges and support
+            </a>
+          {% else %}
+            <a href="/add-challenge-describe" class="govuk-link panel-card__action-link">
+              Add challenge and support
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="panel-card__body">
+
+          <div class="challenge-stats">
+            <div class="challenge-stat">
+              <span class="challenge-stat__number">{{ priorityChallenges.length }}</span>
+              <strong class="govuk-tag govuk-tag--red">Priority challenges</strong>
             </div>
-          </details>
-          
-          {{ govukButton({
-            href: "v4/",
-            text: "View v4 prototype"
-          }) }}
-          
-          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
-          
-          <h2 class="govuk-heading-m">Version 3
-            {{ govukTag({
-              classes: "govuk-!-static-margin-left-3",
-              text: "Archived"
-            }) }}
-          </h2>
-          <h3 class="govuk-heading-s">Iterations from previous version</h3>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>Prototype is now data driven (with 2 specific scenarios for UR)</li>
-            <li>Ability to add support startegies, challenges and strengths from prisoner overview screen</li>
-            <li>All functioning 'add journeys' will save data to the session and displayed in prototype</li>
-            <li>Sub-navigation added within SAN to switch between Overview, Support strategies, Challenges, Strengths, Conditions, and Education support plan</li>
-          </ul>
-          <h3 class="govuk-heading-s">Limitations</h3>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>Search bars are not functional</li>
-            <li>"Create education support plan" only works for 'Chris Atkinson'</li>
-            <li>No functionality to edit or archive support strategies, challenges or strengths</li>
-            <li>No functionality for conditions</li>
-          </ul>
-          {{ govukButton({
-            href: "v3/",
-            text: "View v3 prototype"
-          }) }}
-          
-          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
-          
-          <h2 class="govuk-heading-m">Version 2
-            {{ govukTag({
-              classes: "govuk-!-static-margin-left-3",
-              text: "Archived"
-            }) }}
-          </h2>
-          <p class="govuk-hint">Conversion of Figma designs into usable prototype</p>
-          <h3 class="govuk-heading-s">Iterations from version 1</h3>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>Removal of superfluous data in prisoner list</li>
-            <li>Merged "Are you the person who met" question with inputs for full name and job role of person who conducted the meeting</li>
-            <li>Content updates throughout, mainly on hints for questions</li>
-            <li>addition of Curious screener data for review</li>
-          </ul>
-          <h3 class="govuk-heading-s">Limitations</h3>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>Search bars are not functional</li>
-            <li>Only functioning record is for "Chris Atkinson"</li>
-            <li>Prisoner profile screen only allows user to navigate to "Create education support plan" journey</li>
-            <li>Will need to use "Clear data" link in footer to reset stored data after "Create education support plan" has been completed</li>
-          </ul>
-          {{ govukButton({
-            href: "v2/",
-            text: "View v2 prototype"
-          }) }}
-          <p class="govuk-body-s"><a href="https://www.figma.com/design/RoxQOu1FjRQGFnbmMThdRh/Additional-Support-Needs?node-id=500-11828" class="govuk-link">V2 and related designs in Figma</a></p>
-    
-          <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
-    
-          <h2 class="govuk-heading-m">Version 1
-            {{ govukTag({
-              classes: "govuk-!-static-margin-left-3",
-              text: "Archived"
-            }) }}</h2>
-          <h3 class="govuk-heading-s">Entry to 'Support for additional needs service' including journey to create an education learning support plan</h3>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>Addition of 'Support for additional needs' (SAN) tile on DPS home page to access new sevrice</li>
-            <li>Various methods to navigate to an individual's SAN profile</li>
-            <li>Highlighting the need for an education support plan to be created on lists and profile screens</li>
-            <li>Users can review existing needs, conditions, strengths, and support recommendations on individual's profile</li>
-            <li>Users can create an education support plan, featuring staff involved, education specific support, setting of SMART targets and a review date.</li>
-          </ul>
-          <p class="govuk-body">
-            <a
-            href="https://www.figma.com/proto/RoxQOu1FjRQGFnbmMThdRh/Additional-Support-Needs?page-id=1%3A40455&node-id=7-305&p=f&viewport=218%2C122%2C0.03&t=WsZlFAIHTMe4OfG8-8&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=7%3A305&hide-ui=1" target=" _blank" class="govuk-link">View Figma prototype</a>
-          </p>
-          <p class="govuk-body">
-            <a href="https://www.figma.com/design/RoxQOu1FjRQGFnbmMThdRh/Additional-Support-Needs?node-id=1-40455" target=" _blank" class="govuk-link">View Figma design file</a>
-          </p>
-    
+
+            <div class="challenge-stat">
+              <span class="challenge-stat__number">{{ allChallenges.length }}</span>
+              <strong class="govuk-tag govuk-tag--blue">Total challenges</strong>
+            </div>
+          </div>
+
+          {% if priorityChallenges.length > 0 %}
+
+            {% set categories = [] %}
+            {% for c in priorityChallenges %}
+              {% if categories.indexOf(c.category) == -1 %}
+                {% set categories = categories.concat([c.category]) %}
+              {% endif %}
+            {% endfor %}
+
+            {% for category in categories %}
+
+              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+              <p class="govuk-heading-s">{{ category }}</p>
+
+              {% for challenge in priorityChallenges %}
+                {% if challenge.category == category %}
+
+                  {% if challenge.areas %}
+                    <div style="margin-bottom:8px;">
+                      {% for area in challenge.areas %}
+                        {% if area != "on" and area != "_unchecked" %}
+                          <span class="govuk-body-s" style="display:inline-block; background:#d2e2f1; padding:5px 8px; margin-right:6px;">
+                            {{ area }}
+                          </span>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                  <p class="govuk-body" style="word-break: break-word; overflow-wrap: break-word;">
+                    {{ challenge.description }}
+                  </p>
+
+                  {% if challenge.support %}
+                    <p class="govuk-body govuk-!-font-weight-bold">Support needed</p>
+                    <p class="govuk-body">{{ challenge.support }}</p>
+                  {% endif %}
+
+                {% endif %}
+              {% endfor %}
+
+            {% endfor %}
+
+          {% endif %}
+
         </div>
-    
-    
-        <div class="govuk-grid-column-one-third">
-    
-          <!-- The Related items component is not part of GOV.UK Frontend but will be styled if used in the Prototype Kit -->
-          <aside class="app-related-items" role="complementary">
-            <h2 class="govuk-heading-m" id="subsection-title">
-              Related content
-            </h2>
-            <nav role="navigation" aria-labelledby="subsection-title">
-              <!--p class="govuk-list govuk-!-font-size-16">
-                <a class="govuk-link govuk-link--no-visited-state" target="_blank"
-                  href="https://github.com/ministryofjustice/hmpps-education-and-work-plan-prototype">
-                  Prototype Github repository
-                </a>
-              </p-->
-              <p class="govuk-list govuk-!-font-size-16">
-                <a class="govuk-link govuk-link--no-visited-state" target=" _blank"
-                  href="https://miro.com/app/board/uXjVLYIYqAI=/">
-                  Learner support plan overview - Miro board
-                </a>
-              </p>
-              <p class="govuk-list govuk-!-font-size-16">
-                <a class="govuk-link govuk-link--no-visited-state" target="_blank"
-                  href="https://dsdmoj.atlassian.net/jira/software/c/projects/RR/boards/1693">
-                  Learning & Work Progress Jira Board
-                </a>
-              </p>
-              </ul>
-            </nav>
-          </aside>
-    
+      </section>
+
+      <!-- ✅ STRENGTHS PANEL (YOUR WORKING VERSION — UNCHANGED) -->
+      <section class="panel-card">
+        <div class="panel-card__header">
+          <h2 class="govuk-heading-m">Strengths</h2>
+
+          {% if data.strengths and data.strengths.length > 0 %}
+            <a href="/strengths-tab" class="govuk-link panel-card__action-link">
+              View strengths
+            </a>
+          {% else %}
+            <a href="/add-strength-category" class="govuk-link panel-card__action-link">
+              Add strengths
+            </a>
+          {% endif %}
         </div>
 
+        <div class="panel-card__body">
+
+          <div class="challenge-stats">
+            <div class="challenge-stat">
+              <span class="challenge-stat__number">
+                {{ (data.strengths | length) if data.strengths else 0 }}
+              </span>
+              <strong class="govuk-tag govuk-tag--blue">
+                Strengths recorded
+              </strong>
+            </div>
+          </div>
+
+          {% if data.strengths and data.strengths.length > 0 %}
+
+            {% set categories = [] %}
+            {% for s in data.strengths %}
+              {% if categories.indexOf(s.category) == -1 %}
+                {% set categories = categories.concat([s.category]) %}
+              {% endif %}
+            {% endfor %}
+
+            {% for category in categories %}
+
+              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+              <p class="govuk-heading-s">
+                {{ category }}
+              </p>
+
+              {% set first = true %}
+
+              {% for strength in data.strengths %}
+                {% if strength.category == category %}
+
+                  {% if not first %}
+                    <hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible">
+                  {% endif %}
+                  {% set first = false %}
+
+                  <p class="govuk-body" style="word-break: break-word; overflow-wrap: break-word;">
+                    {{ strength.description }}
+                  </p>
+
+                {% endif %}
+              {% endfor %}
+
+            {% endfor %}
+
+          {% endif %}
+
+        </div>
+      </section>
+
+      <!-- CONDITIONS -->
+      <section class="panel-card">
+        <div class="panel-card__header">
+          <h2 class="govuk-heading-m">Conditions</h2>
+          <a href="#" class="govuk-link panel-card__action-link">Add condition</a>
+        </div>
+        <div class="panel-card__body">
+          <p class="govuk-body panel-note">No conditions recorded</p>
+        </div>
+      </section>
+
+      <!-- SCREENING -->
+      <section class="panel-card">
+        <div class="panel-card__header">
+          <h2 class="govuk-heading-m">Screening and assessment</h2>
+          <a href="#" class="govuk-link panel-card__action-link">Record screener results</a>
+        </div>
+        <div class="panel-card__body">
+          <p class="govuk-body">
+            No additional learning needs screener recorded in Curious
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="govuk-grid-column-one-third">
+      <div class="actions-card">
+        <div class="actions-card__header">Actions</div>
+
+        <div class="actions-card__section">
+          <p class="govuk-body-s actions-card__section-title">Screening and assessment</p>
+          <a href="#" class="govuk-link">Record screener results</a>
+        </div>
+
+        <div class="actions-card__section">
+          <p class="govuk-body-s actions-card__section-title">Additional needs</p>
+          <a href="/add-strength-category" class="govuk-link">Add strengths</a>
+          <a href="/add-challenge-describe" class="govuk-link">Add challenges and support</a>
+          <a href="#" class="govuk-link">Add conditions</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
 {% endblock %}
