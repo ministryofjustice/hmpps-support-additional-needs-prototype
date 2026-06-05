@@ -5,10 +5,9 @@
 {% block content %}
 <div class="govuk-width-container">
 
-  <!-- ✅ FIXED: back link goes to previous page (or wherever appropriate) -->
-  <a class="govuk-back-link" href="/">Back</a>
+  <!-- ✅ ✅ ✅ DYNAMIC BACK LINK -->
+  <a class="govuk-back-link" href="javascript:history.back()">Back</a>
 
-  <!-- ✅ ✅ ✅ FIXED: POST + correct route -->
   <form method="post" action="/add-strength-describe">
 
     <p class="govuk-caption-l">Add strength</p>
@@ -18,8 +17,6 @@
 
     {{ govukRadios({
       name: "strengthCategory",
-
-      value: data['strengthCategory'],  // ✅ preserves selection
 
       items: [
         {

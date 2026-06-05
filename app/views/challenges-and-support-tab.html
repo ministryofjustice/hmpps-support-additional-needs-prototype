@@ -16,7 +16,9 @@
     </ol>
   </div>
 
-  <h1 class="govuk-heading-l page-title">Chris Atkinson’s support for additional needs</h1>
+  <h1 class="govuk-heading-l page-title">
+    Chris Atkinson’s support for additional needs
+  </h1>
 
   <div class="summary-panel govuk-grid-row">
     <div class="govuk-grid-column-one-quarter summary-panel__item">
@@ -59,28 +61,28 @@
 
   <div class="govuk-grid-row main-page-grid">
 
-    <!-- MAIN COLUMN -->
     <div class="govuk-grid-column-two-thirds">
+
+      {% set allChallenges = data.challenges or [] %}
 
       <div class="govuk-tabs" data-module="govuk-tabs">
 
         <ul class="govuk-tabs__list">
           <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-            <a class="govuk-tabs__tab" style="color:#0b0c0c;">
-              Current ({{ (data.challenges | length) if data.challenges else 0 }})
+            <a class="govuk-tabs__tab">
+              Current ({{ allChallenges.length }})
             </a>
           </li>
           <li class="govuk-tabs__list-item">
-            <a class="govuk-tabs__tab" style="color:#0b0c0c;">
+            <a class="govuk-tabs__tab">
               History (0)
             </a>
           </li>
         </ul>
 
-        <!-- CURRENT -->
         <div class="govuk-tabs__panel">
 
-          {% if not data.challenges or data.challenges.length == 0 %}
+          {% if allChallenges.length == 0 %}
 
             <p class="govuk-body">
               Chris Atkinson has no current challenges and support
@@ -93,8 +95,8 @@
           {% else %}
 
             {% set categories = [] %}
-            {% for challenge in data.challenges %}
-              {% if categories.indexOf(challenge.category) == -1 %}
+            {% for challenge in allChallenges %}
+              {% if challenge.category and categories.indexOf(challenge.category) == -1 %}
                 {% set categories = categories.concat([challenge.category]) %}
               {% endif %}
             {% endfor %}
@@ -109,85 +111,80 @@
                   </strong>
                 </div>
 
-                {% for challenge in data.challenges %}
+                {% for challenge in allChallenges %}
                 {% if challenge.category == category %}
 
                   <div style="padding:25px; border-top:1px solid #b1b4b6;">
 
-                    {% if challenge.priority == true %}
-                      <span class="govuk-body-s" style="
-                        display:inline-block;
-                        background:#ecd1cc;
-                        padding:6px 10px;
-                        margin-right:8px;
-                        margin-bottom:5px;
-                      ">
-                        High priority
-                      </span>
-                    {% endif %}
+                    <!-- TAGS -->
+                    <div style="display:flex; flex-direction:column; align-items:flex-start; gap:8px; margin-bottom:15px;">
+                      {% if challenge.priority %}
+                        <span class="govuk-body-s" style="background:#ecd1cc; padding:6px 10px;">
+                          High priority
+                        </span>
+                      {% endif %}
 
-                    {% if challenge.areas and challenge.areas.length > 0 %}
-                      <div style="margin-bottom:15px;">
+                      {% if challenge.areas and challenge.areas.length > 0 %}
                         {% for area in challenge.areas %}
                           {% if area != "_unchecked" and area != "on" %}
-                            <span class="govuk-body-s" style="
-                              display:inline-block;
-                              background:#d2e2f1;
-                              padding:6px 10px;
-                              margin-right:8px;
-                              margin-bottom:5px;
-                            ">
+                            <span class="govuk-body-s" style="background:#d2e2f1; padding:6px 10px;">
                               {{ area }}
                             </span>
                           {% endif %}
                         {% endfor %}
-                      </div>
-                    {% endif %}
+                      {% endif %}
+                    </div>
 
-                    <p class="govuk-body" style="margin-bottom:15px;">
-                      {{ challenge.description }}
+                    <p class="govuk-body">
+                      {{ challenge.description | default('') }}
                     </p>
 
                     {% if challenge.support %}
-                      <p class="govuk-body govuk-!-font-weight-bold" style="margin-bottom:5px;">
-                        Support needed
-                      </p>
-                      <p class="govuk-body" style="margin-bottom:20px;">
-                        {{ challenge.support }}
-                      </p>
+                      <p class="govuk-body govuk-!-font-weight-bold">Support needed</p>
+                      <p class="govuk-body">{{ challenge.support }}</p>
                     {% endif %}
 
-                    <details class="govuk-details" style="margin-bottom:20px;">
-                      <summary class="govuk-details__summary">
-                        <span class="govuk-details__summary-text">
-                          How was this identified
-                        </span>
-                      </summary>
+                    {% if challenge.identifiedBy %}
+                      <details class="govuk-details">
+                        <summary class="govuk-details__summary">
+                          <span class="govuk-details__summary-text">
+                            How was this identified
+                          </span>
+                        </summary>
 
-                      <div class="govuk-details__text">
+                        <!-- ✅ ✅ ✅ FIXED CLEAN OUTPUT -->
+                        <div class="govuk-details__text">
 
-                        {% set cleanIdentified = [] %}
+                          {% set cleanIdentified = [] %}
 
-                        {% for item in challenge.identifiedBy %}
-                          {% if "_unchecked" not in item %}
-                            {% set cleanIdentified = cleanIdentified.concat([item]) %}
+                          {% for item in challenge.identifiedBy %}
+                            {% if item != "_unchecked" and item != "on" %}
+                              {% set cleanIdentified = cleanIdentified.concat([item]) %}
+                            {% endif %}
+                          {% endfor %}
+
+                          {% if cleanIdentified.length %}
+                            {{ cleanIdentified | join(', ') }}
+                          {% else %}
+                            Not specified
                           {% endif %}
-                        {% endfor %}
 
-                        {{ cleanIdentified | join(', ') }}
+                        </div>
 
+                      </details>
+                    {% endif %}
+
+                    <!-- LAST UPDATED -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                      <p class="govuk-body-s govuk-!-margin-0">
+                        Last updated {{ challenge.formattedDate }} by J. Smith (HMP)
+                      </p>
+
+                      <div class="govuk-body-s" style="white-space:nowrap;">
+                        <a href="#" class="govuk-link">Edit</a>
+                        <span class="govuk-!-margin-left-1 govuk-!-margin-right-1">|</span>
+                        <a href="#" class="govuk-link">Move to history</a>
                       </div>
-                    </details>
-
-                    <!-- ✅ ✅ ✅ UPDATED LINE -->
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                      <span class="govuk-body-s">
-                        Last updated {{ challenge.date }} at {{ challenge.time }} by J. Smith (HMP)
-                      </span>
-                      <span class="govuk-body-s">
-                        <a href="#">Edit</a> |
-                        <a href="#">Move to history</a>
-                      </span>
                     </div>
 
                   </div>
@@ -199,17 +196,14 @@
 
             {% endfor %}
 
-            <div class="govuk-!-margin-top-4">
-              <a href="/add-challenge-describe" class="govuk-link">
-                Add a challenge and support
-              </a>
-            </div>
+            <a href="/add-challenge-describe" class="govuk-link">
+              Add a challenge and support
+            </a>
 
           {% endif %}
 
         </div>
 
-        <!-- HISTORY -->
         <div class="govuk-tabs__panel govuk-tabs__panel--hidden">
           <p class="govuk-body">
             No historic challenges and support
@@ -220,24 +214,17 @@
 
     </div>
 
-    <!-- ACTIONS -->
     <aside class="govuk-grid-column-one-third">
       <div class="actions-card">
         <div class="actions-card__header">Actions</div>
 
         <div class="actions-card__section">
-          <p class="govuk-body-s actions-card__section-title">
-            Screening and assessment
-          </p>
-          <a href="#" class="govuk-link inline-icon-link">
-            Record screener results
-          </a>
+          <p class="govuk-body-s">Screening and assessment</p>
+          <a href="#" class="govuk-link">Record screener results</a>
         </div>
 
         <div class="actions-card__section">
-          <p class="govuk-body-s actions-card__section-title">
-            Additional needs
-          </p>
+          <p class="govuk-body-s">Additional needs</p>
           <a href="/add-strength-category" class="govuk-link">Add strengths</a>
           <a href="/add-challenge-describe" class="govuk-link">Add challenges and support</a>
           <a href="#" class="govuk-link">Add conditions</a>

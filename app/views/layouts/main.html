@@ -26,45 +26,26 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
         </span>
         Digital Prison Services
       </div>
+
       <div class="custom-header__actions" role="navigation" aria-label="Header menu">
         <div class="custom-header__action-group">
-          <span class="custom-header__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-              <path d="M12 21s7-4.8 7-10.5S14.4 3 12 3 5 6.8 5 10.5 12 21 12 21z" />
-            </svg>
-          </span>
           <span class="custom-header__action-text">Hull (HMP)</span>
         </div>
         <div class="custom-header__action-group">
-          <span class="custom-header__chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </span>
-          <span class="custom-header__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </span>
           <span class="custom-header__action-text">J. Smith</span>
         </div>
         <a href="#" class="custom-header__link govuk-link govuk-link--inverse">
-          <span class="custom-header__chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </span>
           Menu
-        </a>
-        <a href="#" class="custom-header__search" aria-label="Search">
-          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="9" cy="9" r="6" />
-            <path d="M14.5 14.5L18 18" />
-          </svg>
         </a>
       </div>
     </div>
   </div>
+{% endblock %}
+
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    window.GOVUKFrontend.initAll()
+  </script>
 {% endblock %}

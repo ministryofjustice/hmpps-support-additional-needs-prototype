@@ -5,17 +5,15 @@
 {% block content %}
 <div class="govuk-width-container">
 
-  <a class="govuk-back-link" href="/">Back</a>
+  <!-- ✅ ✅ ✅ CORRECT DYNAMIC BACK LINK -->
+  <a class="govuk-back-link" href="javascript:history.back()">Back</a>
 
-  <!-- ✅ ✅ ✅ FIXED: POST + correct route -->
-  <form method="post" action="/add-challenge-describe">
+  <form method="post" action="/add-challenge-category">
 
     {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
     {{ govukRadios({
       name: "challengeCategory",
-
-      value: data['challengeCategory'],  // ✅ remembers selection
 
       hint: {
         text: "Add a challenge and support"
